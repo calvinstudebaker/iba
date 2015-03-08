@@ -34,34 +34,36 @@ Parse.Cloud.define("putMeterData", function(request, response){
 	Parse.Cloud.httpRequest({
 		url: "https://data.sfgov.org/resource/7egw-qt89.json",
 		success: function(res){
-			var data = JSON.parse(res.data);
-			for(i = 0; i < 1; i++){
-				var entry = new ParkingMeter();
-				var meter = data[i];
-				var streetname = meter["streetname"];
-				console.log(streetname);
-				var location = meter["location"];
-				var geopoint = new Parse.GeoPoint({latitude: location.latitude, longitude: location.longitude});
+			var data = res.data;
+			var entry = new ParkingMeter();
+			
+			var meter = data[0];
+			var streetname = meter["streetname"];
+			console.log(streetname);
+			var location = meter["location"];
+			var geopoint = new Parse.GeoPoint({latitude: location.latitude, longitude: location.longitude});
 
 
-				entry.set("has_active_sensor", meter.activesens);
-				entry.set("is_smart_meter", meter.smart_mete);
-				entry.set("location", geopoint);
-				entry.set("on_off_street", meter.on_off_str);
-				entry.set("street_number", meter.street_num);
-				entry.set("street_name", meter.streetname);
-				entry.set("meter_id", meter.post_id);
+			entry.set("has_active_sensor", meter.activesens);
+			entry.set("is_smart_meter", meter.smart_mete);
+			entry.set("location", geopoint);
+			entry.set("on_off_street", meter.on_off_str);
+			entry.set("street_number", meter.street_num);
+			entry.set("street_name", meter.streetname);
+			entry.set("meter_id", meter.post_id);
 
-				entry.save(null, {
-					succss: function(entry){
+			entry.save(null, {
+				succss: function(entry){
+					console.log("SAVED TO DB!");
+					response.success(res.data[0].location);
+				},
+				error: function(entry, error){
+					console.error("Failed to create new object, with error code: " + error.message);
+					response.error("save did not work");
+				}
+			});
 
-					},
-					error: function(entry, error){
-						console.error("Failed to create new object, with error code: " + error.message);
-					}
-				});
-
-			}
+			
 			// console.log(entry["activesens"]);
 			// console.log(entry["on_off_str"]);
 			// console.log(entry["sfparkarea"]);
@@ -78,7 +80,7 @@ Parse.Cloud.define("putMeterData", function(request, response){
 			// console.log(entry["osp_id"]);
 			// console.log(entry["ms_spaceid"]);
 			// console.log(entry["streetname"]);
-			response.success(data[0]);
+			
 		},
 		error: function(res){
 			console.error("request failed with response code: " + res.status);
