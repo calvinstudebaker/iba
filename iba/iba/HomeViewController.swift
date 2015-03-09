@@ -53,14 +53,8 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
     
         triggerLocationServices()
         
-        let southwest: CLLocationCoordinate2D = self.mapView.projection.coordinateForPoint(CGPointMake(0, self.mapView.frame.size.height))
-        let northeast: CLLocationCoordinate2D = self.mapView.projection.coordinateForPoint(CGPointMake(self.mapView.frame.size.width, 0))
+        mapView.animateToCameraPosition(GMSCameraPosition.cameraWithLatitude(37.75941, longitude: -122.4260365, zoom: 16))
         
-        IBANetworking.crimesInBoxWithCorners(southwest, northeast: northeast, radius: 2, completion: {response, error in
-            println("\(response)")
-        })
-        
-        mapView.animateToCameraPosition(GMSCameraPosition.cameraWithLatitude(self.locationManager.location.coordinate.latitude, longitude:self.locationManager.location.coordinate.longitude, zoom: 16))
     }
     
     deinit {
@@ -127,6 +121,15 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
     }
     
     // MARK: GMSMapViewDelegate Methods
+    
+    func mapView(mapView: GMSMapView!, idleAtCameraPosition position: GMSCameraPosition!) {
+        
+        let bounds = GMSCoordinateBounds(region: self.mapView.projection.visibleRegion())
+        
+        IBANetworking.crimesInBoxWithCorners(bounds.southWest, northeast: bounds.northEast, completion: {response, error in
+            println("\(response)")
+        })
+    }
     
 }
 

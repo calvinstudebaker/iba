@@ -12,12 +12,15 @@ import CoreLocation
 
 class IBANetworking {
     
-    class func crimesInBoxWithCorners(southwest: CLLocationCoordinate2D, northeast: CLLocationCoordinate2D, radius: CGFloat, completion: PFIdResultBlock) {
+    class func crimesInBoxWithCorners(southwest: CLLocationCoordinate2D, northeast: CLLocationCoordinate2D, completion: PFIdResultBlock) {
         
         let southwestPoint = PFGeoPoint(latitude: southwest.latitude, longitude: southwest.longitude)
         let northeastPoint = PFGeoPoint(latitude: northeast.latitude, longitude: northeast.longitude)
-
-        let parameters = ["southwest": southwestPoint, "northeast": northeastPoint, "radius": radius]
+        
+        println("Searching for crimes in bounds: ")
+        println("\tSouthwest: (\(southwestPoint.latitude), \(southwestPoint.longitude))")
+        println("\tNortheast: (\(northeastPoint.latitude), \(northeastPoint.longitude))")
+        let parameters = ["southwest": southwestPoint, "northeast": northeastPoint]
         
         PFCloud.callFunctionInBackground("getCrimesNearLocation", withParameters: parameters, block: completion)
         
