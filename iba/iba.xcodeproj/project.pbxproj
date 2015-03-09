@@ -41,6 +41,7 @@
 		AF38CA9F1AAD70F7003892D0 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF38CA9E1AAD70F7003892D0 /* Social.framework */; };
 		AF38CAA11AAD70FD003892D0 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF38CAA01AAD70FD003892D0 /* Accounts.framework */; };
 		AF4614961AAD77FD00CF8C33 /* IBANetworking.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF4614951AAD77FD00CF8C33 /* IBANetworking.swift */; };
+		DC9B50AC1AAD80CE006E2323 /* car_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = DC9B50AB1AAD80CE006E2323 /* car_icon.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -94,6 +95,7 @@
 		AF38CA9E1AAD70F7003892D0 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 		AF38CAA01AAD70FD003892D0 /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
 		AF4614951AAD77FD00CF8C33 /* IBANetworking.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IBANetworking.swift; sourceTree = "<group>"; };
+		DC9B50AB1AAD80CE006E2323 /* car_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = car_icon.png; sourceTree = "<group>"; };
 		E8552270A605BAD894C6CA88 /* libPods-iba.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-iba.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -205,6 +207,7 @@
 		AF21B11D1AAC041600669016 /* iba */ = {
 			isa = PBXGroup;
 			children = (
+				DC9B50AA1AAD80A4006E2323 /* Resources */,
 				AF4614981AAD781900CF8C33 /* Utils */,
 				AF4614971AAD780800CF8C33 /* Networking */,
 				AF38CA811AAD6D90003892D0 /* Custom Objects */,
@@ -273,6 +276,14 @@
 				AF38CA7F1AAD5D9B003892D0 /* IBAUtils.swift */,
 			);
 			name = Utils;
+			sourceTree = "<group>";
+		};
+		DC9B50AA1AAD80A4006E2323 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				DC9B50AB1AAD80CE006E2323 /* car_icon.png */,
+			);
+			name = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -358,6 +369,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AF38CA781AAD5AD4003892D0 /* GoogleMaps.bundle in Resources */,
+				DC9B50AC1AAD80CE006E2323 /* car_icon.png in Resources */,
 				AF21B12B1AAC041600669016 /* LaunchScreen.xib in Resources */,
 				AF21B1281AAC041600669016 /* Images.xcassets in Resources */,
 			);
