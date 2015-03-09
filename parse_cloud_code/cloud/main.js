@@ -5,6 +5,7 @@ Parse.Cloud.define("hello", function(request, response) {
   response.success("Hello world!");
 });
 
+var jobs = require("cloud/jobs.js");
 
 Parse.Cloud.define("putSweepingData", function(request, response){
 	Parse.Cloud.httpRequest({
@@ -27,66 +28,16 @@ Parse.Cloud.define("putSweepingData", function(request, response){
 	});
 });
 
-Parse.Cloud.define("putMeterData", function(request, response){
-	var ParkingMeter = Parse.Object.extend("ParkingMeter");
+Parse.Cloud.define("getCrimesNearLocation", function(request, response){
 
-	console.log ("HERE");
-	Parse.Cloud.httpRequest({
-		url: "https://data.sfgov.org/resource/7egw-qt89.json",
-		success: function(res){
-			var data = res.data;
-			var entry = new ParkingMeter();
-			
-			var meter = data[0];
-			var streetname = meter["streetname"];
-			console.log(streetname);
-			var location = meter["location"];
-			var geopoint = new Parse.GeoPoint({latitude: location.latitude, longitude: location.longitude});
+});
 
+Parse.Cloud.job("putMeterData", function(request, response){
+	jobs.putMeterDataFromURL("https://data.sfgov.org/resource/7egw-qt89.json", request, response);
+});
 
-			entry.set("has_active_sensor", meter.activesens);
-			entry.set("is_smart_meter", meter.smart_mete);
-			entry.set("location", geopoint);
-			entry.set("on_off_street", meter.on_off_str);
-			entry.set("street_number", meter.street_num);
-			entry.set("street_name", meter.streetname);
-			entry.set("meter_id", meter.post_id);
-
-			entry.save(null, {
-				succss: function(entry){
-					console.log("SAVED TO DB!");
-					response.success(res.data[0].location);
-				},
-				error: function(entry, error){
-					console.error("Failed to create new object, with error code: " + error.message);
-					response.error("save did not work");
-				}
-			});
-
-			
-			// console.log(entry["activesens"]);
-			// console.log(entry["on_off_str"]);
-			// console.log(entry["sfparkarea"]);
-			// console.log(entry["location"]["longitude"]);
-			// console.log(entry["ratearea"]);
-			// console.log(entry["street_num"]);
-			// console.log(entry["street_seg"]);
-			// console.log(entry["ms_id"]);
-			// console.log(entry["cap_color"]);
-			// console.log(entry["post_id"]);
-			// console.log(entry["smart_mete"]);
-			// console.log(entry["meter_type"]);
-			// console.log(entry["jurisdicti"]);
-			// console.log(entry["osp_id"]);
-			// console.log(entry["ms_spaceid"]);
-			// console.log(entry["streetname"]);
-			
-		},
-		error: function(res){
-			console.error("request failed with response code: " + res.status);
-			response.error("bad");
-		}
-	});
+Parse.Cloud.job("putCrimeData", function(request, response){
+	jobs.putCrimeDataFromURL("https://data.sfgov.org/api/views/tmnf-yvry/rows.json", request, resopnse);
 });
 
 Parse.Cloud.define("test", function(request, response){
