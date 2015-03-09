@@ -37,7 +37,7 @@ class MovingAlertViewController: UIViewController {
         self.view.addSubview(ignoreButton);
         self.view.addSubview(trackButton);
         
-        self.view.backgroundColor = UIColor.greenColor()
+        self.view.backgroundColor = UIColor.darkGrayColor()
         // Do any additional setup after loading the view.
     }
 
@@ -50,7 +50,7 @@ class MovingAlertViewController: UIViewController {
     func setUpIgnoreButton(){
         var buttonWidth = 100;
         ignoreButton.frame = CGRectMake(self.view.bounds.width/2 - CGFloat(buttonWidth)/2, 100, 100, 50)
-        ignoreButton.backgroundColor = UIColor.purpleColor()
+        ignoreButton.backgroundColor = UIColor.lightGrayColor()
         ignoreButton.setTitle("Ignore", forState: UIControlState.Normal)
         ignoreButton.addTarget(self, action: "dismissMovingAlert:", forControlEvents: UIControlEvents.TouchUpInside)
     }
@@ -59,7 +59,7 @@ class MovingAlertViewController: UIViewController {
     func setUpTrackButton(){
         var buttonWidth = 300;
         trackButton.frame = CGRectMake(self.view.bounds.width/2 - CGFloat(buttonWidth)/2, 200, CGFloat(buttonWidth), 50)
-        trackButton.backgroundColor = UIColor.blueColor()
+        trackButton.backgroundColor = UIColor.lightGrayColor()
         trackButton.setTitle("Track Vehicle", forState: UIControlState.Normal)
         trackButton.addTarget(self, action: "trackVehicle:", forControlEvents: UIControlEvents.TouchUpInside)
     }
@@ -70,16 +70,20 @@ class MovingAlertViewController: UIViewController {
     }
     
     //MARK: ignores moving alert, returns to home map screen
-    @IBAction func dismissMovingAlert(sender: AnyObject) {
+    func dismissMovingAlert(sender: AnyObject) {
         self.dismissViewControllerAnimated(false, completion: nil)
         println("ignored")
     }
     
     //MARK: adds track subview, allowing user to follow vehicle movement
-    @IBAction func trackVehicle(sender: AnyObject) {
-        //trackView.frame = CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height);
-        self.view.addSubview(trackView);
-        println("tracking")
+    //TO DO: reset check if trackview subview already added
+    func trackVehicle(sender: AnyObject) {
+        trackView.frame = CGRectMake(0, self.view.bounds.size.height/2, self.view.bounds.size.width, self.view.bounds.size.height/2);
+        let subviews = self.view.subviews as NSArray
+        if(!subviews.containsObject(trackView)){
+            self.view.addSubview(trackView)
+            println("tracking")
+        }
     }
     
 
