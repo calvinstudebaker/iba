@@ -17,15 +17,30 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
 
         // Override point for customization after application launch.
+        
+        // Setup google maps
         GMSServices.provideAPIKey(googleMapsApiKey)
         
+        // Setup parse
+        Parse.enableLocalDatastore()
+        Parse.setApplicationId("D7gVBFc0P2dkb4XoronMmAbDGybOfKJQZKhg6akQ", clientKey: "AniURE10twa3H0g0tVnBN6vL0PO5mAZxtAtPJiqV")
+        PFAnalytics.trackAppOpenedWithLaunchOptionsInBackground(launchOptions, block: nil)
+        
+        // Setup view contro
+        setupView()
+        
+        return true
+    }
+    
+    func setupView() {
+        let navigationController = UINavigationController()
         let homeViewController = HomeViewController()
+        navigationController.viewControllers = [homeViewController]
         
         self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
-        self.window!.rootViewController = homeViewController
+        self.window!.rootViewController = navigationController
         self.window!.makeKeyAndVisible()
 
-        return true
     }
 
     func applicationWillResignActive(application: UIApplication) {
