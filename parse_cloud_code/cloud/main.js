@@ -1,11 +1,13 @@
-
-// Use Parse.Cloud.define to define as many cloud functions as you want.
-// For example:
-Parse.Cloud.define("hello", function(request, response) {
-  response.success("Hello world!");
-});
+/*
+main.js
+This file defines all cloud functions that will run on Parse Cloud
+These functions can be invoked from the command line using curl with REST API
+or from iOS using Parse API
+*/
 
 var jobs = require("cloud/jobs.js");
+var meterDataURL = "https://data.sfgov.org/resource/7egw-qt89.json";
+var crimeDataURL = "https://data.sfgov.org/api/views/tmnf-yvry/rows.json";
 
 Parse.Cloud.define("putSweepingData", function(request, response){
 	Parse.Cloud.httpRequest({
@@ -28,32 +30,26 @@ Parse.Cloud.define("putSweepingData", function(request, response){
 	});
 });
 
+//given a user location, return a Collection of Crime objects that are within
+//1 mile of the given location
 Parse.Cloud.define("getCrimesNearLocation", function(request, response){
-
+	
 });
 
+//inject initial data into ParkingMeter table from dataSF.org
 Parse.Cloud.job("putMeterData", function(request, response){
-	jobs.putMeterDataFromURL("https://data.sfgov.org/resource/7egw-qt89.json", request, response);
+	jobs.putMeterDataFromURL(meterDataURL, request, response);
 });
 
+//inject initial data into Crime table from dataSF.org
 Parse.Cloud.job("putCrimeData", function(request, response){
-	jobs.putCrimeDataFromURL("https://data.sfgov.org/api/views/tmnf-yvry/rows.json", request, resopnse);
+	jobs.putCrimeDataFromURL(crimeDataURL, request, resopnse);
 });
 
+//Test function to make sure cloud code is working. Exemplifies using a separate
+//javascript module (test.js)
 Parse.Cloud.define("test", function(request, response){
 	var test = require("cloud/test.js");
 	var val = test.isACoolName('Ralph');
 	response.success(val);
 });
-
-
-//from http://stackoverflow.com/questions/247483/http-get-request-in-javascript
-// function httpGet(theUrl)
-// {
-//     var xmlHttp = null;
-
-//     xmlHttp = new XMLHttpRequest();
-//     xmlHttp.open( "GET", theUrl, false );
-//     xmlHttp.send( null );
-//     return xmlHttp.responseText;
-// }
