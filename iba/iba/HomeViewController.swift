@@ -18,6 +18,7 @@ class HomeViewController: UIViewController {
     
     convenience override init() {
         self.init(nibName: nil, bundle: nil)
+        
     }
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
@@ -44,6 +45,7 @@ class HomeViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
 
 
 }
