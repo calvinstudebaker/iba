@@ -24,6 +24,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
     
     convenience override init() {
         self.init(nibName: nil, bundle: nil)
+        
     }
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
@@ -46,10 +47,10 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
     }
     
     override func viewDidAppear(animated: Bool) {
-//        delay(2, { () -> () in
-//            self.presentViewController(MovingAlertViewController(), animated: true, completion: nil)
-//        })
-        
+        delay(2, { () -> () in
+            self.presentViewController(MovingAlertViewController(), animated: true, completion: nil)
+        })
+    
         triggerLocationServices()
         
         mapView.animateToCameraPosition(GMSCameraPosition.cameraWithLatitude(locationManager.location.coordinate.latitude, longitude: locationManager.location.coordinate.longitude, zoom: 16))
@@ -116,9 +117,6 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
     }
     
     // MARK: GMSMapViewDelegate Methods
-    
-    
-
 
 }
 
