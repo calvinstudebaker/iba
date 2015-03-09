@@ -35,7 +35,7 @@ class HomeViewController: UIViewController {
     
     override func viewDidAppear(animated: Bool) {
     
-        delay(5, { () -> () in
+        delay(2, { () -> () in
             self.presentViewController(MovingAlertViewController(), animated: true, completion: nil)
         })
     }

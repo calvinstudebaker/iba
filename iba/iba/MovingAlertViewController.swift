@@ -30,6 +30,7 @@ class MovingAlertViewController: UIViewController {
         super.viewDidLoad()
 
         ignoreButton.frame = CGRectMake(100, 100, self.view.bounds.size.width, self.view.bounds.size.height/2);
+        ignoreButton.backgroundColor = UIColor.whiteColor()
         self.view.addSubview(ignoreButton);
         
         self.view.backgroundColor = UIColor.greenColor()
