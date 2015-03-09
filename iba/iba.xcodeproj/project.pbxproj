@@ -40,6 +40,7 @@
 		AF38CA9A1AAD70B5003892D0 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF38CA961AAD70B5003892D0 /* Bolts.framework */; };
 		AF38CA9F1AAD70F7003892D0 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF38CA9E1AAD70F7003892D0 /* Social.framework */; };
 		AF38CAA11AAD70FD003892D0 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF38CAA01AAD70FD003892D0 /* Accounts.framework */; };
+		AF4614961AAD77FD00CF8C33 /* IBANetworking.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF4614951AAD77FD00CF8C33 /* IBANetworking.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -92,6 +93,7 @@
 		AF38CA961AAD70B5003892D0 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
 		AF38CA9E1AAD70F7003892D0 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 		AF38CAA01AAD70FD003892D0 /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
+		AF4614951AAD77FD00CF8C33 /* IBANetworking.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IBANetworking.swift; sourceTree = "<group>"; };
 		E8552270A605BAD894C6CA88 /* libPods-iba.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-iba.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -203,13 +205,14 @@
 		AF21B11D1AAC041600669016 /* iba */ = {
 			isa = PBXGroup;
 			children = (
+				AF4614981AAD781900CF8C33 /* Utils */,
+				AF4614971AAD780800CF8C33 /* Networking */,
 				AF38CA811AAD6D90003892D0 /* Custom Objects */,
 				AF38CA7E1AAD5C6F003892D0 /* ViewControllers */,
 				AF21B1201AAC041600669016 /* AppDelegate.swift */,
 				AF21B1271AAC041600669016 /* Images.xcassets */,
 				AF21B1291AAC041600669016 /* LaunchScreen.xib */,
 				AF21B11E1AAC041600669016 /* Supporting Files */,
-				AF38CA7F1AAD5D9B003892D0 /* IBAUtils.swift */,
 			);
 			path = iba;
 			sourceTree = "<group>";
@@ -254,6 +257,22 @@
 			children = (
 			);
 			name = "Custom Objects";
+			sourceTree = "<group>";
+		};
+		AF4614971AAD780800CF8C33 /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				AF4614951AAD77FD00CF8C33 /* IBANetworking.swift */,
+			);
+			name = Networking;
+			sourceTree = "<group>";
+		};
+		AF4614981AAD781900CF8C33 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				AF38CA7F1AAD5D9B003892D0 /* IBAUtils.swift */,
+			);
+			name = Utils;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -392,6 +411,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AF21B1211AAC041600669016 /* AppDelegate.swift in Sources */,
+				AF4614961AAD77FD00CF8C33 /* IBANetworking.swift in Sources */,
 				AF38CA591AAD5485003892D0 /* HomeViewController.swift in Sources */,
 				AF38CA801AAD5D9B003892D0 /* IBAUtils.swift in Sources */,
 				AF38CA7D1AAD5C6A003892D0 /* MovingAlertViewController.swift in Sources */,
