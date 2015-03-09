@@ -7,12 +7,28 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7234A8555A9AAC6D75E5443A /* libPods-iba.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E8552270A605BAD894C6CA88 /* libPods-iba.a */; };
 		AF21B1211AAC041600669016 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF21B1201AAC041600669016 /* AppDelegate.swift */; };
-		AF21B1231AAC041600669016 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF21B1221AAC041600669016 /* ViewController.swift */; };
-		AF21B1261AAC041600669016 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AF21B1241AAC041600669016 /* Main.storyboard */; };
 		AF21B1281AAC041600669016 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AF21B1271AAC041600669016 /* Images.xcassets */; };
 		AF21B12B1AAC041600669016 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = AF21B1291AAC041600669016 /* LaunchScreen.xib */; };
 		AF21B1371AAC041600669016 /* ibaTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF21B1361AAC041600669016 /* ibaTests.swift */; };
+		AF38CA571AAD5419003892D0 /* GoogleMaps.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF38CA561AAD5419003892D0 /* GoogleMaps.framework */; };
+		AF38CA591AAD5485003892D0 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF38CA581AAD5485003892D0 /* HomeViewController.swift */; };
+		AF38CA601AAD5823003892D0 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF38CA5F1AAD5823003892D0 /* QuartzCore.framework */; };
+		AF38CA621AAD582A003892D0 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF38CA611AAD582A003892D0 /* CoreLocation.framework */; };
+		AF38CA641AAD5831003892D0 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF38CA631AAD5831003892D0 /* AVFoundation.framework */; };
+		AF38CA661AAD583C003892D0 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF38CA651AAD583C003892D0 /* CoreText.framework */; };
+		AF38CA681AAD5842003892D0 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = AF38CA671AAD5842003892D0 /* libz.dylib */; };
+		AF38CA6A1AAD5849003892D0 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF38CA691AAD5849003892D0 /* OpenGLES.framework */; };
+		AF38CA6C1AAD5850003892D0 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF38CA6B1AAD5850003892D0 /* SystemConfiguration.framework */; };
+		AF38CA6E1AAD5856003892D0 /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF38CA6D1AAD5856003892D0 /* GLKit.framework */; };
+		AF38CA701AAD5862003892D0 /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = AF38CA6F1AAD5862003892D0 /* libicucore.dylib */; };
+		AF38CA721AAD586E003892D0 /* libc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = AF38CA711AAD586E003892D0 /* libc++.dylib */; };
+		AF38CA741AAD5872003892D0 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF38CA731AAD5872003892D0 /* ImageIO.framework */; };
+		AF38CA761AAD5886003892D0 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF38CA751AAD5886003892D0 /* CoreData.framework */; };
+		AF38CA781AAD5AD4003892D0 /* GoogleMaps.bundle in Resources */ = {isa = PBXBuildFile; fileRef = AF38CA771AAD5AD4003892D0 /* GoogleMaps.bundle */; };
+		AF38CA7D1AAD5C6A003892D0 /* MovingAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF38CA7C1AAD5C6A003892D0 /* MovingAlertViewController.swift */; };
+		AF38CA801AAD5D9B003892D0 /* IBAUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF38CA7F1AAD5D9B003892D0 /* IBAUtils.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -26,16 +42,35 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		140E12628EACC2018F2A6880 /* Pods-iba.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iba.debug.xcconfig"; path = "Pods/Target Support Files/Pods-iba/Pods-iba.debug.xcconfig"; sourceTree = "<group>"; };
+		922823493FBF94D711D2A600 /* Pods-iba.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iba.release.xcconfig"; path = "Pods/Target Support Files/Pods-iba/Pods-iba.release.xcconfig"; sourceTree = "<group>"; };
 		AF21B11B1AAC041600669016 /* iba.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iba.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AF21B11F1AAC041600669016 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AF21B1201AAC041600669016 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		AF21B1221AAC041600669016 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		AF21B1251AAC041600669016 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		AF21B1271AAC041600669016 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		AF21B12A1AAC041600669016 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		AF21B1301AAC041600669016 /* ibaTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ibaTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		AF21B1351AAC041600669016 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AF21B1361AAC041600669016 /* ibaTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ibaTests.swift; sourceTree = "<group>"; };
+		AF38CA561AAD5419003892D0 /* GoogleMaps.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleMaps.framework; sourceTree = "<group>"; };
+		AF38CA581AAD5485003892D0 /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		AF38CA5A1AAD56F4003892D0 /* iba-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "iba-Bridging-Header.h"; sourceTree = "<group>"; };
+		AF38CA5F1AAD5823003892D0 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		AF38CA611AAD582A003892D0 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		AF38CA631AAD5831003892D0 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		AF38CA651AAD583C003892D0 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
+		AF38CA671AAD5842003892D0 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		AF38CA691AAD5849003892D0 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
+		AF38CA6B1AAD5850003892D0 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		AF38CA6D1AAD5856003892D0 /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
+		AF38CA6F1AAD5862003892D0 /* libicucore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.dylib; path = usr/lib/libicucore.dylib; sourceTree = SDKROOT; };
+		AF38CA711AAD586E003892D0 /* libc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libc++.dylib"; path = "usr/lib/libc++.dylib"; sourceTree = SDKROOT; };
+		AF38CA731AAD5872003892D0 /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
+		AF38CA751AAD5886003892D0 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		AF38CA771AAD5AD4003892D0 /* GoogleMaps.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = GoogleMaps.bundle; path = GoogleMaps.framework/Versions/A/Resources/GoogleMaps.bundle; sourceTree = "<group>"; };
+		AF38CA7C1AAD5C6A003892D0 /* MovingAlertViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MovingAlertViewController.swift; sourceTree = "<group>"; };
+		AF38CA7F1AAD5D9B003892D0 /* IBAUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IBAUtils.swift; sourceTree = "<group>"; };
+		E8552270A605BAD894C6CA88 /* libPods-iba.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-iba.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -43,6 +78,20 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AF38CA761AAD5886003892D0 /* CoreData.framework in Frameworks */,
+				AF38CA741AAD5872003892D0 /* ImageIO.framework in Frameworks */,
+				AF38CA721AAD586E003892D0 /* libc++.dylib in Frameworks */,
+				AF38CA701AAD5862003892D0 /* libicucore.dylib in Frameworks */,
+				AF38CA6E1AAD5856003892D0 /* GLKit.framework in Frameworks */,
+				AF38CA6C1AAD5850003892D0 /* SystemConfiguration.framework in Frameworks */,
+				AF38CA6A1AAD5849003892D0 /* OpenGLES.framework in Frameworks */,
+				AF38CA681AAD5842003892D0 /* libz.dylib in Frameworks */,
+				AF38CA661AAD583C003892D0 /* CoreText.framework in Frameworks */,
+				AF38CA641AAD5831003892D0 /* AVFoundation.framework in Frameworks */,
+				AF38CA621AAD582A003892D0 /* CoreLocation.framework in Frameworks */,
+				AF38CA601AAD5823003892D0 /* QuartzCore.framework in Frameworks */,
+				AF38CA571AAD5419003892D0 /* GoogleMaps.framework in Frameworks */,
+				7234A8555A9AAC6D75E5443A /* libPods-iba.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -56,12 +105,45 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4324E71EEC353D80F6CD0498 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				AF38CA771AAD5AD4003892D0 /* GoogleMaps.bundle */,
+				AF38CA751AAD5886003892D0 /* CoreData.framework */,
+				AF38CA731AAD5872003892D0 /* ImageIO.framework */,
+				AF38CA711AAD586E003892D0 /* libc++.dylib */,
+				AF38CA6F1AAD5862003892D0 /* libicucore.dylib */,
+				AF38CA6D1AAD5856003892D0 /* GLKit.framework */,
+				AF38CA6B1AAD5850003892D0 /* SystemConfiguration.framework */,
+				AF38CA691AAD5849003892D0 /* OpenGLES.framework */,
+				AF38CA671AAD5842003892D0 /* libz.dylib */,
+				AF38CA651AAD583C003892D0 /* CoreText.framework */,
+				AF38CA631AAD5831003892D0 /* AVFoundation.framework */,
+				AF38CA611AAD582A003892D0 /* CoreLocation.framework */,
+				AF38CA5F1AAD5823003892D0 /* QuartzCore.framework */,
+				AF38CA561AAD5419003892D0 /* GoogleMaps.framework */,
+				E8552270A605BAD894C6CA88 /* libPods-iba.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		6D81DCDAAA615573BEB72FC5 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				140E12628EACC2018F2A6880 /* Pods-iba.debug.xcconfig */,
+				922823493FBF94D711D2A600 /* Pods-iba.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		AF21B1121AAC041600669016 = {
 			isa = PBXGroup;
 			children = (
 				AF21B11D1AAC041600669016 /* iba */,
 				AF21B1331AAC041600669016 /* ibaTests */,
 				AF21B11C1AAC041600669016 /* Products */,
+				6D81DCDAAA615573BEB72FC5 /* Pods */,
+				4324E71EEC353D80F6CD0498 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -77,12 +159,12 @@
 		AF21B11D1AAC041600669016 /* iba */ = {
 			isa = PBXGroup;
 			children = (
+				AF38CA7E1AAD5C6F003892D0 /* ViewControllers */,
 				AF21B1201AAC041600669016 /* AppDelegate.swift */,
-				AF21B1221AAC041600669016 /* ViewController.swift */,
-				AF21B1241AAC041600669016 /* Main.storyboard */,
 				AF21B1271AAC041600669016 /* Images.xcassets */,
 				AF21B1291AAC041600669016 /* LaunchScreen.xib */,
 				AF21B11E1AAC041600669016 /* Supporting Files */,
+				AF38CA7F1AAD5D9B003892D0 /* IBAUtils.swift */,
 			);
 			path = iba;
 			sourceTree = "<group>";
@@ -90,6 +172,7 @@
 		AF21B11E1AAC041600669016 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				AF38CA5A1AAD56F4003892D0 /* iba-Bridging-Header.h */,
 				AF21B11F1AAC041600669016 /* Info.plist */,
 			);
 			name = "Supporting Files";
@@ -112,6 +195,15 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		AF38CA7E1AAD5C6F003892D0 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				AF38CA581AAD5485003892D0 /* HomeViewController.swift */,
+				AF38CA7C1AAD5C6A003892D0 /* MovingAlertViewController.swift */,
+			);
+			name = ViewControllers;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -119,9 +211,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = AF21B13A1AAC041600669016 /* Build configuration list for PBXNativeTarget "iba" */;
 			buildPhases = (
+				673A81C94EDCE0C26D6DD0AA /* Check Pods Manifest.lock */,
 				AF21B1171AAC041600669016 /* Sources */,
 				AF21B1181AAC041600669016 /* Frameworks */,
 				AF21B1191AAC041600669016 /* Resources */,
+				E831E38571CAEEC366206BFC /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -192,7 +286,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AF21B1261AAC041600669016 /* Main.storyboard in Resources */,
+				AF38CA781AAD5AD4003892D0 /* GoogleMaps.bundle in Resources */,
 				AF21B12B1AAC041600669016 /* LaunchScreen.xib in Resources */,
 				AF21B1281AAC041600669016 /* Images.xcassets in Resources */,
 			);
@@ -207,13 +301,48 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		673A81C94EDCE0C26D6DD0AA /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		E831E38571CAEEC366206BFC /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-iba/Pods-iba-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		AF21B1171AAC041600669016 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AF21B1231AAC041600669016 /* ViewController.swift in Sources */,
 				AF21B1211AAC041600669016 /* AppDelegate.swift in Sources */,
+				AF38CA591AAD5485003892D0 /* HomeViewController.swift in Sources */,
+				AF38CA801AAD5D9B003892D0 /* IBAUtils.swift in Sources */,
+				AF38CA7D1AAD5C6A003892D0 /* MovingAlertViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -236,14 +365,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		AF21B1241AAC041600669016 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				AF21B1251AAC041600669016 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		AF21B1291AAC041600669016 /* LaunchScreen.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -334,21 +455,36 @@
 		};
 		AF21B13B1AAC041600669016 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 140E12628EACC2018F2A6880 /* Pods-iba.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = iba/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "iba/iba-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
 		AF21B13C1AAC041600669016 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 922823493FBF94D711D2A600 /* Pods-iba.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = iba/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "iba/iba-Bridging-Header.h";
 			};
 			name = Release;
 		};
@@ -405,6 +541,7 @@
 				AF21B13C1AAC041600669016 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		AF21B13D1AAC041600669016 /* Build configuration list for PBXNativeTarget "ibaTests" */ = {
 			isa = XCConfigurationList;
@@ -413,6 +550,7 @@
 				AF21B13F1AAC041600669016 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
