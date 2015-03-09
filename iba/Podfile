@@ -1,0 +1,11 @@
+# Uncomment this line to define a global platform for your project
+# platform :ios, '6.0'
+
+target 'iba' do
+	pod "LFHeatMap"
+end
+
+target 'ibaTests' do
+
+end
+

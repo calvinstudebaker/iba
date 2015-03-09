@@ -12,11 +12,35 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
+    let googleMapsApiKey = "AIzaSyDLqY2Bq_dD1dei_t-DorEzGAe2Azx1h9c"
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+
         // Override point for customization after application launch.
+        
+        // Setup google maps
+        GMSServices.provideAPIKey(googleMapsApiKey)
+        
+        // Setup parse
+        Parse.enableLocalDatastore()
+        Parse.setApplicationId("D7gVBFc0P2dkb4XoronMmAbDGybOfKJQZKhg6akQ", clientKey: "AniURE10twa3H0g0tVnBN6vL0PO5mAZxtAtPJiqV")
+        PFAnalytics.trackAppOpenedWithLaunchOptionsInBackground(launchOptions, block: nil)
+        
+        // Setup view contro
+        setupView()
+        
         return true
+    }
+    
+    func setupView() {
+        let navigationController = UINavigationController()
+        let homeViewController = HomeViewController()
+        navigationController.viewControllers = [homeViewController]
+        
+        self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
+        self.window!.rootViewController = navigationController
+        self.window!.makeKeyAndVisible()
+
     }
 
     func applicationWillResignActive(application: UIApplication) {
