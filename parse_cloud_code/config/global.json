@@ -1,0 +1,14 @@
+{
+    "applications": {
+        "Parq": {
+            "applicationId": "D7gVBFc0P2dkb4XoronMmAbDGybOfKJQZKhg6akQ", 
+            "masterKey": "ShYh49jf4K2zfNe8q1cMyfpJtwkdu4yXjlMqi1yc"
+        }, 
+        "_default": {
+            "link": "Parq"
+        }
+    }, 
+    "global": {
+        "parseVersion": "1.3.5"
+    }
+}
