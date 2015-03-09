@@ -30,10 +30,32 @@ Parse.Cloud.define("putSweepingData", function(request, response){
 	});
 });
 
-//given a user location, return a Collection of Crime objects that are within
-//1 mile of the given location
+//given southwest-most and northeast-most points, returns the locations and weights
+//of all crimes in the bounding box
+//TODO: make sure southwest and northeast are valid
 Parse.Cloud.define("getCrimesNearLocation", function(request, response){
-	
+	var southwestPoint = new Parse.GeoPoint(request.params.southwest);
+	var northeastPoint = new Parse.GeoPoint(request.params.northeast);
+
+	var Crime = Parse.Object.extend("CrimeSample");
+	var query = new Parse.Query(Crime);
+	query.withinGeoBox("location", southwestPoint, northeastPoint);
+	query.find({
+		success: function(results) {
+			var data = [];
+			for (var entryIndex in results) {
+				var current = new Object();
+				var entry = results[entryIndex];
+				current["location"] = entry.get("location");
+				current["weight"] = entry.get("weight");
+				data.push(current);
+			}
+			response.success(data);
+		},
+		error: function(error){
+			response.error("Unable to retrieve objects. Error: " + error.code + " " + error.messsage);
+		}
+	});
 });
 
 //inject initial data into ParkingMeter table from dataSF.org
