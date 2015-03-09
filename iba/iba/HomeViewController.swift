@@ -47,13 +47,20 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
     }
     
     override func viewDidAppear(animated: Bool) {
-        delay(2, { () -> () in
-            self.presentViewController(MovingAlertViewController(), animated: true, completion: nil)
-        })
+//                delay(2, { () -> () in
+//                    self.presentViewController(MovingAlertViewController(), animated: true, completion: nil)
+//                })
     
         triggerLocationServices()
         
-        mapView.animateToCameraPosition(GMSCameraPosition.cameraWithLatitude(locationManager.location.coordinate.latitude, longitude: locationManager.location.coordinate.longitude, zoom: 16))
+        let southwest: CLLocationCoordinate2D = self.mapView.projection.coordinateForPoint(CGPointMake(0, self.mapView.frame.size.height))
+        let northeast: CLLocationCoordinate2D = self.mapView.projection.coordinateForPoint(CGPointMake(self.mapView.frame.size.width, 0))
+        
+        IBANetworking.crimesInBoxWithCorners(southwest, northeast: northeast, radius: 2, completion: {response, error in
+            println("\(response)")
+        })
+        
+        mapView.animateToCameraPosition(GMSCameraPosition.cameraWithLatitude(self.locationManager.location.coordinate.latitude, longitude:self.locationManager.location.coordinate.longitude, zoom: 16))
     }
     
     deinit {
@@ -68,7 +75,9 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
     // MARK: Setup Methods
     
     func setupMapView() {
-        mapView.frame = CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height);
+        let navBarHeight = self.navigationController!.navigationBar.frame.size.height + UIApplication.sharedApplication().statusBarFrame.size.height
+        
+        mapView.frame = CGRectMake(0, navBarHeight, self.view.bounds.size.width, self.view.bounds.size.height - navBarHeight);
         mapView.myLocationEnabled = true
         mapView.delegate = self
         self.view.addSubview(mapView);
@@ -95,16 +104,17 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
     func startUpdatingLocation() {
         locationManager.startUpdatingLocation()
     }
-
+    
     
     // MARK: CLLocationManagerDelegate Methods
     
     func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!) {
-    
+        
     }
     
     func locationManager(manager: CLLocationManager!, didFailWithError error: NSError!) {
         var alert = UIAlertController(title: "Whoops!", message: "Couldn't get location", preferredStyle: UIAlertControllerStyle.Alert)
+        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: nil))
         self.presentViewController(alert, animated: true, completion: nil)
     }
     
@@ -117,6 +127,6 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
     }
     
     // MARK: GMSMapViewDelegate Methods
-
+    
 }
 
