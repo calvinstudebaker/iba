@@ -4,3 +4,4 @@
 
 #import <GoogleMaps/GoogleMaps.h>
 #import <Parse/Parse.h>
+#import <LFHeatMap/LFHeatMap.h>

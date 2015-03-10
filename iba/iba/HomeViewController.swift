@@ -15,6 +15,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
     var mapView: GMSMapView
     let locationManager = CLLocationManager()
     let previousLocation: CLLocationCoordinate2D
+    var currentOverlay: GMSGroundOverlay = GMSGroundOverlay()
     
     // MARK: Init Methods
     
@@ -99,6 +100,40 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
         locationManager.startUpdatingLocation()
     }
     
+    // MARK: HeatMap Drawing
+
+    func drawHeatMapWith(#crimes: NSArray) {
+        
+        self.currentOverlay.map = nil;
+        
+        if crimes.count == 0 {
+            println("No Crimes in this region!")
+            return
+        }
+        
+        var heatmapImage: UIImage
+        var points: NSMutableArray = NSMutableArray()
+        var weights: NSMutableArray = NSMutableArray()
+        
+        for crime in crimes {
+            
+            let location: PFGeoPoint = crime["location"] as PFGeoPoint
+            let weight: NSNumber = NSNumber(double: crime["weight"] as Double)
+            let convertedPoint = self.mapView.projection.pointForCoordinate(CLLocationCoordinate2D(latitude: location.latitude, longitude: location.longitude))
+            
+            points.addObject(NSValue(CGPoint: convertedPoint))
+            weights.addObject(weight)
+            
+        }
+        
+        heatmapImage = LFHeatMap.heatMapWithRect(self.mapView.frame, boost: 1.0, points: points, weights: weights)
+        self.currentOverlay = GMSGroundOverlay(bounds: GMSCoordinateBounds(region: self.mapView.projection.visibleRegion()), icon: heatmapImage)
+        self.currentOverlay.bearing = 0
+        self.currentOverlay.map = self.mapView
+        println("image generated")
+        
+    }
+    
     
     // MARK: CLLocationManagerDelegate Methods
     
@@ -128,6 +163,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
         
         IBANetworking.crimesInBoxWithCorners(bounds.southWest, northeast: bounds.northEast, completion: {response, error in
             println("\(response)")
+            self.drawHeatMapWith(crimes: response as NSArray)
         })
     }
     
