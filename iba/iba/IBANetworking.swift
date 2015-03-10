@@ -22,7 +22,7 @@ class IBANetworking {
         println("\tNortheast: (\(northeastPoint.latitude), \(northeastPoint.longitude))")
         let parameters = ["southwest": southwestPoint, "northeast": northeastPoint]
         
-        PFCloud.callFunctionInBackground("getCrimesNearLocation", withParameters: parameters, block: completion)
+        PFCloud.callFunctionInBackground("getCrimesInBoundingBox", withParameters: parameters, block: completion)
         
     }
     
