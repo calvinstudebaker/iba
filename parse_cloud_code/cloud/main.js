@@ -30,26 +30,51 @@ Parse.Cloud.define("putSweepingData", function(request, response){
 	});
 });
 
-//given southwest-most and northeast-most points, returns the locations and weights
-//of all crimes in the bounding box
-//TODO: make sure southwest and northeast are valid
-Parse.Cloud.define("getCrimesNearLocation", function(request, response){
-	var southwestPoint = new Parse.GeoPoint(request.params.southwest);
-	var northeastPoint = new Parse.GeoPoint(request.params.northeast);
+//given four GeoPoints that define a region, return an array of
+//locations and weights of all crimes within that region
+//TODO: make sure southwest and northeast are valid, get time field from request
+Parse.Cloud.define("crimesInRegion", function(request, response){
+	var nearLeft = request.params.nearLeft;
+	var nearRight = request.params.nearRight;
+	var farLeft = request.params.farLeft;
+	var farRight = request.params.farRight;
+
+	console.log(nearLeft);
+	console.log(nearLeft.latitude);
+	console.log(nearLeft.longitude);
+
+	var minLatitude = Math.min(nearLeft.latitude, nearRight.latitude, farLeft.latitude, farRight.latitude);
+	var maxLatitude = Math.max(nearLeft.latitude, nearRight.latitude, farLeft.latitude, farRight.latitude);
+	var minLongitude = Math.min(nearLeft.longitude, nearRight.longitude, farLeft.longitude, farRight.longitude);
+	var maxLongitude = Math.max(nearLeft.longitude, nearRight.longitude, farLeft.longitude, farRight.longitude);
+
+	var southwestPoint = new Parse.GeoPoint(minLatitude, minLongitude);
+	var northeastPoint = new Parse.GeoPoint(maxLatitude, maxLongitude);
+
+	console.log(southwestPoint);
+	console.log(northeastPoint);
 
 	var Crime = Parse.Object.extend("CrimeSample");
 	var query = new Parse.Query(Crime);
-	query.withinGeoBox("location", southwestPoint, northeastPoint);
+	query.withinGeoBox("location", southwestPoint, northeastPoint).limit(1000);
 	query.find({
 		success: function(results) {
 			var data = [];
+			var maxWeight = 0;
+			var minWeight = 11;
 			for (var entryIndex in results) {
 				var current = new Object();
 				var entry = results[entryIndex];
+				var weight = entry.get("weight");
 				current["location"] = entry.get("location");
-				current["weight"] = entry.get("weight");
+				current["weight"] = weight;
+				if (weight < minWeight) { minWeight = weight;}
+				if (weight > maxWeight) { maxWeight = weight;}
 				data.push(current);
 			}
+			console.log(data.length + " crimes found with a max weight of " + maxWeight
+				+ " and  min weight of " + minWeight +":");
+			console.log(data);
 			response.success(data);
 		},
 		error: function(error){
