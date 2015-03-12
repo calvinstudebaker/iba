@@ -216,7 +216,7 @@ inline static int isqrt(int x)
     if (weights != nil)
     {
         point_weight = malloc(sizeof(float) * points_num);
-        max_weight = 0.0;
+        max_weight = 0.0;2
     }
 	
     i = 0;
