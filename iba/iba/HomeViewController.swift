@@ -134,11 +134,12 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
             
         }
         
-        heatmapImage = LFHeatMap.heatMapWithRect(self.mapView.frame, boost: 1.0, points: points, weights: weights)
-        self.currentOverlay = GMSGroundOverlay(position: self.mapView.projection.coordinateForPoint(self.mapView.center), icon: heatmapImage, zoomLevel: CGFloat(self.mapView.camera.zoom))
+        let navBarHeight = self.navigationController!.navigationBar.frame.size.height + UIApplication.sharedApplication().statusBarFrame.size.height
+        
+        heatmapImage = LFHeatMap.heatMapWithRect(self.mapView.bounds, boost: 1.0, points: points, weights: weights)
+        self.currentOverlay = GMSGroundOverlay(position: self.mapView.projection.coordinateForPoint(CGPointMake(self.mapView.center.x, self.mapView.center.y - navBarHeight)), icon: heatmapImage, zoomLevel: CGFloat(self.mapView.camera.zoom))
         self.currentOverlay.bearing = self.mapView.camera.bearing
         self.currentOverlay.map = self.mapView
-        println("image generated")
         
     }
     
