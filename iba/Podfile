@@ -3,6 +3,7 @@
 
 target 'iba' do
 	pod "LFHeatMap"
+	pod 'MBProgressHUD', '~> 0.9.1'
 end
 
 target 'ibaTests' do

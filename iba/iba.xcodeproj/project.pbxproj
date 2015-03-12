@@ -207,14 +207,12 @@
 		AF21B11D1AAC041600669016 /* iba */ = {
 			isa = PBXGroup;
 			children = (
-				DC9B50AA1AAD80A4006E2323 /* Resources */,
 				AF4614981AAD781900CF8C33 /* Utils */,
 				AF4614971AAD780800CF8C33 /* Networking */,
 				AF38CA811AAD6D90003892D0 /* Custom Objects */,
 				AF38CA7E1AAD5C6F003892D0 /* ViewControllers */,
 				AF21B1201AAC041600669016 /* AppDelegate.swift */,
-				AF21B1271AAC041600669016 /* Images.xcassets */,
-				AF21B1291AAC041600669016 /* LaunchScreen.xib */,
+				DC9B50AA1AAD80A4006E2323 /* Resources */,
 				AF21B11E1AAC041600669016 /* Supporting Files */,
 			);
 			path = iba;
@@ -281,6 +279,8 @@
 		DC9B50AA1AAD80A4006E2323 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				AF21B1271AAC041600669016 /* Images.xcassets */,
+				AF21B1291AAC041600669016 /* LaunchScreen.xib */,
 				DC9B50AB1AAD80CE006E2323 /* car_icon.png */,
 			);
 			name = Resources;

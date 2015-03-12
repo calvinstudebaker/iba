@@ -1,10 +1,13 @@
 PODS:
   - LFHeatMap (1.0.1)
+  - MBProgressHUD (0.9.1)
 
 DEPENDENCIES:
   - LFHeatMap
+  - MBProgressHUD (~> 0.9.1)
 
 SPEC CHECKSUMS:
   LFHeatMap: c47847fffe60ad7bdd34b177372205fbef7f0f39
+  MBProgressHUD: f3747dcbd45a9e855a6b0674550651e0b7ed250c
 
 COCOAPODS: 0.36.0.rc.1

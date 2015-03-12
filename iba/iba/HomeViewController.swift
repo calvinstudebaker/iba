@@ -106,7 +106,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
         
         self.currentOverlay.map = nil;
         
-        if crimes.count == 0 {
+        if (crimes == nil || crimes.count == 0) {
             println("No Crimes in this region!")
             return
         }
@@ -128,7 +128,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
         
         heatmapImage = LFHeatMap.heatMapWithRect(self.mapView.frame, boost: 1.0, points: points, weights: weights)
         self.currentOverlay = GMSGroundOverlay(bounds: GMSCoordinateBounds(region: self.mapView.projection.visibleRegion()), icon: heatmapImage)
-        self.currentOverlay.bearing = 0
+
         self.currentOverlay.map = self.mapView
         println("image generated")
         

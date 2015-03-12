@@ -17,9 +17,6 @@ class IBANetworking {
         let southwestPoint = PFGeoPoint(latitude: southwest.latitude, longitude: southwest.longitude)
         let northeastPoint = PFGeoPoint(latitude: northeast.latitude, longitude: northeast.longitude)
         
-        println("Searching for crimes in bounds: ")
-        println("\tSouthwest: (\(southwestPoint.latitude), \(southwestPoint.longitude))")
-        println("\tNortheast: (\(northeastPoint.latitude), \(northeastPoint.longitude))")
         let parameters = ["southwest": southwestPoint, "northeast": northeastPoint]
         
         PFCloud.callFunctionInBackground("getCrimesInBoundingBox", withParameters: parameters, block: completion)
