@@ -207,7 +207,7 @@ inline static int isqrt(int x)
     
     // Step 1
     // Copy points into plain array (plain array iteration is faster than accessing NSArray objects)
-    int points_num = [points count];
+    int points_num = (int)[points count];
     int *point_x = malloc(sizeof(int) * points_num);
     int *point_y = malloc(sizeof(int) * points_num);
     int *point_weight_percent = malloc(sizeof(int) * points_num);

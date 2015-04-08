@@ -29,7 +29,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Setup view contro
         setupView()
         
+        // Enable push notifications
+        askForPush(application);
+        
         return true
+    }
+    
+    func askForPush(application: UIApplication) {
+        if (UIDevice.currentDevice().systemVersion.floatValue >= 8.0) {
+            application.registerUserNotificationSettings(UIUserNotificationSettings(forTypes: (.Sound | .Alert | .Badge), categories: nil))
+            application.registerForRemoteNotifications()
+        } else {
+            application.registerForRemoteNotificationTypes(.Alert | .Badge | .Sound)
+        }
     }
     
     func setupView() {
@@ -40,7 +52,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
         self.window!.rootViewController = navigationController
         self.window!.makeKeyAndVisible()
+        self.window!.backgroundColor = UIColor.whiteColor()
 
+    }
+    
+    // MARK: Push Notification Delegate Methods
+    
+    func application(application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: NSError) {
+        println("Did fail to register for remote notifications")
+        println("\(error), \(error.localizedDescription)")
+    }
+    
+    func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
+        println("Did register with device token: \(deviceToken)")
+        
+        var currentInstallation: PFInstallation = PFInstallation.currentInstallation()
+        currentInstallation.setDeviceTokenFromData(deviceToken)
+        currentInstallation.channels = [("global" as NSString)]
+        currentInstallation.saveInBackgroundWithBlock(nil)
     }
 
     func applicationWillResignActive(application: UIApplication) {
