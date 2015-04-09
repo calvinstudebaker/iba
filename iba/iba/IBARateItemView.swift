@@ -10,11 +10,11 @@ import Foundation
 
 
 class IBARateItemView: UIView {
-
+    
     var currentValue: CGFloat = 0
     
-    let kSliderPadding: CGFloat = 5
-    let kLabelPadding: CGFloat = 5
+    let kSliderPadding: CGFloat = 7.5
+    let kLabelPadding: CGFloat = 7.5
     let kLabelTextSize: CGFloat = 17
     let kLabelTextWidth: CGFloat = 100
     
@@ -32,13 +32,14 @@ class IBARateItemView: UIView {
         self.lowTextLabel.text = lowText
         self.highTextLabel.text = highText
         self.titleLabel.text = title
-    
+        
         // Add the border
         self.layer.cornerRadius = 6.0
-        self.layer.borderWidth = 1.0
+        self.layer.borderWidth = 1.25
         self.layer.borderColor = UIColor.lightGrayColor().CGColor
-
-        self.backgroundColor = UIColor(red: 0.98, green: 0.98, blue: 0.98, alpha: 1.0)
+        self.layer.masksToBounds = true
+        
+        self.backgroundColor = UIColor(red: 0.99, green: 0.99, blue: 0.99, alpha: 1.0)
         
         // Configure the slider
         setupSlider()
@@ -60,11 +61,11 @@ class IBARateItemView: UIView {
         self.highTextLabel = UILabel(frame: CGRectZero)
         self.titleLabel = UILabel(frame: CGRectZero)
         self.currentLabel = UILabel(frame: CGRectZero)
-
+        
         super.init(frame: frame)
     }
-
-
+    
+    
     required init(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -73,15 +74,14 @@ class IBARateItemView: UIView {
         let sliderCircleImage = UIImage(named: "slider_circle")
         self.slider.setThumbImage(sliderCircleImage, forState: .Normal)
         self.slider.addTarget(self, action:"sliderValueChanged:", forControlEvents: .ValueChanged)
-        self.slider.addTarget(self, action: "sliderUp:", forControlEvents: .TouchUpInside)
         self.slider.addTarget(self, action: "sliderDown:", forControlEvents: .TouchDown)
-
+        
         self.slider.value = 0.0
         self.currentValue = 0
         self.slider.minimumTrackTintColor = UIColor(red: 0.85, green: 0.85, blue: 0.85, alpha: 1)
         self.slider.maximumTrackTintColor = UIColor(red: 0.85, green: 0.85, blue: 0.85, alpha: 1)
         self.addSubview(self.slider)
-
+        
     }
     
     func setupLowTextLabel() {
@@ -123,13 +123,13 @@ class IBARateItemView: UIView {
         
         let lowText: NSString = self.lowTextLabel.text! as NSString
         let lowTextSize: CGRect = lowText.boundingRectWithSize(CGSizeMake(self.bounds.size.width, self.bounds.size.height), options: .UsesLineFragmentOrigin, attributes: [NSFontAttributeName : self.lowTextLabel.font], context: nil)
-
+        
         let highText: NSString = self.highTextLabel.text! as NSString
         let highTextSize: CGRect = highText.boundingRectWithSize(CGSizeMake(self.bounds.size.width, self.bounds.size.height), options: .UsesLineFragmentOrigin, attributes: [NSFontAttributeName : self.highTextLabel.font], context: nil)
-
+        
         let titleText: NSString = self.titleLabel.text! as NSString
         let titleTextSize: CGRect = titleText.boundingRectWithSize(CGSizeMake(self.bounds.size.width, self.bounds.size.height), options: .UsesLineFragmentOrigin, attributes: [NSFontAttributeName : self.titleLabel.font], context: nil)
-
+        
         // Setup the labels
         self.lowTextLabel.frame = CGRectMake(kLabelPadding, self.bounds.size.height - kLabelPadding - lowTextSize.height, kLabelTextWidth, lowTextSize.height)
         self.highTextLabel.frame = CGRectMake(self.bounds.size.width - kLabelPadding - highTextSize.width, self.bounds.size.height - kLabelPadding - highTextSize.height, highTextSize.width, highTextSize.height)
@@ -140,22 +140,27 @@ class IBARateItemView: UIView {
     
     func sliderValueChanged(sender: UISlider) {
         let percent: CGFloat = CGFloat(slider.value) * 100
+        
+        if (slider.value == 0) {
+            self.currentLabel.text = self.lowTextLabel.text
+            return
+        } else if (slider.value == 1) {
+            self.currentLabel.text = self.highTextLabel.text
+            return
+        }
+        
         let percentString: String = String(format: "%.0f%%", Double(percent))
         self.currentLabel.text = percentString
         currentValue = CGFloat(self.slider.value)
     }
     
     func sliderDown(sender: UISlider) {
-        self.currentLabel.alpha = 0.0
-        UIView.animateWithDuration(0.3, animations: { () -> Void in
-            self.currentLabel.alpha = 1.0
-        })
-    }
-    
-    func sliderUp(sender: UISlider) {
-        UIView.animateWithDuration(0.3, animations: { () -> Void in
+        if (self.currentLabel.alpha != 1.0) {
             self.currentLabel.alpha = 0.0
-        })
+            UIView.animateWithDuration(0.3, animations: { () -> Void in
+                self.currentLabel.alpha = 1.0
+            })
+        }
     }
     
 }

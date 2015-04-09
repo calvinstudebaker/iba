@@ -45,6 +45,7 @@
 		AF674E3E1AD5D0AF00C0BA16 /* IBARateItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF674E3D1AD5D0AF00C0BA16 /* IBARateItemView.swift */; };
 		AF674E411AD5D72000C0BA16 /* ReportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF674E401AD5D72000C0BA16 /* ReportViewController.swift */; };
 		AF674E431AD5E1ED00C0BA16 /* slider_circle@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = AF674E421AD5E1ED00C0BA16 /* slider_circle@2x.png */; };
+		AF674E451AD6198F00C0BA16 /* IBAButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF674E441AD6198F00C0BA16 /* IBAButton.swift */; };
 		DC9B50AC1AAD80CE006E2323 /* car_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = DC9B50AB1AAD80CE006E2323 /* car_icon.png */; };
 /* End PBXBuildFile section */
 
@@ -103,6 +104,7 @@
 		AF674E3D1AD5D0AF00C0BA16 /* IBARateItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IBARateItemView.swift; sourceTree = "<group>"; };
 		AF674E401AD5D72000C0BA16 /* ReportViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReportViewController.swift; sourceTree = "<group>"; };
 		AF674E421AD5E1ED00C0BA16 /* slider_circle@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "slider_circle@2x.png"; sourceTree = "<group>"; };
+		AF674E441AD6198F00C0BA16 /* IBAButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IBAButton.swift; sourceTree = "<group>"; };
 		DC9B50AB1AAD80CE006E2323 /* car_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = car_icon.png; sourceTree = "<group>"; };
 		E8552270A605BAD894C6CA88 /* libPods-iba.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-iba.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -291,6 +293,7 @@
 			isa = PBXGroup;
 			children = (
 				AF674E3D1AD5D0AF00C0BA16 /* IBARateItemView.swift */,
+				AF674E441AD6198F00C0BA16 /* IBAButton.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -444,6 +447,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AF674E451AD6198F00C0BA16 /* IBAButton.swift in Sources */,
 				AF674E411AD5D72000C0BA16 /* ReportViewController.swift in Sources */,
 				AF21B1211AAC041600669016 /* AppDelegate.swift in Sources */,
 				AF674E3C1AD5C35500C0BA16 /* Extensions.swift in Sources */,
