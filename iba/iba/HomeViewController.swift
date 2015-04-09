@@ -25,7 +25,6 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
     
     convenience override init() {
         self.init(nibName: nil, bundle: nil)
-        
     }
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
@@ -48,10 +47,11 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
     }
     
     override func viewDidAppear(animated: Bool) {
-//                delay(2, { () -> () in
-//                    self.presentViewController(MovingAlertViewController(), animated: true, completion: nil)
-//                })
-    
+        delay(1.0, { () -> () in
+            let rvc = ReportViewController()
+            self.navigationController?.pushViewController(rvc, animated: true)
+        })
+        
         triggerLocationServices()
         
         mapView.animateToCameraPosition(GMSCameraPosition.cameraWithLatitude(37.75941, longitude: -122.4260365, zoom: 16))
@@ -109,7 +109,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
     }
     
     // MARK: HeatMap Drawing
-
+    
     func drawHeatMapWith(#crimes: NSArray?) {
         
         self.currentOverlay.map = nil;
@@ -151,9 +151,9 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
     }
     
     func locationManager(manager: CLLocationManager!, didFailWithError error: NSError!) {
-        var alert = UIAlertController(title: "Whoops!", message: "Couldn't get location", preferredStyle: UIAlertControllerStyle.Alert)
-        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: nil))
-        self.presentViewController(alert, animated: true, completion: nil)
+//        var alert = UIAlertController(title: "Whoops!", message: "Couldn't get location", preferredStyle: UIAlertControllerStyle.Alert)
+//        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: nil))
+//        self.presentViewController(alert, animated: true, completion: nil)
     }
     
     func locationManager(manager: CLLocationManager!,

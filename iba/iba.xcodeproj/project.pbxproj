@@ -43,6 +43,8 @@
 		AF4614961AAD77FD00CF8C33 /* IBANetworking.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF4614951AAD77FD00CF8C33 /* IBANetworking.swift */; };
 		AF674E3C1AD5C35500C0BA16 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF674E3B1AD5C35500C0BA16 /* Extensions.swift */; };
 		AF674E3E1AD5D0AF00C0BA16 /* IBARateItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF674E3D1AD5D0AF00C0BA16 /* IBARateItemView.swift */; };
+		AF674E411AD5D72000C0BA16 /* ReportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF674E401AD5D72000C0BA16 /* ReportViewController.swift */; };
+		AF674E431AD5E1ED00C0BA16 /* slider_circle@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = AF674E421AD5E1ED00C0BA16 /* slider_circle@2x.png */; };
 		DC9B50AC1AAD80CE006E2323 /* car_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = DC9B50AB1AAD80CE006E2323 /* car_icon.png */; };
 /* End PBXBuildFile section */
 
@@ -99,6 +101,8 @@
 		AF46149B1AAE8C5000CF8C33 /* iba-bridging-header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "iba-bridging-header.h"; sourceTree = "<group>"; };
 		AF674E3B1AD5C35500C0BA16 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		AF674E3D1AD5D0AF00C0BA16 /* IBARateItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IBARateItemView.swift; sourceTree = "<group>"; };
+		AF674E401AD5D72000C0BA16 /* ReportViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReportViewController.swift; sourceTree = "<group>"; };
+		AF674E421AD5E1ED00C0BA16 /* slider_circle@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "slider_circle@2x.png"; sourceTree = "<group>"; };
 		DC9B50AB1AAD80CE006E2323 /* car_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = car_icon.png; sourceTree = "<group>"; };
 		E8552270A605BAD894C6CA88 /* libPods-iba.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-iba.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -254,6 +258,7 @@
 			children = (
 				AF38CA581AAD5485003892D0 /* HomeViewController.swift */,
 				AF38CA7C1AAD5C6A003892D0 /* MovingAlertViewController.swift */,
+				AF674E401AD5D72000C0BA16 /* ReportViewController.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -293,6 +298,7 @@
 		DC9B50AA1AAD80A4006E2323 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				AF674E421AD5E1ED00C0BA16 /* slider_circle@2x.png */,
 				AF21B1271AAC041600669016 /* Images.xcassets */,
 				AF21B1291AAC041600669016 /* LaunchScreen.xib */,
 				DC9B50AB1AAD80CE006E2323 /* car_icon.png */,
@@ -384,6 +390,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AF38CA781AAD5AD4003892D0 /* GoogleMaps.bundle in Resources */,
+				AF674E431AD5E1ED00C0BA16 /* slider_circle@2x.png in Resources */,
 				DC9B50AC1AAD80CE006E2323 /* car_icon.png in Resources */,
 				AF21B12B1AAC041600669016 /* LaunchScreen.xib in Resources */,
 				AF21B1281AAC041600669016 /* Images.xcassets in Resources */,
@@ -437,6 +444,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AF674E411AD5D72000C0BA16 /* ReportViewController.swift in Sources */,
 				AF21B1211AAC041600669016 /* AppDelegate.swift in Sources */,
 				AF674E3C1AD5C35500C0BA16 /* Extensions.swift in Sources */,
 				AF4614961AAD77FD00CF8C33 /* IBANetworking.swift in Sources */,
