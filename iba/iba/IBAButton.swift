@@ -11,12 +11,17 @@ import UIKit
 class IBAButton : UIButton {
     
     let mainColor: UIColor
+    var clear: Bool
     
-    convenience init(frame: CGRect, title: String, colorScheme: UIColor) {
+    convenience init(frame: CGRect, title: String, colorScheme: UIColor, clear: Bool) {
         self.init(frame: frame)
         
         self.setTitle(title, forState: .Normal)
-        self.backgroundColor = UIColor.clearColor()
+        if (clear) {
+            self.backgroundColor = UIColor.clearColor()
+        } else {
+            self.backgroundColor = UIColor.whiteColor()
+        }
         
         self.layer.cornerRadius = 6.0
         self.layer.masksToBounds = true
@@ -24,10 +29,12 @@ class IBAButton : UIButton {
         self.layer.borderColor = colorScheme.CGColor
         self.setTitleColor(colorScheme, forState: .Normal)
         self.setTitleColor(UIColor.whiteColor(), forState: .Highlighted)
+        self.clear = clear
     }
     
     override init(frame: CGRect) {
         
+        self.clear = true
         self.mainColor = UIColor.blackColor()
         super.init(frame: frame)
         
@@ -43,7 +50,11 @@ class IBAButton : UIButton {
             if (newValue) {
                 self.backgroundColor = UIColor(CGColor: self.layer.borderColor)
             } else {
-                self.backgroundColor = UIColor.clearColor()
+                if (self.clear) {
+                    self.backgroundColor = UIColor.clearColor()
+                } else {
+                    self.backgroundColor = UIColor.whiteColor()
+                }
             }
         }
         

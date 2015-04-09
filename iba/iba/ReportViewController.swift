@@ -45,7 +45,7 @@ class ReportViewController: UIViewController {
         self.scrollView.alwaysBounceVertical = true
         
         self.descriptionLabel = UILabel(frame: CGRectZero)
-        self.submitButton = IBAButton(frame: CGRectZero, title: "Submit", colorScheme: UIColor(red: 0.18, green: 0.8, blue: 0.44, alpha: 1.0))
+        self.submitButton = IBAButton(frame: CGRectZero, title: "Submit", colorScheme: UIColor(red: 0.18, green: 0.8, blue: 0.44, alpha: 1.0), clear: true)
         
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
         
@@ -70,15 +70,17 @@ class ReportViewController: UIViewController {
         self.view.backgroundColor = UIColor.whiteColor()
     }
     
+    
+    
     func layoutSubviews() {
         var originY = 0 as CGFloat
         
         let descriptionText: NSString = self.descriptionLabel.text! as NSString
         let descriptionTextSize: CGRect = descriptionText.boundingRectWithSize(CGSizeMake(self.view.bounds.size.width - (kRateItemPadding), self.view.bounds.size.height), options: .UsesLineFragmentOrigin, attributes: [NSFontAttributeName : self.descriptionLabel.font], context: nil)
         
-        self.descriptionLabel.frame = CGRectMake(kRateItemPadding/2, kRateItemPadding/2, self.view.bounds.size.width - (kRateItemPadding), descriptionTextSize.height)
+        self.descriptionLabel.frame = CGRectMake(kRateItemPadding, kRateItemPadding, self.view.bounds.size.width - (kRateItemPadding * 2), descriptionTextSize.height)
         
-        originY += self.descriptionLabel.bounds.size.height + kRateItemPadding/2
+        originY += self.descriptionLabel.bounds.size.height + kRateItemPadding
         
         // Configure the frames for the rateitems
         self.easeRateItem.frame = CGRectMake(kRateItemPadding, originY + kRateItemPadding, self.view.frame.size.width - (kRateItemPadding * 2), kRateItemHeight)
@@ -118,7 +120,7 @@ class ReportViewController: UIViewController {
         self.descriptionLabel.font = UIFont(name: "HelveticaNeue-Light", size: 21)
         self.descriptionLabel.textColor = UIColor.blackColor()
         self.descriptionLabel.textAlignment = .Center
-        self.descriptionLabel.text = "Let us know how your parking spot was to help us produce better results!"
+        self.descriptionLabel.text = "Let us know how your parking spot on Berry St. was!"
         self.descriptionLabel.numberOfLines = 3
         self.scrollView.addSubview(self.descriptionLabel)
     }

@@ -25,4 +25,8 @@ class IBANetworking {
         
     }
     
+    class func submitReport(report: NSDictionary) {
+        
+    }
+    
 }

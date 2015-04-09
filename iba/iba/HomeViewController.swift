@@ -16,6 +16,9 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
     let locationManager = CLLocationManager()
     let previousLocation: CLLocationCoordinate2D
     var currentOverlay: GMSGroundOverlay = GMSGroundOverlay()
+    let reportButton: IBAButton
+    
+    let kButtonPadding: CGFloat = 10
     
     // MARK: Init Methods
     
@@ -32,6 +35,8 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
         self.mapView = GMSMapView(frame: CGRectZero)
         self.previousLocation = CLLocationCoordinate2D(latitude: 0, longitude: 0)
         
+        self.reportButton = IBAButton(frame: CGRectZero, title: "Report", colorScheme: UIColor(red: 0.2, green: 0.6, blue: 0.86, alpha: 1), clear: false)
+        
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
     }
     
@@ -40,16 +45,17 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.title = "IBA Parking"
+        self.title = "Parq"
         
         setupMapView()
         setupLocationManager()
+        setupReportButton()
     }
     
     override func viewDidAppear(animated: Bool) {
         delay(1.0, { () -> () in
-            let rvc = ReportViewController()
-            self.navigationController?.pushViewController(rvc, animated: true)
+//            let rvc = ReportViewController()
+//            self.navigationController?.pushViewController(rvc, animated: true)
         })
         
         triggerLocationServices()
@@ -76,6 +82,18 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
         mapView.myLocationEnabled = true
         mapView.delegate = self
         self.view.addSubview(mapView);
+    }
+    
+    func setupReportButton() {
+        self.reportButton.frame = CGRectMake(self.view.bounds.size.width - kButtonPadding - 150, self.view.bounds.size.height - kButtonPadding - 45, 150, 45)
+        self.reportButton.backgroundColor = UIColor.whiteColor()
+        self.reportButton.addTarget(self, action: "reportButtonPressed:", forControlEvents: .TouchUpInside)
+        self.view.addSubview(self.reportButton)
+    }
+    
+    func reportButtonPressed(sender: UIButton) {
+        let rvc = ReportViewController()
+        self.navigationController?.pushViewController(rvc, animated: true)
     }
     
     // Sets up the locationManager
