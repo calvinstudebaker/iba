@@ -53,9 +53,29 @@ class ReportViewController: UIViewController {
         // Configure the frames for the rateitems
         self.easeRateItem.frame = CGRectMake(kRateItemPadding, originY + kRateItemPadding, self.view.frame.size.width - (kRateItemPadding * 2), kRateItemHeight)
         self.easeRateItem.userInteractionEnabled = true
+
+        originY += kRateItemPadding + kRateItemHeight
+        
+        self.damageRateItem.frame = CGRectMake(kRateItemPadding, originY + kRateItemPadding, self.view.frame.size.width - (kRateItemPadding * 2), kRateItemHeight)
+        self.damageRateItem.userInteractionEnabled = true
+        
+        originY += kRateItemPadding + kRateItemHeight
+        
+        self.spotPriceRateItem.frame = CGRectMake(kRateItemPadding, originY + kRateItemPadding, self.view.frame.size.width - (kRateItemPadding * 2), kRateItemHeight)
+        self.spotPriceRateItem.userInteractionEnabled = true
+        
+        originY += kRateItemPadding + kRateItemHeight
+        
+        self.ticketPriceRateItem.frame = CGRectMake(kRateItemPadding, originY + kRateItemPadding, self.view.frame.size.width - (kRateItemPadding * 2), kRateItemHeight)
+        self.ticketPriceRateItem.userInteractionEnabled = true
+
         
         // Add them as subviews
         self.view.addSubview(self.easeRateItem)
+        self.view.addSubview(self.damageRateItem)
+        self.view.addSubview(self.spotPriceRateItem)
+        self.view.addSubview(self.ticketPriceRateItem)
+
         
         // Set background color
         self.view.backgroundColor = UIColor.whiteColor()
