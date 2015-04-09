@@ -18,6 +18,8 @@ class ReportViewController: UIViewController {
     let spotPriceRateItem: IBARateItemView
     let ticketPriceRateItem: IBARateItemView
     
+    let scrollView: UIScrollView
+    
     // MARK: Init Methods
     
     required init(coder: NSCoder) {
@@ -36,6 +38,9 @@ class ReportViewController: UIViewController {
         self.spotPriceRateItem = IBARateItemView(title: "Price of spot", lowText: "free", highText: "expensive")
         self.ticketPriceRateItem = IBARateItemView(title: "Price of ticket", lowText: "free", highText: "$100+")
         
+        self.scrollView = UIScrollView(frame: CGRectZero)
+        self.scrollView.alwaysBounceVertical = true
+        
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
         
     }
@@ -48,7 +53,8 @@ class ReportViewController: UIViewController {
         
         let navBarHeight = self.navigationController!.navigationBar.frame.size.height + UIApplication.sharedApplication().statusBarFrame.size.height
         
-        var originY = navBarHeight
+        var originY = 0 as CGFloat
+        
         
         // Configure the frames for the rateitems
         self.easeRateItem.frame = CGRectMake(kRateItemPadding, originY + kRateItemPadding, self.view.frame.size.width - (kRateItemPadding * 2), kRateItemHeight)
@@ -69,12 +75,17 @@ class ReportViewController: UIViewController {
         self.ticketPriceRateItem.frame = CGRectMake(kRateItemPadding, originY + kRateItemPadding, self.view.frame.size.width - (kRateItemPadding * 2), kRateItemHeight)
         self.ticketPriceRateItem.userInteractionEnabled = true
 
+        self.scrollView.frame = self.view.frame
         
         // Add them as subviews
-        self.view.addSubview(self.easeRateItem)
-        self.view.addSubview(self.damageRateItem)
-        self.view.addSubview(self.spotPriceRateItem)
-        self.view.addSubview(self.ticketPriceRateItem)
+        self.view.addSubview(self.scrollView)
+        self.scrollView.addSubview(self.easeRateItem)
+        self.scrollView.addSubview(self.damageRateItem)
+        self.scrollView.addSubview(self.spotPriceRateItem)
+        self.scrollView.addSubview(self.ticketPriceRateItem)
+        
+        // Turn off back gestures
+        self.navigationController?.interactivePopGestureRecognizer.enabled = false
 
         
         // Set background color

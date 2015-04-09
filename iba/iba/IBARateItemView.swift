@@ -37,8 +37,8 @@ class IBARateItemView: UIView {
         self.layer.cornerRadius = 6.0
         self.layer.borderWidth = 1.0
         self.layer.borderColor = UIColor.lightGrayColor().CGColor
-        
-        // Add all the items as subviews
+
+        self.backgroundColor = UIColor(red: 0.98, green: 0.98, blue: 0.98, alpha: 1.0)
         
         // Configure the slider
         setupSlider()
