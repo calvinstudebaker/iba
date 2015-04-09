@@ -9,7 +9,7 @@
 import UIKit
 
 class ReportViewController: UIViewController {
-
+    
     let kRateItemHeight: CGFloat = 90
     let kRateItemPadding: CGFloat = 20
     
@@ -50,6 +50,7 @@ class ReportViewController: UIViewController {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
         
         setupDescriptionLabel();
+        self.submitButton.addTarget(self, action: "submitPressed:", forControlEvents: .TouchUpInside)
         
     }
     
@@ -114,6 +115,56 @@ class ReportViewController: UIViewController {
         self.scrollView.addSubview(self.spotPriceRateItem)
         self.scrollView.addSubview(self.ticketPriceRateItem)
         self.scrollView.addSubview(self.submitButton)
+    }
+    
+    func submitPressed(sender: UIButton) {
+        
+        var hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+        hud.mode = MBProgressHUDMode.Indeterminate
+        hud.labelText = "Submitting Report"
+        self.view.userInteractionEnabled = false
+        
+        let dict = compileReport()
+        IBANetworking.submitReport(dict, completion: { (succeeded, error) -> Void in
+            hud.hide(true)
+            if (succeeded) {
+                println("success")
+                hud =  MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+                hud.mode = MBProgressHUDMode.Text
+                hud.labelText = "Success"
+                hud.hide(true, afterDelay: 2.0)
+
+                delay(2.0, { () -> () in
+                    self.navigationController?.popViewControllerAnimated(true)
+                    return
+                })
+
+            } else {
+                hud =  MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+                hud.mode = MBProgressHUDMode.Text
+                hud.labelText = "Failed to submit report"
+                hud.hide(true, afterDelay: 2.0)
+                self.view.userInteractionEnabled = true
+            }
+        })
+    }
+    
+    func compileReport() -> [String: AnyObject!] {
+        let easePercent = self.easeRateItem.currentValue
+        let damagePercent = self.damageRateItem.currentValue
+        let spotPricePercent = self.spotPriceRateItem.currentValue
+        let ticketPricePercent = self.ticketPriceRateItem.currentValue
+        let location = CLLocation(latitude: 37.7833, longitude: 122.41)
+        
+        let dict: [String: AnyObject] = [
+            "easePercent": easePercent,
+            "damagePercent": damagePercent,
+            "spotPricePercent": spotPricePercent,
+            "ticketPricePercent": ticketPricePercent,
+            "location": location
+        ]
+        
+        return dict
     }
     
     func setupDescriptionLabel() {

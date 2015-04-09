@@ -177,7 +177,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
     func locationManager(manager: CLLocationManager!,
         didChangeAuthorizationStatus status: CLAuthorizationStatus)
     {
-        if status == .AuthorizedAlways || status == .AuthorizedWhenInUse {
+        if status == .Authorized || status == .AuthorizedWhenInUse {
             startUpdatingLocation()
         }
     }
