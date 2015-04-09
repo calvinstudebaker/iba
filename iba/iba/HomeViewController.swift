@@ -10,13 +10,19 @@ import UIKit
 import CoreLocation
 import Parse
 
-class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapViewDelegate {
+class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapViewDelegate, UITextFieldDelegate {
     
     var mapView: GMSMapView
+    var waypoints: NSMutableArray
+    var waypointStrings: NSMutableArray
+    
     let locationManager = CLLocationManager()
     let previousLocation: CLLocationCoordinate2D
+    
     var currentOverlay: GMSGroundOverlay = GMSGroundOverlay()
+    
     let reportButton: IBAButton
+    let searchField: UITextField
     
     let kButtonPadding: CGFloat = 10
     
@@ -36,6 +42,10 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
         self.previousLocation = CLLocationCoordinate2D(latitude: 0, longitude: 0)
         
         self.reportButton = IBAButton(frame: CGRectZero, title: "Report", colorScheme: UIColor(red: 0.2, green: 0.6, blue: 0.86, alpha: 1), clear: false)
+        self.searchField = UITextField(frame: CGRectZero)
+        
+        self.waypoints = NSMutableArray()
+        self.waypointStrings = NSMutableArray()
         
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
     }
@@ -82,6 +92,28 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
         mapView.myLocationEnabled = true
         mapView.delegate = self
         self.view.addSubview(mapView);
+        
+        // Add the text field to the top of the map view
+        self.searchField.frame = CGRectMake(kButtonPadding, kButtonPadding + navBarHeight, self.view.bounds.size.width - (kButtonPadding * 2), 45)
+        self.searchField.backgroundColor = UIColor.whiteColor()
+        self.searchField.placeholder = "Enter Destination"
+        self.searchField.textColor = UIColor.blackColor()
+        self.searchField.font = UIFont(name: "HelveticaNeue-Light", size: 17)
+
+        // Add some padding
+        let paddingView =  UIView(frame: CGRectMake(0, 0, 10, 45))
+        self.searchField.leftView = paddingView
+        self.searchField.leftViewMode = .Always
+        
+        // Add borders
+        self.searchField.layer.cornerRadius = 6.0
+        self.searchField.layer.masksToBounds = true
+        self.searchField.layer.borderColor = UIColor.lightGrayColor().CGColor
+        self.searchField.layer.borderWidth = 1.25
+        self.searchField.alpha = 0.95
+        self.searchField.delegate = self
+        self.searchField.returnKeyType = .Done
+        self.view.addSubview(self.searchField)
     }
     
     func setupReportButton() {
@@ -124,6 +156,18 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
         hud.labelText = message
         hud.hide(true, afterDelay: 1.0)
         hud.userInteractionEnabled = false
+    }
+    
+    // MARK: Direction Stuffs
+    
+    func addDirections(json: NSDictionary) {
+        let routes: NSDictionary = (json.objectForKey("routes") as NSArray)[0] as NSDictionary
+        let route: NSDictionary = routes.objectForKey("overview_polyline") as NSDictionary
+        let overview_route: String = route.objectForKey("points") as String
+        
+        let path: GMSPath = GMSPath(fromEncodedPath: overview_route)
+        let polyline: GMSPolyline = GMSPolyline(path: path)
+        polyline.map = self.mapView
     }
     
     // MARK: HeatMap Drawing
@@ -190,6 +234,28 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
             println("\(response)")
             self.drawHeatMapWith(crimes: response as NSArray?)
         })
+    }
+    
+    // MARK: UITextfield Delegate Methods
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        println("Search query: \(self.searchField.text)")
+        self.searchField.resignFirstResponder()
+        
+        // Search for the query and make directions for it
+        let location = CLLocation(latitude: 37.7833, longitude: -122.41)
+        
+        let marker: GMSMarker = GMSMarker(position: location.coordinate)
+        marker.map = self.mapView
+        self.waypoints.addObject(marker)
+        let positionString: String = "\(location.coordinate.latitude), \(location.coordinate.longitude)"
+        self.waypointStrings.addObject(positionString)
+        
+        if (self.waypoints.count > 1) {
+            
+        }
+        
+        return true
     }
     
 }

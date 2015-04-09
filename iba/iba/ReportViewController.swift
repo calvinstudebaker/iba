@@ -154,7 +154,7 @@ class ReportViewController: UIViewController {
         let damagePercent = self.damageRateItem.currentValue
         let spotPricePercent = self.spotPriceRateItem.currentValue
         let ticketPricePercent = self.ticketPriceRateItem.currentValue
-        let location = CLLocation(latitude: 37.7833, longitude: 122.41)
+        let location = CLLocation(latitude: 37.7833, longitude: -122.41)
         
         let dict: [String: AnyObject] = [
             "easePercent": easePercent,
