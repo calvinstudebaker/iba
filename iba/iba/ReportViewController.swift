@@ -29,7 +29,7 @@ class ReportViewController: UIViewController {
         fatalError("NSCoding not supported")
     }
     
-    convenience override init() {
+    convenience init() {
         self.init(nibName: nil, bundle: nil)
     }
     

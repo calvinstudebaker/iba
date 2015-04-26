@@ -29,12 +29,12 @@ class IBANetworking {
         
         let uGenReport = PFObject(className: "UserGeneratedReport")
         
-        let location: CLLocation = report["location"] as CLLocation
+        let location: CLLocation = report["location"] as! CLLocation
         
-        uGenReport["damageRating"] = NSNumber(float: report["damagePercent"] as Float)
-        uGenReport["easeRating"] = NSNumber(float: report["easePercent"] as Float)
-        uGenReport["priceRating"] = NSNumber(float: report["spotPricePercent"] as Float)
-        uGenReport["ticketCost"] = NSNumber(float: report["ticketPricePercent"] as Float)
+        uGenReport["damageRating"] = NSNumber(float: report["damagePercent"] as! Float)
+        uGenReport["easeRating"] = NSNumber(float: report["easePercent"] as! Float)
+        uGenReport["priceRating"] = NSNumber(float: report["spotPricePercent"] as! Float)
+        uGenReport["ticketCost"] = NSNumber(float: report["ticketPricePercent"] as! Float)
         uGenReport["location"] = PFGeoPoint(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
         uGenReport["installation"] = PFInstallation.currentInstallation()
         uGenReport.saveInBackgroundWithBlock(completion)

@@ -18,13 +18,13 @@ class MovingAlertViewController: UIViewController {
         fatalError("NSCoding not supported")
     }
     
-    convenience override init() {
+    convenience init() {
         self.init(nibName: nil, bundle: nil)
     }
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
-        ignoreButton = UIButton.buttonWithType(UIButtonType.Custom) as UIButton
-        trackButton = UIButton.buttonWithType(UIButtonType.Custom) as UIButton
+        ignoreButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
+        trackButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
         trackView = GMSMapView(frame: CGRectZero)
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
         self.setUpIgnoreButton();

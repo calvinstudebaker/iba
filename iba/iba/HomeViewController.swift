@@ -32,7 +32,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
         fatalError("NSCoding not supported")
     }
     
-    convenience override init() {
+    convenience init() {
         self.init(nibName: nil, bundle: nil)
     }
     
@@ -161,9 +161,9 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
     // MARK: Direction Stuffs
     
     func addDirections(json: NSDictionary) {
-        let routes: NSDictionary = (json.objectForKey("routes") as NSArray)[0] as NSDictionary
-        let route: NSDictionary = routes.objectForKey("overview_polyline") as NSDictionary
-        let overview_route: String = route.objectForKey("points") as String
+        let routes: NSDictionary = (json.objectForKey("routes") as! NSArray)[0] as! NSDictionary
+        let route: NSDictionary = routes.objectForKey("overview_polyline") as! NSDictionary
+        let overview_route: String = route.objectForKey("points") as! String
         
         let path: GMSPath = GMSPath(fromEncodedPath: overview_route)
         let polyline: GMSPolyline = GMSPolyline(path: path)
@@ -187,8 +187,8 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
         
         for crime in crimes! {
             
-            let location: PFGeoPoint = crime["location"] as PFGeoPoint
-            let weight: NSNumber = NSNumber(double: crime["weight"] as Double)
+            let location: PFGeoPoint = crime["location"] as! PFGeoPoint
+            let weight: NSNumber = NSNumber(double: crime["weight"] as! Double)
             let convertedPoint = self.mapView.projection.pointForCoordinate(CLLocationCoordinate2D(latitude: location.latitude, longitude: location.longitude))
             
             points.addObject(NSValue(CGPoint: convertedPoint))
@@ -198,7 +198,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
         
         let navBarHeight = self.navigationController!.navigationBar.frame.size.height + UIApplication.sharedApplication().statusBarFrame.size.height
         
-        heatmapImage = LFHeatMap.heatMapWithRect(self.mapView.bounds, boost: 1.0, points: points, weights: weights)
+        heatmapImage = LFHeatMap.heatMapWithRect(self.mapView.bounds, boost: 1.0, points: points as [AnyObject], weights: weights as [AnyObject])
         self.currentOverlay = GMSGroundOverlay(position: self.mapView.projection.coordinateForPoint(CGPointMake(self.mapView.center.x, self.mapView.center.y - navBarHeight)), icon: heatmapImage, zoomLevel: CGFloat(self.mapView.camera.zoom))
         self.currentOverlay.bearing = self.mapView.camera.bearing
         self.currentOverlay.map = self.mapView
@@ -221,7 +221,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
     func locationManager(manager: CLLocationManager!,
         didChangeAuthorizationStatus status: CLAuthorizationStatus)
     {
-        if status == .Authorized || status == .AuthorizedWhenInUse {
+        if status == .AuthorizedAlways || status == .AuthorizedWhenInUse {
             startUpdatingLocation()
         }
     }
@@ -232,7 +232,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
         
         IBANetworking.crimesInRegion(self.mapView.projection.visibleRegion(), completion: {response, error in
             println("\(response)")
-            self.drawHeatMapWith(crimes: response as NSArray?)
+            self.drawHeatMapWith(crimes: response as! NSArray?)
         })
     }
     
