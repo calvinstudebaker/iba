@@ -128,7 +128,7 @@ class ReportViewController: UIViewController {
         IBANetworking.submitReport(dict, completion: { (succeeded, error) -> Void in
             hud.hide(true)
             if (succeeded) {
-                println("success")
+                println("Successfully Generated Report")
                 hud =  MBProgressHUD.showHUDAddedTo(self.view, animated: true)
                 hud.mode = MBProgressHUDMode.Text
                 hud.labelText = "Success"

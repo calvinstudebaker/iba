@@ -123,18 +123,19 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
         self.view.addSubview(self.reportButton)
     }
     
-    func reportButtonPressed(sender: UIButton) {
-        let rvc = ReportViewController()
-        self.navigationController?.pushViewController(rvc, animated: true)
-    }
-    
     // Sets up the locationManager
     func setupLocationManager() {
         self.locationManager.delegate = self
         self.locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        self.locationManager.distanceFilter = 10
     }
     
     // MARK: Private Methods
+    
+    func reportButtonPressed(sender: UIButton) {
+        let rvc = ReportViewController()
+        self.navigationController?.pushViewController(rvc, animated: true)
+    }
     
     func triggerLocationServices() {
         if CLLocationManager.locationServicesEnabled() {
@@ -161,6 +162,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
     // MARK: Direction Stuffs
     
     func addDirections(json: NSDictionary) {
+        println("Adding directions")
         let routes: NSDictionary = (json.objectForKey("routes") as! NSArray)[0] as! NSDictionary
         let route: NSDictionary = routes.objectForKey("overview_polyline") as! NSDictionary
         let overview_route: String = route.objectForKey("points") as! String
@@ -209,13 +211,24 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
     // MARK: CLLocationManagerDelegate Methods
     
     func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!) {
-        
+
+//        println("Updating Current Location...")
+//        
+//        let currentLocation: CLLocation = (locations as NSArray).lastObject as! CLLocation
+//        let positionString: String = "\(currentLocation.coordinate.latitude), \(currentLocation.coordinate.longitude)"
+//        
+//        // Clear the waypoint strings
+//        if (self.waypointStrings.count == 1) {
+//            self.waypointStrings.removeAllObjects()
+//        }
+//        
     }
+
     
     func locationManager(manager: CLLocationManager!, didFailWithError error: NSError!) {
-//        var alert = UIAlertController(title: "Whoops!", message: "Couldn't get location", preferredStyle: UIAlertControllerStyle.Alert)
-//        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: nil))
-//        self.presentViewController(alert, animated: true, completion: nil)
+        var alert = UIAlertController(title: "Whoops!", message: "Couldn't get location", preferredStyle: UIAlertControllerStyle.Alert)
+        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: nil))
+        self.presentViewController(alert, animated: true, completion: nil)
     }
     
     func locationManager(manager: CLLocationManager!,
@@ -231,7 +244,6 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
     func mapView(mapView: GMSMapView!, idleAtCameraPosition position: GMSCameraPosition!) {
         
         IBANetworking.crimesInRegion(self.mapView.projection.visibleRegion(), completion: {response, error in
-            println("\(response)")
             self.drawHeatMapWith(crimes: response as! NSArray?)
         })
     }
@@ -243,15 +255,26 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
         self.searchField.resignFirstResponder()
         
         // Search for the query and make directions for it
-        let location = CLLocation(latitude: 37.7833, longitude: -122.41)
+        let toLocation = CLLocation(latitude: 37.7833, longitude: -122.41)
+        let fromLocation = self.locationManager.location
         
-        let marker: GMSMarker = GMSMarker(position: location.coordinate)
+        let marker: GMSMarker = GMSMarker(position: toLocation.coordinate)
         marker.map = self.mapView
         self.waypoints.addObject(marker)
-        let positionString: String = "\(location.coordinate.latitude), \(location.coordinate.longitude)"
-        self.waypointStrings.addObject(positionString)
+        let toPositionString: String = "\(toLocation.coordinate.latitude), \(toLocation.coordinate.longitude)"
+        let fromPositionString: String = "\(fromLocation.coordinate.latitude), \(fromLocation.coordinate.longitude)"
+
+        self.waypointStrings.removeAllObjects()
+        self.waypointStrings.addObject(toPositionString)
+        self.waypointStrings.addObject(fromPositionString)
         
-        if (self.waypoints.count > 1) {
+        if (self.waypointStrings.count > 1) {
+            let sensor: String = "false"
+            let parameters: NSArray = NSArray(objects: sensor, self.waypointStrings)
+            let keys: NSArray = NSArray(objects: "sensor", "waypoints")
+            let query: NSDictionary = NSDictionary(objects: parameters as [AnyObject], forKeys: keys as [AnyObject])
+            let mds: MDDirectionService = MDDirectionService()
+            mds.setDirectionsQuery(query as [NSObject : AnyObject], withSelector: "addDirections:", withDelegate: self)
             
         }
         
