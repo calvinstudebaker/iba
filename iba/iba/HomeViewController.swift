@@ -64,8 +64,8 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
     
     override func viewDidAppear(animated: Bool) {
         delay(1.0, { () -> () in
-//            let rvc = ReportViewController()
-//            self.navigationController?.pushViewController(rvc, animated: true)
+            //            let rvc = ReportViewController()
+            //            self.navigationController?.pushViewController(rvc, animated: true)
         })
         
         triggerLocationServices()
@@ -99,7 +99,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
         self.searchField.placeholder = "Enter Destination"
         self.searchField.textColor = UIColor.blackColor()
         self.searchField.font = UIFont(name: "HelveticaNeue-Light", size: 17)
-
+        
         // Add some padding
         let paddingView =  UIView(frame: CGRectMake(0, 0, 10, 45))
         self.searchField.leftView = paddingView
@@ -169,7 +169,13 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
         
         let path: GMSPath = GMSPath(fromEncodedPath: overview_route)
         let polyline: GMSPolyline = GMSPolyline(path: path)
+        polyline.strokeWidth = 3.0
+        polyline.strokeColor = UIColor(red: 52/255, green: 152/255, blue: 219/255, alpha: 1.0)
         polyline.map = self.mapView
+    }
+    
+    func focusMapToFitDirections {
+        
     }
     
     // MARK: HeatMap Drawing
@@ -211,19 +217,19 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
     // MARK: CLLocationManagerDelegate Methods
     
     func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!) {
-
-//        println("Updating Current Location...")
-//        
-//        let currentLocation: CLLocation = (locations as NSArray).lastObject as! CLLocation
-//        let positionString: String = "\(currentLocation.coordinate.latitude), \(currentLocation.coordinate.longitude)"
-//        
-//        // Clear the waypoint strings
-//        if (self.waypointStrings.count == 1) {
-//            self.waypointStrings.removeAllObjects()
-//        }
-//        
+        
+        //        println("Updating Current Location...")
+        //
+        //        let currentLocation: CLLocation = (locations as NSArray).lastObject as! CLLocation
+        //        let positionString: String = "\(currentLocation.coordinate.latitude), \(currentLocation.coordinate.longitude)"
+        //
+        //        // Clear the waypoint strings
+        //        if (self.waypointStrings.count == 1) {
+        //            self.waypointStrings.removeAllObjects()
+        //        }
+        //
     }
-
+    
     
     func locationManager(manager: CLLocationManager!, didFailWithError error: NSError!) {
         var alert = UIAlertController(title: "Whoops!", message: "Couldn't get location", preferredStyle: UIAlertControllerStyle.Alert)
@@ -256,14 +262,22 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
         
         // Search for the query and make directions for it
         let toLocation = CLLocation(latitude: 37.7833, longitude: -122.41)
-        let fromLocation = self.locationManager.location
+        let fromLocation: CLLocation
+        
+        // If we are using the simulator fake a start point
+        if ((UIDevice.currentDevice().model as NSString).rangeOfString("Simulator").location == NSNotFound) {
+            fromLocation = self.locationManager.location
+        } else {
+            fromLocation = CLLocation(latitude: 37.4203696428215, longitude: -122.170106303061)
+        }
+        
         
         let marker: GMSMarker = GMSMarker(position: toLocation.coordinate)
         marker.map = self.mapView
         self.waypoints.addObject(marker)
         let toPositionString: String = "\(toLocation.coordinate.latitude), \(toLocation.coordinate.longitude)"
         let fromPositionString: String = "\(fromLocation.coordinate.latitude), \(fromLocation.coordinate.longitude)"
-
+        
         self.waypointStrings.removeAllObjects()
         self.waypointStrings.addObject(toPositionString)
         self.waypointStrings.addObject(fromPositionString)
