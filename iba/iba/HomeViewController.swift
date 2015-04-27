@@ -22,6 +22,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
     var currentOverlay: GMSGroundOverlay = GMSGroundOverlay()
     
     let reportButton: IBAButton
+    let shareButton: IBAButton
     let searchField: UITextField
     
     let kButtonPadding: CGFloat = 10
@@ -42,6 +43,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
         self.previousLocation = CLLocationCoordinate2D(latitude: 0, longitude: 0)
         
         self.reportButton = IBAButton(frame: CGRectZero, title: "Report", colorScheme: UIColor(red: 0.2, green: 0.6, blue: 0.86, alpha: 1), clear: false)
+        self.shareButton = IBAButton(frame: CGRectZero, title: "Share", colorScheme: UIColor(red: 46/255, green: 204/255, blue: 113/255, alpha: 1), clear: false)
         self.searchField = UITextField(frame: CGRectZero)
         
         self.waypoints = NSMutableArray()
@@ -60,6 +62,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
         setupMapView()
         setupLocationManager()
         setupReportButton()
+        setupShareButton()
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -117,10 +120,17 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
     }
     
     func setupReportButton() {
-        self.reportButton.frame = CGRectMake(self.view.bounds.size.width - kButtonPadding - 150, self.view.bounds.size.height - kButtonPadding - 45, 150, 45)
+        self.reportButton.frame = CGRectMake(self.view.bounds.size.width - kButtonPadding - 100, self.view.bounds.size.height - kButtonPadding - 45, 100, 45)
         self.reportButton.backgroundColor = UIColor.whiteColor()
         self.reportButton.addTarget(self, action: "reportButtonPressed:", forControlEvents: .TouchUpInside)
         self.view.addSubview(self.reportButton)
+    }
+    
+    func setupShareButton() {
+        self.shareButton.frame = CGRectMake(kButtonPadding, self.view.bounds.size.height - kButtonPadding - 45, 80, 45)
+        self.shareButton.backgroundColor = UIColor.whiteColor()
+        self.shareButton.addTarget(self, action: "shareButtonPressed:", forControlEvents: .TouchUpInside)
+        self.view.addSubview(self.shareButton)
     }
     
     // Sets up the locationManager
@@ -135,6 +145,11 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
     func reportButtonPressed(sender: UIButton) {
         let rvc = ReportViewController()
         self.navigationController?.pushViewController(rvc, animated: true)
+    }
+    
+    // TODO: Implement Share Features @leigh
+    func shareButtonPressed(sender: UIButton) {
+        println("share")
     }
     
     func triggerLocationServices() {
