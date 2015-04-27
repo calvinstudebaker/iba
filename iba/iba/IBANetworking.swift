@@ -40,11 +40,47 @@ class IBANetworking {
         uGenReport.saveInBackgroundWithBlock(completion)
         
         
-
+        
     }
     
-    class func searchForDestination(destination: String, completion: (Bool) -> ()) {
+    class func searchForDestination(destination: String, completion: (complete: Bool, location: CLLocation?) -> ()) {
         
+        let queryString: String = (("https://maps.googleapis.com/maps/api/place/textsearch/json?query=" + destination + "&key=AIzaSyAbd-ELe3MBV2eYyJ3AKCoZuRut7kcWLW0") as NSString).stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding) as String!
+        println(queryString)
+        
+        let manager = AFHTTPRequestOperationManager()
+        manager.GET(queryString,
+            parameters: nil,
+            success: { (operation: AFHTTPRequestOperation!, responseObject: AnyObject!) -> () in
+                
+                let dict: [String: AnyObject] = responseObject as! [String: AnyObject]
+                
+                // Get the location and return it
+                if let results = dict["results"] as? [AnyObject] {
+                    if (results.count > 0) {
+                        if let result = results[0] as? [String: AnyObject] {
+                            if let geometry = result["geometry"] as? [String: AnyObject] {
+                                if let location = geometry["location"] as? [String: AnyObject] {
+                                    let lat: Double = location["lat"] as! Double
+                                    let lng: Double = location["lng"] as! Double
+                                    let location: CLLocation = CLLocation(latitude: lat, longitude: lng)
+                                    completion(complete: true, location: location)
+                                    return
+                                    
+                                }
+                            }
+                        }
+                    }
+                    
+                }
+                completion(complete: false, location: nil)
+                
+            },
+            failure: { (operation: AFHTTPRequestOperation!, error: NSError!) -> () in
+                completion(complete: false, location: nil)
+                
+            }
+        )
         
         
     }

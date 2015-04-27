@@ -6,5 +6,6 @@
 #import <Parse/Parse.h>
 #import <LFHeatMap/LFHeatMap.h>
 #import <MBProgressHUD/MBProgressHUD.h>
+#import <AFNetworking/AFNetworking.h>
 
 #import "MDDirectionService.h"

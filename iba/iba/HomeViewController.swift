@@ -20,6 +20,8 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
     let previousLocation: CLLocationCoordinate2D
     
     var currentOverlay: GMSGroundOverlay = GMSGroundOverlay()
+    var currentPolyline: GMSPolyline = GMSPolyline()
+    var currentMarker: GMSMarker = GMSMarker()
     
     let reportButton: IBAButton
     let shareButton: IBAButton
@@ -178,19 +180,66 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
     
     func addDirections(json: NSDictionary) {
         println("Adding directions")
+        
+        let routesArray = (json.objectForKey("routes") as! NSArray)
+        if routesArray.count == 0 {
+            // Couldn't find route
+            let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+            hud.mode = MBProgressHUDMode.Text
+            hud.labelText = "Couldn't find a route to the destination."
+            hud.hide(true, afterDelay: 1.0)
+            return
+        }
+        
         let routes: NSDictionary = (json.objectForKey("routes") as! NSArray)[0] as! NSDictionary
         let route: NSDictionary = routes.objectForKey("overview_polyline") as! NSDictionary
         let overview_route: String = route.objectForKey("points") as! String
         
         let path: GMSPath = GMSPath(fromEncodedPath: overview_route)
-        let polyline: GMSPolyline = GMSPolyline(path: path)
-        polyline.strokeWidth = 3.0
-        polyline.strokeColor = UIColor(red: 52/255, green: 152/255, blue: 219/255, alpha: 1.0)
-        polyline.map = self.mapView
+        self.currentPolyline = GMSPolyline(path: path)
+        self.currentPolyline.strokeWidth = 3.5
+        self.currentPolyline.strokeColor = UIColor(red: 52/255, green: 152/255, blue: 219/255, alpha: 1.0)
+        self.currentPolyline.map = self.mapView
+        
+        var bounds = GMSCoordinateBounds(path: path)
+        self.mapView.animateWithCameraUpdate(GMSCameraUpdate.fitBounds(bounds))
     }
     
-    func focusMapToFitDirections() {
+    func createRouteToDestination(destination: CLLocation) {
+
+        // Clear the previous destination
+        self.currentPolyline.map = nil
+        self.currentMarker.map = nil
         
+        let fromLocation: CLLocation
+        
+        // If we are using the simulator fake a start point
+        if ((UIDevice.currentDevice().model as NSString).rangeOfString("Simulator").location == NSNotFound) {
+            fromLocation = self.locationManager.location
+        } else {
+            fromLocation = CLLocation(latitude: 37.4203696428215, longitude: -122.170106303061)
+        }
+        
+        self.currentMarker = GMSMarker(position: destination.coordinate)
+        self.currentMarker.map = self.mapView
+        self.waypoints.addObject(self.currentMarker)
+        let toPositionString: String = "\(destination.coordinate.latitude), \(destination.coordinate.longitude)"
+        let fromPositionString: String = "\(fromLocation.coordinate.latitude), \(fromLocation.coordinate.longitude)"
+        
+        self.waypointStrings.removeAllObjects()
+        self.waypointStrings.addObject(toPositionString)
+        self.waypointStrings.addObject(fromPositionString)
+        
+        if (self.waypointStrings.count > 1) {
+            let sensor: String = "false"
+            let parameters: NSArray = NSArray(objects: sensor, self.waypointStrings)
+            let keys: NSArray = NSArray(objects: "sensor", "waypoints")
+            let query: NSDictionary = NSDictionary(objects: parameters as [AnyObject], forKeys: keys as [AnyObject])
+            let mds: MDDirectionService = MDDirectionService()
+            mds.setDirectionsQuery(query as [NSObject : AnyObject], withSelector: "addDirections:", withDelegate: self)
+            
+        }
+
     }
     
     // MARK: HeatMap Drawing
@@ -275,36 +324,26 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
         println("Search query: \(self.searchField.text)")
         self.searchField.resignFirstResponder()
         
-        // Search for the query and make directions for it
-        let toLocation = CLLocation(latitude: 37.7833, longitude: -122.41)
-        let fromLocation: CLLocation
-        
-        // If we are using the simulator fake a start point
-        if ((UIDevice.currentDevice().model as NSString).rangeOfString("Simulator").location == NSNotFound) {
-            fromLocation = self.locationManager.location
-        } else {
-            fromLocation = CLLocation(latitude: 37.4203696428215, longitude: -122.170106303061)
+        if (self.searchField.text == "") {
+            return true
         }
         
-        let marker: GMSMarker = GMSMarker(position: toLocation.coordinate)
-        marker.map = self.mapView
-        self.waypoints.addObject(marker)
-        let toPositionString: String = "\(toLocation.coordinate.latitude), \(toLocation.coordinate.longitude)"
-        let fromPositionString: String = "\(fromLocation.coordinate.latitude), \(fromLocation.coordinate.longitude)"
+        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+        hud.mode = .Indeterminate
+        hud.labelText = "Searching for " + self.searchField.text
         
-        self.waypointStrings.removeAllObjects()
-        self.waypointStrings.addObject(toPositionString)
-        self.waypointStrings.addObject(fromPositionString)
         
-        if (self.waypointStrings.count > 1) {
-            let sensor: String = "false"
-            let parameters: NSArray = NSArray(objects: sensor, self.waypointStrings)
-            let keys: NSArray = NSArray(objects: "sensor", "waypoints")
-            let query: NSDictionary = NSDictionary(objects: parameters as [AnyObject], forKeys: keys as [AnyObject])
-            let mds: MDDirectionService = MDDirectionService()
-            mds.setDirectionsQuery(query as [NSObject : AnyObject], withSelector: "addDirections:", withDelegate: self)
-            
-        }
+        IBANetworking.searchForDestination(self.searchField.text, completion: { (complete, location) -> () in
+            if complete {
+                hud.hide(true)
+                self.createRouteToDestination(location!)
+            } else {
+                // Show an error
+                hud.mode = .Text
+                hud.labelText = "Couldn't find anything for " + self.searchField.text
+                hud.hide(true, afterDelay: 1.0)
+            }
+        })
         
         return true
     }
