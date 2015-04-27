@@ -43,4 +43,10 @@ class IBANetworking {
 
     }
     
+    class func searchForDestination(destination: String, completion: (Bool) -> ()) {
+        
+        
+        
+    }
+    
 }
