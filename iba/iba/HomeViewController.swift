@@ -174,7 +174,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
         polyline.map = self.mapView
     }
     
-    func focusMapToFitDirections {
+    func focusMapToFitDirections() {
         
     }
     
@@ -270,7 +270,6 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
         } else {
             fromLocation = CLLocation(latitude: 37.4203696428215, longitude: -122.170106303061)
         }
-        
         
         let marker: GMSMarker = GMSMarker(position: toLocation.coordinate)
         marker.map = self.mapView
