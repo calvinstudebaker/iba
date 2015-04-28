@@ -25,6 +25,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
     
     let reportButton: IBAButton
     let shareButton: IBAButton
+    let stopGuidanceButton: IBAButton
     let searchField: UITextField
     
     let kButtonPadding: CGFloat = 10
@@ -46,6 +47,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
         
         self.reportButton = IBAButton(frame: CGRectZero, title: "Report", colorScheme: UIColor(red: 0.2, green: 0.6, blue: 0.86, alpha: 1), clear: false)
         self.shareButton = IBAButton(frame: CGRectZero, title: "Share", colorScheme: UIColor(red: 46/255, green: 204/255, blue: 113/255, alpha: 1), clear: false)
+        self.stopGuidanceButton = IBAButton(frame: CGRectZero, title: "X", colorScheme: UIColor(red: 231/255, green: 76/255, blue: 60/255, alpha: 1.0), clear: false)
         self.searchField = UITextField(frame: CGRectZero)
         
         self.waypoints = NSMutableArray()
@@ -65,6 +67,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
         setupLocationManager()
         setupReportButton()
         setupShareButton()
+        setupStopGuidanceButton()
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -75,7 +78,9 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
         
         triggerLocationServices()
         
-        mapView.animateToCameraPosition(GMSCameraPosition.cameraWithLatitude(37.75941, longitude: -122.4260365, zoom: 16))
+        if ((UIDevice.currentDevice().model as NSString).rangeOfString("Simulator").location != NSNotFound) {
+            mapView.animateToCameraPosition(GMSCameraPosition.cameraWithLatitude(37.75941, longitude: -122.4260365, zoom: 16))
+        }
         
     }
     
@@ -135,6 +140,15 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
         self.view.addSubview(self.shareButton)
     }
     
+    func setupStopGuidanceButton() {
+        self.stopGuidanceButton.frame = CGRectMake(kButtonPadding, self.searchField.frame.origin.y + self.searchField.frame.size.height + kButtonPadding, 50, 50)
+        self.stopGuidanceButton.backgroundColor = UIColor.whiteColor()
+        self.stopGuidanceButton.addTarget(self, action: "stopGuidance:", forControlEvents: .TouchUpInside)
+        self.view.addSubview(self.stopGuidanceButton)
+        self.stopGuidanceButton.hidden = true;
+        self.stopGuidanceButton.alpha = 0.0;
+    }
+    
     // Sets up the locationManager
     func setupLocationManager() {
         self.locationManager.delegate = self
@@ -178,9 +192,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
     
     // MARK: Direction Stuffs
     
-    func addDirections(json: NSDictionary) {
-        println("Adding directions")
-        
+    func addDirections(json: NSDictionary) {        
         let routesArray = (json.objectForKey("routes") as! NSArray)
         if routesArray.count == 0 {
             // Couldn't find route
@@ -203,6 +215,21 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
         
         var bounds = GMSCoordinateBounds(path: path)
         self.mapView.animateWithCameraUpdate(GMSCameraUpdate.fitBounds(bounds))
+        self.stopGuidanceButton.alpha = 0.0
+        self.stopGuidanceButton.hidden = false
+        UIView.animateWithDuration(1.0, animations: { () -> Void in
+            self.stopGuidanceButton.alpha = 1.0
+        })
+    }
+    
+    func stopGuidance(sender: IBAButton) {
+        self.currentMarker.map = nil
+        self.currentPolyline.map = nil
+        UIView.animateWithDuration(1.0, animations: { () -> Void in
+            self.stopGuidanceButton.alpha = 0.0
+        }) { (completion: Bool) -> Void in
+            self.stopGuidanceButton.hidden = true
+        }
     }
     
     func createRouteToDestination(destination: CLLocation) {
