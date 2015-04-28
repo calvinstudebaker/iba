@@ -168,6 +168,15 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
     // TODO: Implement Share Features @leigh
     func shareButtonPressed(sender: UIButton) {
         println("share")
+        let textToShare = "Tired of stressing over where to park? Try Paqr today!"
+        
+        if let myWebsite = NSURL(string: "http://www.cs210.stanford.edu/")
+        {
+            let objectsToShare = [textToShare, myWebsite]
+            let activityVC = UIActivityViewController(activityItems: objectsToShare, applicationActivities: nil)
+            
+            self.presentViewController(activityVC, animated: true, completion: nil)
+        }
     }
     
     func triggerLocationServices() {
