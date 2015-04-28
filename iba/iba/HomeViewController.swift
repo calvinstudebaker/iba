@@ -167,7 +167,6 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
     
     // TODO: Implement Share Features @leigh
     func shareButtonPressed(sender: UIButton) {
-        println("share")
         let textToShare = "Tired of stressing over where to park? Try Parq today!"
         
         if let myWebsite = NSURL(string: "http://www.cs210.stanford.edu/")
@@ -317,16 +316,6 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
     
     func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!) {
         
-        //        println("Updating Current Location...")
-        //
-        //        let currentLocation: CLLocation = (locations as NSArray).lastObject as! CLLocation
-        //        let positionString: String = "\(currentLocation.coordinate.latitude), \(currentLocation.coordinate.longitude)"
-        //
-        //        // Clear the waypoint strings
-        //        if (self.waypointStrings.count == 1) {
-        //            self.waypointStrings.removeAllObjects()
-        //        }
-        //
     }
     
     
