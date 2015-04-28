@@ -601,7 +601,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "df3dd3b3-5870-4222-b794-1f1b0bc2f911";
+				PROVISIONING_PROFILE = "eccd148d-34ec-44d2-8f44-1a986a7d180c";
 				SWIFT_OBJC_BRIDGING_HEADER = "iba/iba-bridging-header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				USER_HEADER_SEARCH_PATHS = "";
@@ -625,7 +625,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "df3dd3b3-5870-4222-b794-1f1b0bc2f911";
+				PROVISIONING_PROFILE = "eccd148d-34ec-44d2-8f44-1a986a7d180c";
 				SWIFT_OBJC_BRIDGING_HEADER = "iba/iba-bridging-header.h";
 				USER_HEADER_SEARCH_PATHS = "";
 			};

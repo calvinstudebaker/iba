@@ -46,7 +46,7 @@ class IBANetworking {
     class func searchForDestination(destination: String, completion: (complete: Bool, location: CLLocation?) -> ()) {
         
         let queryString: String = (("https://maps.googleapis.com/maps/api/place/textsearch/json?query=" + destination + "&key=AIzaSyAbd-ELe3MBV2eYyJ3AKCoZuRut7kcWLW0") as NSString).stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding) as String!
-        println(queryString)
+        println("Search Query: " + queryString)
         
         let manager = AFHTTPRequestOperationManager()
         manager.GET(queryString,

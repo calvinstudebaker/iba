@@ -79,7 +79,9 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
         triggerLocationServices()
         
         if ((UIDevice.currentDevice().model as NSString).rangeOfString("Simulator").location != NSNotFound) {
-            mapView.animateToCameraPosition(GMSCameraPosition.cameraWithLatitude(37.75941, longitude: -122.4260365, zoom: 16))
+            self.mapView.animateToCameraPosition(GMSCameraPosition.cameraWithLatitude(37.75941, longitude: -122.4260365, zoom: 16))
+        } else {
+            self.mapView.animateToCameraPosition(GMSCameraPosition.cameraWithTarget(self.locationManager.location.coordinate, zoom: 16))
         }
         
     }
@@ -108,7 +110,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
         self.searchField.backgroundColor = UIColor.whiteColor()
         self.searchField.placeholder = "Enter Destination"
         self.searchField.textColor = UIColor.blackColor()
-        self.searchField.font = UIFont(name: "HelveticaNeue-Light", size: 17)
+        self.searchField.font = UIFont(name: "HelveticaNeue", size: 17)
         
         // Add some padding
         let paddingView =  UIView(frame: CGRectMake(0, 0, 10, 45))
@@ -192,7 +194,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
     
     // MARK: Direction Stuffs
     
-    func addDirections(json: NSDictionary) {        
+    func addDirections(json: NSDictionary) {
         let routesArray = (json.objectForKey("routes") as! NSArray)
         if routesArray.count == 0 {
             // Couldn't find route
@@ -225,15 +227,12 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
     func stopGuidance(sender: IBAButton) {
         self.currentMarker.map = nil
         self.currentPolyline.map = nil
-        UIView.animateWithDuration(1.0, animations: { () -> Void in
-            self.stopGuidanceButton.alpha = 0.0
-        }) { (completion: Bool) -> Void in
-            self.stopGuidanceButton.hidden = true
-        }
+        self.stopGuidanceButton.hidden = true
+        self.searchField.text = ""
     }
     
     func createRouteToDestination(destination: CLLocation) {
-
+        
         // Clear the previous destination
         self.currentPolyline.map = nil
         self.currentMarker.map = nil
@@ -266,7 +265,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
             mds.setDirectionsQuery(query as [NSObject : AnyObject], withSelector: "addDirections:", withDelegate: self)
             
         }
-
+        
     }
     
     // MARK: HeatMap Drawing
@@ -348,7 +347,6 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
     // MARK: UITextfield Delegate Methods
     
     func textFieldShouldReturn(textField: UITextField) -> Bool {
-        println("Search query: \(self.searchField.text)")
         self.searchField.resignFirstResponder()
         
         if (self.searchField.text == "") {
