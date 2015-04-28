@@ -53,7 +53,7 @@ for row in reader:
 	address = row["location"]
 	d["address"] = address
 
-	#Only allowed 25,000 requests per day, do this later with only 25,000 rows
+	#Only allowed 25,000 requests per day, do this later with only 25,000 rows (will take 3 days to get entire file)
 
 	# url = "http://maps.googleapis.com/maps/api/geocode/json?address=" + address.replace(" ", "+") + ",+San+Francisco"
 	# response = urllib2.urlopen(url)
