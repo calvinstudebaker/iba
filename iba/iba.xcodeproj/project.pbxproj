@@ -39,6 +39,8 @@
 		AF38CA9F1AAD70F7003892D0 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF38CA9E1AAD70F7003892D0 /* Social.framework */; };
 		AF38CAA11AAD70FD003892D0 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF38CAA01AAD70FD003892D0 /* Accounts.framework */; };
 		AF4614961AAD77FD00CF8C33 /* IBANetworking.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF4614951AAD77FD00CF8C33 /* IBANetworking.swift */; };
+		AF485A431AF1B998003CCEFA /* ConnectCarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF485A421AF1B998003CCEFA /* ConnectCarViewController.swift */; };
+		AF485A511AF1C4CE003CCEFA /* car_nav_icon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = AF485A501AF1C4CE003CCEFA /* car_nav_icon@3x.png */; };
 		AF5A4D581AEEE87200011E08 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = AF21B1291AAC041600669016 /* LaunchScreen.xib */; };
 		AF674E3C1AD5C35500C0BA16 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF674E3B1AD5C35500C0BA16 /* Extensions.swift */; };
 		AF674E3E1AD5D0AF00C0BA16 /* IBARateItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF674E3D1AD5D0AF00C0BA16 /* IBARateItemView.swift */; };
@@ -101,6 +103,8 @@
 		AF38CAA01AAD70FD003892D0 /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
 		AF4614951AAD77FD00CF8C33 /* IBANetworking.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IBANetworking.swift; sourceTree = "<group>"; };
 		AF46149B1AAE8C5000CF8C33 /* iba-bridging-header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "iba-bridging-header.h"; sourceTree = "<group>"; };
+		AF485A421AF1B998003CCEFA /* ConnectCarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectCarViewController.swift; sourceTree = "<group>"; };
+		AF485A501AF1C4CE003CCEFA /* car_nav_icon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "car_nav_icon@3x.png"; sourceTree = "<group>"; };
 		AF5A4D5A1AEEE8FC00011E08 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		AF674E3B1AD5C35500C0BA16 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		AF674E3D1AD5D0AF00C0BA16 /* IBARateItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IBARateItemView.swift; sourceTree = "<group>"; };
@@ -266,6 +270,7 @@
 				AF38CA581AAD5485003892D0 /* HomeViewController.swift */,
 				AF38CA7C1AAD5C6A003892D0 /* MovingAlertViewController.swift */,
 				AF674E401AD5D72000C0BA16 /* ReportViewController.swift */,
+				AF485A421AF1B998003CCEFA /* ConnectCarViewController.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -318,6 +323,7 @@
 				AF674E421AD5E1ED00C0BA16 /* slider_circle@2x.png */,
 				AF21B1271AAC041600669016 /* Images.xcassets */,
 				AF21B1291AAC041600669016 /* LaunchScreen.xib */,
+				AF485A501AF1C4CE003CCEFA /* car_nav_icon@3x.png */,
 				DC9B50AB1AAD80CE006E2323 /* car_icon.png */,
 			);
 			name = Resources;
@@ -407,6 +413,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AF5A4D581AEEE87200011E08 /* LaunchScreen.xib in Resources */,
+				AF485A511AF1C4CE003CCEFA /* car_nav_icon@3x.png in Resources */,
 				AF38CA781AAD5AD4003892D0 /* GoogleMaps.bundle in Resources */,
 				AF674E431AD5E1ED00C0BA16 /* slider_circle@2x.png in Resources */,
 				DC9B50AC1AAD80CE006E2323 /* car_icon.png in Resources */,
@@ -471,6 +478,7 @@
 				AF38CA801AAD5D9B003892D0 /* IBAUtils.swift in Sources */,
 				AF38CA7D1AAD5C6A003892D0 /* MovingAlertViewController.swift in Sources */,
 				AF674E3E1AD5D0AF00C0BA16 /* IBARateItemView.swift in Sources */,
+				AF485A431AF1B998003CCEFA /* ConnectCarViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

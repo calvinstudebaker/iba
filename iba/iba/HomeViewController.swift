@@ -68,17 +68,21 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
         setupReportButton()
         setupShareButton()
         setupStopGuidanceButton()
+        setupNavIcon()
     }
     
     override func viewDidAppear(animated: Bool) {
-        delay(1.0, { () -> () in
-            //            let rvc = ReportViewController()
-            //            self.navigationController?.pushViewController(rvc, animated: true)
-        })
+        //        delay(1.0, { () -> () in
+//                    let rvc = ConnectCarViewController()
+//                    self.navigationController?.presentViewController(rvc, animated: true, completion: { () -> Void in
+        //
+        //            });
+        //        })
         
         triggerLocationServices()
         
-        if ((UIDevice.currentDevice().model as NSString).rangeOfString("Simulator").location != NSNotFound) {
+        let model: NSString = UIDevice.currentDevice().model as NSString
+        if (model.isEqualToString("iPhone Simulator")) {
             self.mapView.animateToCameraPosition(GMSCameraPosition.cameraWithLatitude(37.75941, longitude: -122.4260365, zoom: 16))
         } else {
             self.mapView.animateToCameraPosition(GMSCameraPosition.cameraWithTarget(self.locationManager.location.coordinate, zoom: 16))
@@ -96,6 +100,14 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
     }
     
     // MARK: Setup Methods
+    
+    func setupNavIcon() {
+        var carImage: UIImage? = UIImage(named: "car_nav_icon")
+        carImage = carImage?.imageWithRenderingMode(UIImageRenderingMode.AlwaysOriginal)
+
+        var carButton = UIBarButtonItem(image: carImage, style: UIBarButtonItemStyle.Done, target: self, action: "connectCar:")
+        navigationItem.leftBarButtonItem = carButton
+    }
     
     func setupMapView() {
         let navBarHeight = self.navigationController!.navigationBar.frame.size.height + UIApplication.sharedApplication().statusBarFrame.size.height
@@ -122,7 +134,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
         self.searchField.layer.masksToBounds = true
         self.searchField.layer.borderColor = UIColor.lightGrayColor().CGColor
         self.searchField.layer.borderWidth = 1.25
-        self.searchField.alpha = 0.95
+        self.searchField.alpha = 0.98
         self.searchField.delegate = self
         self.searchField.returnKeyType = .Done
         self.view.addSubview(self.searchField)
@@ -159,6 +171,13 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
     }
     
     // MARK: Private Methods
+    
+    func connectCar(sender: AnyObject) {
+        let rvc = ConnectCarViewController()
+        self.navigationController?.presentViewController(rvc, animated: true, completion: { () -> Void in
+        
+        })
+    }
     
     func reportButtonPressed(sender: UIButton) {
         let rvc = ReportViewController()
@@ -248,10 +267,11 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
         let fromLocation: CLLocation
         
         // If we are using the simulator fake a start point
-        if ((UIDevice.currentDevice().model as NSString).rangeOfString("Simulator").location == NSNotFound) {
-            fromLocation = self.locationManager.location
-        } else {
+        let model: NSString = UIDevice.currentDevice().model as NSString
+        if (model.isEqualToString("iPhone Simulator")) {
             fromLocation = CLLocation(latitude: 37.4203696428215, longitude: -122.170106303061)
+        } else {
+            fromLocation = self.locationManager.location
         }
         
         self.currentMarker = GMSMarker(position: destination.coordinate)
@@ -318,11 +338,14 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
         
     }
     
-    
     func locationManager(manager: CLLocationManager!, didFailWithError error: NSError!) {
-        var alert = UIAlertController(title: "Whoops!", message: "Couldn't get location", preferredStyle: UIAlertControllerStyle.Alert)
-        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: nil))
-        self.presentViewController(alert, animated: true, completion: nil)
+        let model: NSString = UIDevice.currentDevice().model as NSString
+        if (!model.isEqualToString("iPhone Simulator")) {
+            var alert = UIAlertController(title: "Whoops!", message: "Couldn't get location", preferredStyle: UIAlertControllerStyle.Alert)
+            alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: nil))
+            self.presentViewController(alert, animated: true, completion: nil)
+
+        }
     }
     
     func locationManager(manager: CLLocationManager!,
