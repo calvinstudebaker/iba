@@ -104,7 +104,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
     func setupNavIcon() {
         var carImage: UIImage? = UIImage(named: "car_nav_icon")
         carImage = carImage?.imageWithRenderingMode(UIImageRenderingMode.AlwaysOriginal)
-
+        
         var carButton = UIBarButtonItem(image: carImage, style: UIBarButtonItemStyle.Done, target: self, action: "connectCar:")
         navigationItem.leftBarButtonItem = carButton
     }
