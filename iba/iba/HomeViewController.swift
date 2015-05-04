@@ -72,12 +72,6 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
     }
     
     override func viewDidAppear(animated: Bool) {
-        //        delay(1.0, { () -> () in
-//                    let rvc = ConnectCarViewController()
-//                    self.navigationController?.presentViewController(rvc, animated: true, completion: { () -> Void in
-        //
-        //            });
-        //        })
         
         triggerLocationServices()
         
@@ -173,10 +167,26 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
     // MARK: Private Methods
     
     func connectCar(sender: AnyObject) {
-        let rvc = ConnectCarViewController()
-        self.navigationController?.presentViewController(rvc, animated: true, completion: { () -> Void in
         
-        })
+        // First double check to make sure push notification are enabled
+
+        if UIApplication.sharedApplication().isRegisteredForRemoteNotifications() {
+            let rvc = ConnectCarViewController()
+            self.navigationController?.presentViewController(rvc, animated: true, completion: { () -> Void in
+                
+            })
+        } else {
+
+            let alert = UIAlertController(title: "Slow Down There...", message: "You need to enable push notifications in settings before you do anything with a car!", preferredStyle: UIAlertControllerStyle.Alert)
+            alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: { (action: UIAlertAction!) -> Void in
+                
+            }))
+            alert.addAction(UIAlertAction(title: "Settings", style: .Default, handler: { (action: UIAlertAction!) -> Void in
+                UIApplication.sharedApplication().openURL(NSURL(string: UIApplicationOpenSettingsURLString)!)
+            }))
+            self.presentViewController(alert, animated: true, completion: nil)
+        }
+        
     }
     
     func reportButtonPressed(sender: UIButton) {
