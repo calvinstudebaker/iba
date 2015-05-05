@@ -31,6 +31,8 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
     let stopGuidanceButton: IBAButton
     let searchField: UITextField
     
+    var currentFilter: String = "crimes"
+    
     let kButtonPadding: CGFloat = 10
     let kButtonHeight = 45
     
@@ -283,21 +285,22 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
     }
     
     func ticketButtonPressed(sender: UIButton) {
-        //TODO: implement ticketing heatmap
-        /* IBANetworking.ticketsInRegion(self.mapView.projection.visibleRegion(), completion: {response, error in
-        self.drawHeatMapWith(tickets: response as! NSArray?)
-        })*/
+        self.currentFilter = "tickets"
+        reloadHeatMap()
     }
     
     func priceButtonPressed(sender: UIButton) {
-        //TODO: implement pricing heatmap
-        /* IBANetworking.pricesInRegion(self.mapView.projection.visibleRegion(), completion: {response, error in
-        self.drawHeatMapWith(prices: response as! NSArray?)
-        })*/
+        self.currentFilter = "prices"
+        reloadHeatMap()
     }
+    
     func crimeButtonPressed(sender: UIButton) {
-        //TODO: reload cime heatmap
-        IBANetworking.crimesInRegion(self.mapView.projection.visibleRegion(), completion: {response, error in
+        self.currentFilter = "crimes"
+        reloadHeatMap()
+    }
+    
+    func reloadHeatMap() {
+        IBANetworking.valuesInRegion(self.mapView.projection.visibleRegion(), values: self.currentFilter, completion: {response, error in
             self.drawHeatMapWith(crimes: response as! NSArray?)
         })
     }
@@ -408,7 +411,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
         self.currentOverlay.map = nil;
         
         if (crimes == nil || crimes!.count == 0) {
-            displayErrorWithMessage("No Crimes in this region!")
+            displayErrorWithMessage("No " + self.currentFilter + " in this region!")
             return
         }
         
@@ -464,13 +467,8 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
     // MARK: GMSMapViewDelegate Methods
     
     func mapView(mapView: GMSMapView!, idleAtCameraPosition position: GMSCameraPosition!) {
-        
-        IBANetworking.crimesInRegion(self.mapView.projection.visibleRegion(), completion: {response, error in
-            self.drawHeatMapWith(crimes: response as! NSArray?)
-        })
+        reloadHeatMap()
     }
-    
-    //TODO: Make separate functions crimeMapView, priceMapView, ticketMapView that call different IBANetworking functions to produce different heatMaps @Leigh
     
     // MARK: UITextfield Delegate Methods
     
