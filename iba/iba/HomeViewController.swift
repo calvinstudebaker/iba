@@ -85,13 +85,45 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
         
         triggerLocationServices()
         
-        let model: NSString = UIDevice.currentDevice().model as NSString
-        if (model.isEqualToString("iPhone Simulator")) {
-            self.mapView.animateToCameraPosition(GMSCameraPosition.cameraWithLatitude(37.75941, longitude: -122.4260365, zoom: 16))
+        if (NSUserDefaults.standardUserDefaults().valueForKey("LastLat") != nil) {
+            
+            let lastLat = NSUserDefaults.standardUserDefaults().valueForKey("LastLat") as! CLLocationDegrees
+            let lastLon = NSUserDefaults.standardUserDefaults().valueForKey("LastLon") as! CLLocationDegrees
+        
+            let lastCoordinate = CLLocationCoordinate2D(latitude: lastLat, longitude: lastLon)
+            let lastZoom = NSUserDefaults.standardUserDefaults().valueForKey("LastZoom") as! Float
+            let lastBearing = NSUserDefaults.standardUserDefaults().valueForKey("LastBearing") as! CLLocationDirection
+            let lastViewingAngle = NSUserDefaults.standardUserDefaults().valueForKey("LastViewingAngle") as! Double
+            
+            let lastCameraPosition: GMSCameraPosition = GMSCameraPosition(target: lastCoordinate, zoom: lastZoom, bearing: lastBearing, viewingAngle: lastViewingAngle)
+            self.mapView.animateToCameraPosition(lastCameraPosition)
+            
         } else {
-            self.mapView.animateToCameraPosition(GMSCameraPosition.cameraWithTarget(self.locationManager.location.coordinate, zoom: 16))
+        
+            let model: NSString = UIDevice.currentDevice().model as NSString
+            if (model.isEqualToString("iPhone Simulator")) {
+                self.mapView.animateToCameraPosition(GMSCameraPosition.cameraWithLatitude(37.75941, longitude: -122.4260365, zoom: 16))
+            } else {
+                self.mapView.animateToCameraPosition(GMSCameraPosition.cameraWithTarget(self.locationManager.location.coordinate, zoom: 16))
+            }
         }
         
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        // Get the current camera location and store it in NSUserDefaults
+        let lastLat = self.mapView.camera.target.latitude
+        let lastLon = self.mapView.camera.target.longitude
+        let lastZoom = self.mapView.camera.zoom
+        let lastBearing = self.mapView.camera.bearing
+        let lastViewingAngle = self.mapView.camera.viewingAngle
+        
+        NSUserDefaults.standardUserDefaults().setValue(lastLat, forKey: "LastLat")
+        NSUserDefaults.standardUserDefaults().setValue(lastLon, forKey: "LastLon")
+        NSUserDefaults.standardUserDefaults().setValue(lastZoom, forKey: "LastZoom")
+        NSUserDefaults.standardUserDefaults().setValue(lastBearing, forKey: "LastBearing")
+        NSUserDefaults.standardUserDefaults().setValue(lastViewingAngle, forKey: "LastViewingAngle")
+
     }
     
     deinit {
@@ -104,8 +136,8 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
     }
     
     //TODO: Add gesture listener to switch heatmap generation @Leigh
-
-
+    
+    
     // MARK: Setup Methods
     
     func setupNavIcon() {
@@ -437,7 +469,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
             self.drawHeatMapWith(crimes: response as! NSArray?)
         })
     }
-
+    
     //TODO: Make separate functions crimeMapView, priceMapView, ticketMapView that call different IBANetworking functions to produce different heatMaps @Leigh
     
     // MARK: UITextfield Delegate Methods

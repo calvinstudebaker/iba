@@ -144,7 +144,6 @@ class ConnectCarViewController: UIViewController {
             self.carDescriptionLabel.textAlignment = .Center
             self.scrollView.addSubview(self.carDescriptionLabel)
             
-            
         }
         
 
