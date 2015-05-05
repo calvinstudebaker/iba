@@ -209,14 +209,14 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
     func connectCar(sender: AnyObject) {
         
         // First double check to make sure push notification are enabled
-
+        
         if UIApplication.sharedApplication().isRegisteredForRemoteNotifications() {
             let rvc = ConnectCarViewController()
             self.navigationController?.presentViewController(rvc, animated: true, completion: { () -> Void in
                 
             })
         } else {
-
+            
             let alert = UIAlertController(title: "Slow Down There...", message: "You need to enable push notifications in settings before you do anything with a car!", preferredStyle: UIAlertControllerStyle.Alert)
             alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: { (action: UIAlertAction!) -> Void in
                 
@@ -233,7 +233,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
         let rvc = ReportViewController()
         self.navigationController?.pushViewController(rvc, animated: true)
     }
- 
+    
     
     func shareButtonPressed(sender: UIButton) {
         let textToShare = "Tired of stressing over where to park? Try Parq today!"
@@ -249,8 +249,8 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
     
     func ticketButtonPressed(sender: UIButton) {
         //TODO: implement ticketing heatmap
-       /* IBANetworking.ticketsInRegion(self.mapView.projection.visibleRegion(), completion: {response, error in
-            self.drawHeatMapWith(tickets: response as! NSArray?)
+        /* IBANetworking.ticketsInRegion(self.mapView.projection.visibleRegion(), completion: {response, error in
+        self.drawHeatMapWith(tickets: response as! NSArray?)
         })*/
     }
     
@@ -263,7 +263,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
     func crimeButtonPressed(sender: UIButton) {
         //TODO: reload cime heatmap
         IBANetworking.crimesInRegion(self.mapView.projection.visibleRegion(), completion: {response, error in
-        self.drawHeatMapWith(crimes: response as! NSArray?)
+            self.drawHeatMapWith(crimes: response as! NSArray?)
         })
     }
     
@@ -414,7 +414,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
             var alert = UIAlertController(title: "Whoops!", message: "Couldn't get location", preferredStyle: UIAlertControllerStyle.Alert)
             alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: nil))
             self.presentViewController(alert, animated: true, completion: nil)
-
+            
         }
     }
     
