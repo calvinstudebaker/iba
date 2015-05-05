@@ -95,6 +95,9 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
         // Dispose of any resources that can be recreated.
     }
     
+    //TODO: Add gesture listener to switch heatmap generation @Leigh
+
+
     // MARK: Setup Methods
     
     func setupMapView() {
@@ -341,6 +344,8 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
             self.drawHeatMapWith(crimes: response as! NSArray?)
         })
     }
+
+    //TODO: Make separate functions crimeMapView, priceMapView, ticketMapView that call different IBANetworking functions to produce different heatMaps @Leigh
     
     // MARK: UITextfield Delegate Methods
     
