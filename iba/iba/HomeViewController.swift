@@ -213,7 +213,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
         
         // First double check to make sure push notification are enabled
         
-        if UIApplication.sharedApplication().isRegisteredForRemoteNotifications() {
+        if !UIApplication.sharedApplication().isRegisteredForRemoteNotifications() {
             let rvc = ConnectCarViewController()
             self.navigationController?.presentViewController(rvc, animated: true, completion: { () -> Void in
                 
