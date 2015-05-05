@@ -47,13 +47,13 @@
 		AF674E411AD5D72000C0BA16 /* ReportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF674E401AD5D72000C0BA16 /* ReportViewController.swift */; };
 		AF674E431AD5E1ED00C0BA16 /* slider_circle@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = AF674E421AD5E1ED00C0BA16 /* slider_circle@2x.png */; };
 		AF674E451AD6198F00C0BA16 /* IBAButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF674E441AD6198F00C0BA16 /* IBAButton.swift */; };
+		AF8C0A741AF958EE0076C942 /* crime_icon_grey.png in Resources */ = {isa = PBXBuildFile; fileRef = AF8C0A731AF958EE0076C942 /* crime_icon_grey.png */; };
 		AFB753CF1AD717630078246F /* MDDirectionService.m in Sources */ = {isa = PBXBuildFile; fileRef = AFB753CE1AD717630078246F /* MDDirectionService.m */; };
 		AFDEE6371AF9407700F213FD /* audi_vector.png in Resources */ = {isa = PBXBuildFile; fileRef = AFDEE6361AF9407700F213FD /* audi_vector.png */; };
 		D4B406BC8ECB8D1ED17BAD49 /* libPods-iba.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E82C9291DF6C9871051377D3 /* libPods-iba.a */; };
 		DC51158B1AF860A00032F6DC /* ticket_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = DC51158A1AF860A00032F6DC /* ticket_icon.png */; };
 		DC51158F1AF865C70032F6DC /* price_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = DC51158E1AF865C70032F6DC /* price_icon.png */; };
 		DC5115911AF86B3F0032F6DC /* crime_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = DC5115901AF86B3F0032F6DC /* crime_icon.png */; };
-		DC5115951AF956B60032F6DC /* crime__icon_grey.png in Resources */ = {isa = PBXBuildFile; fileRef = DC5115921AF956B60032F6DC /* crime__icon_grey.png */; };
 		DC5115961AF956B60032F6DC /* price_icon_grey.png in Resources */ = {isa = PBXBuildFile; fileRef = DC5115931AF956B60032F6DC /* price_icon_grey.png */; };
 		DC5115971AF956B60032F6DC /* ticket_icon_grey.png in Resources */ = {isa = PBXBuildFile; fileRef = DC5115941AF956B60032F6DC /* ticket_icon_grey.png */; };
 		DC9B50AC1AAD80CE006E2323 /* car_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = DC9B50AB1AAD80CE006E2323 /* car_icon.png */; };
@@ -118,13 +118,13 @@
 		AF674E401AD5D72000C0BA16 /* ReportViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReportViewController.swift; sourceTree = "<group>"; };
 		AF674E421AD5E1ED00C0BA16 /* slider_circle@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "slider_circle@2x.png"; sourceTree = "<group>"; };
 		AF674E441AD6198F00C0BA16 /* IBAButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IBAButton.swift; sourceTree = "<group>"; };
+		AF8C0A731AF958EE0076C942 /* crime_icon_grey.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = crime_icon_grey.png; sourceTree = "<group>"; };
 		AFB753CD1AD717630078246F /* MDDirectionService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDDirectionService.h; sourceTree = "<group>"; };
 		AFB753CE1AD717630078246F /* MDDirectionService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDDirectionService.m; sourceTree = "<group>"; };
 		AFDEE6361AF9407700F213FD /* audi_vector.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = audi_vector.png; sourceTree = "<group>"; };
 		DC51158A1AF860A00032F6DC /* ticket_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ticket_icon.png; sourceTree = "<group>"; };
 		DC51158E1AF865C70032F6DC /* price_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = price_icon.png; sourceTree = "<group>"; };
 		DC5115901AF86B3F0032F6DC /* crime_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = crime_icon.png; sourceTree = "<group>"; };
-		DC5115921AF956B60032F6DC /* crime__icon_grey.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = crime__icon_grey.png; sourceTree = "<group>"; };
 		DC5115931AF956B60032F6DC /* price_icon_grey.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = price_icon_grey.png; sourceTree = "<group>"; };
 		DC5115941AF956B60032F6DC /* ticket_icon_grey.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ticket_icon_grey.png; sourceTree = "<group>"; };
 		DC9B50AB1AAD80CE006E2323 /* car_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = car_icon.png; sourceTree = "<group>"; };
@@ -343,7 +343,7 @@
 				DC5115901AF86B3F0032F6DC /* crime_icon.png */,
 				AF485A501AF1C4CE003CCEFA /* car_nav_icon@3x.png */,
 				DC9B50AB1AAD80CE006E2323 /* car_icon.png */,
-				DC5115921AF956B60032F6DC /* crime__icon_grey.png */,
+				AF8C0A731AF958EE0076C942 /* crime_icon_grey.png */,
 				DC5115931AF956B60032F6DC /* price_icon_grey.png */,
 				DC5115941AF956B60032F6DC /* ticket_icon_grey.png */,
 			);
@@ -435,10 +435,10 @@
 			files = (
 				AF5A4D581AEEE87200011E08 /* LaunchScreen.xib in Resources */,
 				DC51158B1AF860A00032F6DC /* ticket_icon.png in Resources */,
+				AF8C0A741AF958EE0076C942 /* crime_icon_grey.png in Resources */,
 				AF485A511AF1C4CE003CCEFA /* car_nav_icon@3x.png in Resources */,
 				AF38CA781AAD5AD4003892D0 /* GoogleMaps.bundle in Resources */,
 				AF674E431AD5E1ED00C0BA16 /* slider_circle@2x.png in Resources */,
-				DC5115951AF956B60032F6DC /* crime__icon_grey.png in Resources */,
 				AFDEE6371AF9407700F213FD /* audi_vector.png in Resources */,
 				DC9B50AC1AAD80CE006E2323 /* car_icon.png in Resources */,
 				DC5115971AF956B60032F6DC /* ticket_icon_grey.png in Resources */,

@@ -289,20 +289,19 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
     }
     
     func ticketButtonPressed(sender: UIButton) {
+        setSelectedButton(self.ticketButton)
         self.currentFilter = "tickets"
         reloadHeatMap()
     }
     
     func priceButtonPressed(sender: UIButton) {
+        setSelectedButton(self.priceButton)
         self.currentFilter = "prices"
         reloadHeatMap()
     }
     
     func crimeButtonPressed(sender: UIButton) {
-        self.priceButton.layer.borderColor = UIColor.lightGrayColor().CGColor
-        self.ticketButton.layer.borderColor = UIColor.lightGrayColor().CGColor
-        self.crimeButton.layer.borderColor = UIColor(red: 247/255, green: 71/255, blue: 71/255, alpha: 1).CGColor
-        
+        setSelectedButton(self.crimeButton)
         self.currentFilter = "crimes"
         reloadHeatMap()
     }
@@ -312,7 +311,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
         self.priceButton.layer.borderColor = UIColor.lightGrayColor().CGColor
         self.priceButton.setImage(UIImage(named: "price_icon_grey"), forState: .Normal)
         self.ticketButton.layer.borderColor = UIColor.lightGrayColor().CGColor
-        self.priceButton.setImage(UIImage(named: "ticket_icon_grey"), forState: .Normal)
+        self.ticketButton.setImage(UIImage(named: "ticket_icon_grey"), forState: .Normal)
         self.crimeButton.layer.borderColor = UIColor.lightGrayColor().CGColor
         self.crimeButton.setImage(UIImage(named: "crime_icon_grey"), forState: .Normal)
         
