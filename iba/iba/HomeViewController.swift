@@ -106,7 +106,11 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
             if (model.isEqualToString("iPhone Simulator")) {
                 self.mapView.animateToCameraPosition(GMSCameraPosition.cameraWithLatitude(37.75941, longitude: -122.4260365, zoom: 16))
             } else {
-                self.mapView.animateToCameraPosition(GMSCameraPosition.cameraWithTarget(self.locationManager.location.coordinate, zoom: 16))
+                if (self.locationManager.location != nil) {
+                    self.mapView.animateToCameraPosition(GMSCameraPosition.cameraWithTarget(self.locationManager.location.coordinate, zoom: 16))
+                } else {
+                    self.mapView.animateToCameraPosition(GMSCameraPosition.cameraWithLatitude(37.75941, longitude: -122.4260365, zoom: 16))
+                }
             }
         }
         
@@ -247,7 +251,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
         
         // First double check to make sure push notification are enabled
         
-        if !UIApplication.sharedApplication().isRegisteredForRemoteNotifications() {
+        if UIApplication.sharedApplication().isRegisteredForRemoteNotifications() {
             let rvc = ConnectCarViewController()
             self.navigationController?.presentViewController(rvc, animated: true, completion: { () -> Void in
                 
