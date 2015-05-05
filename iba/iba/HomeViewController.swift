@@ -91,7 +91,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
             
             let lastLat = NSUserDefaults.standardUserDefaults().valueForKey("LastLat") as! CLLocationDegrees
             let lastLon = NSUserDefaults.standardUserDefaults().valueForKey("LastLon") as! CLLocationDegrees
-        
+            
             let lastCoordinate = CLLocationCoordinate2D(latitude: lastLat, longitude: lastLon)
             let lastZoom = NSUserDefaults.standardUserDefaults().valueForKey("LastZoom") as! Float
             let lastBearing = NSUserDefaults.standardUserDefaults().valueForKey("LastBearing") as! CLLocationDirection
@@ -101,7 +101,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
             self.mapView.animateToCameraPosition(lastCameraPosition)
             
         } else {
-        
+            
             let model: NSString = UIDevice.currentDevice().model as NSString
             if (model.isEqualToString("iPhone Simulator")) {
                 self.mapView.animateToCameraPosition(GMSCameraPosition.cameraWithLatitude(37.75941, longitude: -122.4260365, zoom: 16))
@@ -129,7 +129,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
         NSUserDefaults.standardUserDefaults().setValue(lastZoom, forKey: "LastZoom")
         NSUserDefaults.standardUserDefaults().setValue(lastBearing, forKey: "LastBearing")
         NSUserDefaults.standardUserDefaults().setValue(lastViewingAngle, forKey: "LastViewingAngle")
-
+        
     }
     
     deinit {
@@ -299,8 +299,35 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
     }
     
     func crimeButtonPressed(sender: UIButton) {
+        self.priceButton.layer.borderColor = UIColor.lightGrayColor().CGColor
+        self.ticketButton.layer.borderColor = UIColor.lightGrayColor().CGColor
+        self.crimeButton.layer.borderColor = UIColor(red: 247/255, green: 71/255, blue: 71/255, alpha: 1).CGColor
+        
         self.currentFilter = "crimes"
         reloadHeatMap()
+    }
+    
+    func setSelectedButton(sender: IBAButton) {
+        
+        self.priceButton.layer.borderColor = UIColor.lightGrayColor().CGColor
+        self.priceButton.setImage(UIImage(named: "price_icon_grey"), forState: .Normal)
+        self.ticketButton.layer.borderColor = UIColor.lightGrayColor().CGColor
+        self.priceButton.setImage(UIImage(named: "ticket_icon_grey"), forState: .Normal)
+        self.crimeButton.layer.borderColor = UIColor.lightGrayColor().CGColor
+        self.crimeButton.setImage(UIImage(named: "crime_icon_grey"), forState: .Normal)
+        
+        if sender == self.crimeButton {
+            self.crimeButton.layer.borderColor = UIColor(red: 247/255, green: 71/255, blue: 71/255, alpha: 1).CGColor
+            self.crimeButton.setImage(UIImage(named: "crime_icon"), forState: .Normal)
+        } else if sender == self.ticketButton {
+            self.ticketButton.layer.borderColor = UIColor(red: 247/255, green: 71/255, blue: 71/255, alpha: 1).CGColor
+            self.ticketButton.setImage(UIImage(named: "ticket_icon"), forState: .Normal)
+
+        } else if sender == self.priceButton {
+            self.priceButton.layer.borderColor = UIColor(red: 247/255, green: 71/255, blue: 71/255, alpha: 1).CGColor
+            self.priceButton.setImage(UIImage(named: "price_icon"), forState: .Normal)
+            
+        }
     }
     
     func reloadHeatMap() {
