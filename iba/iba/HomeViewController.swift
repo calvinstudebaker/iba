@@ -25,10 +25,14 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
     
     let reportButton: IBAButton
     let shareButton: IBAButton
+    let ticketButton: IBAButton
+    let priceButton: IBAButton
+    let crimeButton: IBAButton
     let stopGuidanceButton: IBAButton
     let searchField: UITextField
     
     let kButtonPadding: CGFloat = 10
+    let kButtonHeight = 45
     
     // MARK: Init Methods
     
@@ -47,6 +51,9 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
         
         self.reportButton = IBAButton(frame: CGRectZero, title: "Report", colorScheme: UIColor(red: 0.2, green: 0.6, blue: 0.86, alpha: 1), clear: false)
         self.shareButton = IBAButton(frame: CGRectZero, title: "Share", colorScheme: UIColor(red: 46/255, green: 204/255, blue: 113/255, alpha: 1), clear: false)
+        self.ticketButton = IBAButton(frame: CGRectZero, title: "", colorScheme: UIColor(red: 247/255, green: 71/255, blue: 71/255, alpha: 1), clear: false)
+        self.priceButton = IBAButton(frame: CGRectZero, title: "", colorScheme: UIColor(red: 247/255, green: 71/255, blue: 71/255, alpha: 1), clear: false)
+        self.crimeButton = IBAButton(frame: CGRectZero, title: "", colorScheme: UIColor(red: 247/255, green: 71/255, blue: 71/255, alpha: 1), clear: false)
         self.stopGuidanceButton = IBAButton(frame: CGRectZero, title: "X", colorScheme: UIColor(red: 231/255, green: 76/255, blue: 60/255, alpha: 1.0), clear: false)
         self.searchField = UITextField(frame: CGRectZero)
         
@@ -67,18 +74,19 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
         setupLocationManager()
         setupReportButton()
         setupShareButton()
+        setupTicketButton()
+        setupPriceButton()
+        setupCrimeButton()
         setupStopGuidanceButton()
+        setupNavIcon()
     }
     
     override func viewDidAppear(animated: Bool) {
-        delay(1.0, { () -> () in
-            //            let rvc = ReportViewController()
-            //            self.navigationController?.pushViewController(rvc, animated: true)
-        })
         
         triggerLocationServices()
         
-        if ((UIDevice.currentDevice().model as NSString).rangeOfString("Simulator").location != NSNotFound) {
+        let model: NSString = UIDevice.currentDevice().model as NSString
+        if (model.isEqualToString("iPhone Simulator")) {
             self.mapView.animateToCameraPosition(GMSCameraPosition.cameraWithLatitude(37.75941, longitude: -122.4260365, zoom: 16))
         } else {
             self.mapView.animateToCameraPosition(GMSCameraPosition.cameraWithTarget(self.locationManager.location.coordinate, zoom: 16))
@@ -99,6 +107,14 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
 
 
     // MARK: Setup Methods
+    
+    func setupNavIcon() {
+        var carImage: UIImage? = UIImage(named: "car_nav_icon")
+        carImage = carImage?.imageWithRenderingMode(UIImageRenderingMode.AlwaysOriginal)
+        
+        var carButton = UIBarButtonItem(image: carImage, style: UIBarButtonItemStyle.Done, target: self, action: "connectCar:")
+        navigationItem.leftBarButtonItem = carButton
+    }
     
     func setupMapView() {
         let navBarHeight = self.navigationController!.navigationBar.frame.size.height + UIApplication.sharedApplication().statusBarFrame.size.height
@@ -125,7 +141,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
         self.searchField.layer.masksToBounds = true
         self.searchField.layer.borderColor = UIColor.lightGrayColor().CGColor
         self.searchField.layer.borderWidth = 1.25
-        self.searchField.alpha = 0.95
+        self.searchField.alpha = 0.98
         self.searchField.delegate = self
         self.searchField.returnKeyType = .Done
         self.view.addSubview(self.searchField)
@@ -143,6 +159,36 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
         self.shareButton.backgroundColor = UIColor.whiteColor()
         self.shareButton.addTarget(self, action: "shareButtonPressed:", forControlEvents: .TouchUpInside)
         self.view.addSubview(self.shareButton)
+    }
+    
+    func setupTicketButton() {
+        self.ticketButton.frame = CGRectMake(self.view.bounds.size.width - kButtonPadding - 45, self.view.bounds.size.height - (kButtonPadding * 2) - (45 * 2), 45, 45)
+        self.ticketButton.backgroundColor = UIColor.whiteColor()
+        let ticketImage = UIImage(named: "ticket_icon") as UIImage?
+        ticketButton.setImage(ticketImage, forState: .Normal)
+        ticketButton.imageEdgeInsets = UIEdgeInsetsMake(5,5,5,5)
+        self.ticketButton.addTarget(self, action: "ticketButtonPressed:", forControlEvents: .TouchUpInside)
+        self.view.addSubview(self.ticketButton)
+    }
+    
+    func setupPriceButton() {
+        self.priceButton.frame = CGRectMake(self.view.bounds.size.width - kButtonPadding - 45, self.view.bounds.size.height - (kButtonPadding * 3) - (45 * 3), 45, 45)
+        self.priceButton.backgroundColor = UIColor.whiteColor()
+        let priceImage = UIImage(named: "price_icon") as UIImage?
+        priceButton.setImage(priceImage, forState: .Normal)
+        priceButton.imageEdgeInsets = UIEdgeInsetsMake(5,5,5,5)
+        self.priceButton.addTarget(self, action: "priceButtonPressed:", forControlEvents: .TouchUpInside)
+        self.view.addSubview(self.priceButton)
+    }
+    
+    func setupCrimeButton() {
+        self.crimeButton.frame = CGRectMake(self.view.bounds.size.width - kButtonPadding - 45, self.view.bounds.size.height - (kButtonPadding * 4) - (45 * 4), 45, 45)
+        self.crimeButton.backgroundColor = UIColor.whiteColor()
+        let crimeImage = UIImage(named: "crime_icon") as UIImage?
+        crimeButton.setImage(crimeImage, forState: .Normal)
+        crimeButton.imageEdgeInsets = UIEdgeInsetsMake(5,5,5,5)
+        self.crimeButton.addTarget(self, action: "crimeButtonPressed:", forControlEvents: .TouchUpInside)
+        self.view.addSubview(self.crimeButton)
     }
     
     func setupStopGuidanceButton() {
@@ -163,22 +209,65 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
     
     // MARK: Private Methods
     
+    func connectCar(sender: AnyObject) {
+        
+        // First double check to make sure push notification are enabled
+        
+        if UIApplication.sharedApplication().isRegisteredForRemoteNotifications() {
+            let rvc = ConnectCarViewController()
+            self.navigationController?.presentViewController(rvc, animated: true, completion: { () -> Void in
+                
+            })
+        } else {
+            
+            let alert = UIAlertController(title: "Slow Down There...", message: "You need to enable push notifications in settings before you do anything with a car!", preferredStyle: UIAlertControllerStyle.Alert)
+            alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: { (action: UIAlertAction!) -> Void in
+                
+            }))
+            alert.addAction(UIAlertAction(title: "Settings", style: .Default, handler: { (action: UIAlertAction!) -> Void in
+                UIApplication.sharedApplication().openURL(NSURL(string: UIApplicationOpenSettingsURLString)!)
+            }))
+            self.presentViewController(alert, animated: true, completion: nil)
+        }
+        
+    }
+    
     func reportButtonPressed(sender: UIButton) {
         let rvc = ReportViewController()
         self.navigationController?.pushViewController(rvc, animated: true)
     }
     
-    // TODO: Implement Share Features @leigh
+    
     func shareButtonPressed(sender: UIButton) {
         let textToShare = "Tired of stressing over where to park? Try Parq today!"
         
-        if let myWebsite = NSURL(string: "http://www.cs210.stanford.edu/")
+        if let myWebsite = NSURL(string: "http://www.parqtheapp.com/")
         {
             let objectsToShare = [textToShare, myWebsite]
             let activityVC = UIActivityViewController(activityItems: objectsToShare, applicationActivities: nil)
             
             self.presentViewController(activityVC, animated: true, completion: nil)
         }
+    }
+    
+    func ticketButtonPressed(sender: UIButton) {
+        //TODO: implement ticketing heatmap
+        /* IBANetworking.ticketsInRegion(self.mapView.projection.visibleRegion(), completion: {response, error in
+        self.drawHeatMapWith(tickets: response as! NSArray?)
+        })*/
+    }
+    
+    func priceButtonPressed(sender: UIButton) {
+        //TODO: implement pricing heatmap
+        /* IBANetworking.pricesInRegion(self.mapView.projection.visibleRegion(), completion: {response, error in
+        self.drawHeatMapWith(prices: response as! NSArray?)
+        })*/
+    }
+    func crimeButtonPressed(sender: UIButton) {
+        //TODO: reload cime heatmap
+        IBANetworking.crimesInRegion(self.mapView.projection.visibleRegion(), completion: {response, error in
+            self.drawHeatMapWith(crimes: response as! NSArray?)
+        })
     }
     
     func triggerLocationServices() {
@@ -251,10 +340,11 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
         let fromLocation: CLLocation
         
         // If we are using the simulator fake a start point
-        if ((UIDevice.currentDevice().model as NSString).rangeOfString("Simulator").location == NSNotFound) {
-            fromLocation = self.locationManager.location
-        } else {
+        let model: NSString = UIDevice.currentDevice().model as NSString
+        if (model.isEqualToString("iPhone Simulator")) {
             fromLocation = CLLocation(latitude: 37.4203696428215, longitude: -122.170106303061)
+        } else {
+            fromLocation = self.locationManager.location
         }
         
         self.currentMarker = GMSMarker(position: destination.coordinate)
@@ -321,11 +411,14 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
         
     }
     
-    
     func locationManager(manager: CLLocationManager!, didFailWithError error: NSError!) {
-        var alert = UIAlertController(title: "Whoops!", message: "Couldn't get location", preferredStyle: UIAlertControllerStyle.Alert)
-        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: nil))
-        self.presentViewController(alert, animated: true, completion: nil)
+        let model: NSString = UIDevice.currentDevice().model as NSString
+        if (!model.isEqualToString("iPhone Simulator")) {
+            var alert = UIAlertController(title: "Whoops!", message: "Couldn't get location", preferredStyle: UIAlertControllerStyle.Alert)
+            alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: nil))
+            self.presentViewController(alert, animated: true, completion: nil)
+            
+        }
     }
     
     func locationManager(manager: CLLocationManager!,

@@ -12,7 +12,7 @@ class MovingAlertViewController: UIViewController {
     
     var ignoreButton: UIButton;
     var trackButton: UIButton;
-    var trackView: GMSMapView;
+    var trackMapView: GMSMapView;
     
     required init(coder: NSCoder) {
         fatalError("NSCoding not supported")
@@ -23,10 +23,13 @@ class MovingAlertViewController: UIViewController {
     }
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
-        ignoreButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
-        trackButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
-        trackView = GMSMapView(frame: CGRectZero)
+        
+        self.ignoreButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
+        self.trackButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
+        self.trackMapView = GMSMapView(frame: CGRectZero)
+        
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+        
         self.setUpIgnoreButton();
         self.setUpTrackButton();
         self.setUpTrackView();
@@ -49,24 +52,25 @@ class MovingAlertViewController: UIViewController {
     //MARK: set up ignore button properties
     func setUpIgnoreButton(){
         var buttonWidth = 100;
-        ignoreButton.frame = CGRectMake(self.view.bounds.width/2 - CGFloat(buttonWidth)/2, 100, 100, 50)
-        ignoreButton.backgroundColor = UIColor.lightGrayColor()
-        ignoreButton.setTitle("Ignore", forState: UIControlState.Normal)
-        ignoreButton.addTarget(self, action: "dismissMovingAlert:", forControlEvents: UIControlEvents.TouchUpInside)
+        self.ignoreButton.frame = CGRectMake(self.view.bounds.width/2 - CGFloat(buttonWidth)/2, 100, 100, 50)
+        self.ignoreButton.backgroundColor = UIColor.lightGrayColor()
+        self.ignoreButton.setTitle("Ignore", forState: UIControlState.Normal)
+        self.ignoreButton.addTarget(self, action: "dismissMovingAlert:", forControlEvents: UIControlEvents.TouchUpInside)
     }
     
     //MARK: set up tracking button properties
     func setUpTrackButton(){
         var buttonWidth = 300;
-        trackButton.frame = CGRectMake(self.view.bounds.width/2 - CGFloat(buttonWidth)/2, 200, CGFloat(buttonWidth), 50)
-        trackButton.backgroundColor = UIColor.lightGrayColor()
-        trackButton.setTitle("Track Vehicle", forState: UIControlState.Normal)
-        trackButton.addTarget(self, action: "trackVehicle:", forControlEvents: UIControlEvents.TouchUpInside)
+        self.trackButton.frame = CGRectMake(self.view.bounds.width/2 - CGFloat(buttonWidth)/2, 200, CGFloat(buttonWidth), 50)
+        self.trackButton.backgroundColor = UIColor.lightGrayColor()
+        self.trackButton.setTitle("Track Vehicle", forState: UIControlState.Normal)
+        self.trackButton.addTarget(self, action: "trackVehicle:", forControlEvents: UIControlEvents.TouchUpInside)
     }
     
     //sets up trackView frame
     func setUpTrackView(){
-        trackView.frame = CGRectMake(0, self.view.bounds.size.height/2, self.view.bounds.size.width, self.view.bounds.size.height/2);
+        self.trackMapView.frame = CGRectMake(0, self.view.bounds.size.height/2, self.view.bounds.size.width, self.view.bounds.size.height/2);
+        self.view.addSubview(self.trackMapView)
     }
     
     //MARK: ignores moving alert, returns to home map screen
@@ -78,12 +82,7 @@ class MovingAlertViewController: UIViewController {
     //MARK: adds track subview, allowing user to follow vehicle movement
     //TO DO: reset check if trackview subview already added
     func trackVehicle(sender: AnyObject) {
-        trackView.frame = CGRectMake(0, self.view.bounds.size.height/2, self.view.bounds.size.width, self.view.bounds.size.height/2);
-        let subviews = self.view.subviews as NSArray
-        if(!subviews.containsObject(trackView)){
-            self.view.addSubview(trackView)
-            println("tracking")
-        }
+
     }
     
 

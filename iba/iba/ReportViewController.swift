@@ -132,9 +132,9 @@ class ReportViewController: UIViewController {
                 hud =  MBProgressHUD.showHUDAddedTo(self.view, animated: true)
                 hud.mode = MBProgressHUDMode.Text
                 hud.labelText = "Success"
-                hud.hide(true, afterDelay: 2.0)
+                hud.hide(true, afterDelay: 1.0)
 
-                delay(2.0, { () -> () in
+                delay(1.0, { () -> () in
                     self.navigationController?.popViewControllerAnimated(true)
                     return
                 })
