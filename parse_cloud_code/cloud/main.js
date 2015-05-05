@@ -104,26 +104,71 @@ Parse.Cloud.define("ticketsInRegion", function(request, response){
 	console.log(southwestPoint);
 	console.log(northeastPoint);
 
-	var Crime = Parse.Object.extend("CrimeSample");
-	var query = new Parse.Query(Crime);
-	query.withinGeoBox("location", southwestPoint, northeastPoint).limit(1000);
+	var Ticket = Parse.Object.extend("Ticket");
+	var query = new Parse.Query(Ticket);
+	query.withinGeoBox("location", southwestPoint, northeastPoint).limit(1500);
 	query.find({
 		success: function(results) {
 			var data = [];
-			var maxWeight = 0;
-			var minWeight = 11;
 			for (var entryIndex in results) {
 				var current = new Object();
 				var entry = results[entryIndex];
-				var weight = entry.get("weight");
+				var weight = 1;
 				current["location"] = entry.get("location");
 				current["weight"] = weight;
-				if (weight < minWeight) { minWeight = weight;}
-				if (weight > maxWeight) { maxWeight = weight;}
 				data.push(current);
 			}
-			console.log(data.length + " crimes found with a max weight of " + maxWeight
-				+ " and  min weight of " + minWeight +":");
+			console.log(data.length + " tickets found:");
+			console.log(data);
+			response.success(data);
+		},
+		error: function(error){
+			response.error("Unable to retrieve objects. Error: " + error.code + " " + error.messsage);
+		}
+	});
+});
+
+Parse.Cloud.define("pricesInRegion", function(request, response){
+	var nearLeft = request.params.nearLeft;
+	var nearRight = request.params.nearRight;
+	var farLeft = request.params.farLeft;
+	var farRight = request.params.farRight;
+
+	// console.log(nearLeft);
+	// console.log(nearLeft.latitude);
+	// console.log(nearLeft.longitude);
+
+	var minLatitude = Math.min(nearLeft.latitude, nearRight.latitude, farLeft.latitude, farRight.latitude);
+	var maxLatitude = Math.max(nearLeft.latitude, nearRight.latitude, farLeft.latitude, farRight.latitude);
+	var minLongitude = Math.min(nearLeft.longitude, nearRight.longitude, farLeft.longitude, farRight.longitude);
+	var maxLongitude = Math.max(nearLeft.longitude, nearRight.longitude, farLeft.longitude, farRight.longitude);
+
+	var southwestPoint = new Parse.GeoPoint(minLatitude, minLongitude);
+	var northeastPoint = new Parse.GeoPoint(maxLatitude, maxLongitude);
+
+	console.log(southwestPoint);
+	console.log(northeastPoint);
+
+	var ParkingMeter = Parse.Object.extend("ParkingMeter");
+	var query = new Parse.Query(ParkingMeter);
+	query.withinGeoBox("location", southwestPoint, northeastPoint).limit(2000);
+	query.find({
+		success: function(results) {
+			var data = [];
+			var minPrice = 20;
+			var maxPrice = 0;
+			for (var entryIndex in results) {
+				var current = new Object();
+				var entry = results[entryIndex];
+				var price = entry.get("hourlyRateEstimate");
+				current["location"] = entry.get("location");
+				current["weight"] = price;
+				if(price < minPrice) {minPrice = price;}
+				if(price > maxPrice) {maxPrice = price;}
+				data.push(current);
+			}
+			console.log(data.length + " meters found with a low price of " + minPrice
+				+ " and a high price of " + maxPrice + ":");
 			console.log(data);
 			response.success(data);
 		},
