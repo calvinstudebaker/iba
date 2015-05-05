@@ -178,6 +178,56 @@ Parse.Cloud.define("pricesInRegion", function(request, response){
 	});
 });
 
+Parse.Cloud.define("carStatusChanged", function(request, response) {
+	var reqParams = request.params;
+	var status = reqParams.status;
+	var car = reqParams.car;
+
+	var Car = Parse.Object.extend("Car");
+	var query = new Parse.Query(Car);
+
+	//query.equalTo("objectId", car);
+	//query.find();
+	var carId = reqParams.car;
+	query.get(carId, {
+		success: function(carObject) {
+			var isMove = carObject.get("isMoving");
+			var isPark = carObject.get("isParked");
+
+			var possibleUpdates = {
+				BEGAN: 1,
+				STOPPED: 2,
+				PARKED: 3
+			};
+
+			if (isMove && status === possibleUpdates.PARKED) {
+				carObject.save(null, {
+					success: function(carObject) {
+						carObject.set("isMoving", false);
+						carObject.set("isParked", true);
+						console.log("Switched the car status to PARKED!");
+					}
+				})
+
+			} 
+			else if (isPark && (status === possibleUpdates.BEGAN || status === possibleUpdates.STOPPED)) {
+				carObject.save(null, {
+					success: function(carObject) {
+						carObject.set("isMoving", true);
+						carObject.set("isParked", false);
+						console.log("Switched the car status to MOVING!");
+					}
+				})
+			}
+			response.success("Updated data here!");
+		},
+		error: function(object, error) {
+			console.log("Trying to find a Car failed! Error code: " + error.message);
+			response.error("Unable to find a Car! Error: " + error.code + ", " + error.message);
+		}
+	});
+});
+
 //inject initial data into ParkingMeter table from dataSF.org
 Parse.Cloud.job("putMeterData", function(request, response){
 	jobs.putMeterDataFromURL(meterDataURL, request, response);
