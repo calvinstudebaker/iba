@@ -81,6 +81,8 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
         setupCrimeButton()
         setupStopGuidanceButton()
         setupNavIcon()
+        
+        setSelectedButton(self.crimeButton)
     }
     
     override func viewDidAppear(animated: Bool) {
