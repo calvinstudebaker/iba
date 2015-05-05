@@ -249,16 +249,22 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
     
     func ticketButtonPressed(sender: UIButton) {
         //TODO: implement ticketing heatmap
-        NSLog("ticketing heatmap goes here \n");
+       /* IBANetworking.ticketsInRegion(self.mapView.projection.visibleRegion(), completion: {response, error in
+            self.drawHeatMapWith(tickets: response as! NSArray?)
+        })*/
     }
     
     func priceButtonPressed(sender: UIButton) {
         //TODO: implement pricing heatmap
-        NSLog("pricing heatmap goes here \n");
+        /* IBANetworking.pricesInRegion(self.mapView.projection.visibleRegion(), completion: {response, error in
+        self.drawHeatMapWith(prices: response as! NSArray?)
+        })*/
     }
     func crimeButtonPressed(sender: UIButton) {
         //TODO: reload cime heatmap
-        NSLog("reload crime map \n");
+        IBANetworking.crimesInRegion(self.mapView.projection.visibleRegion(), completion: {response, error in
+        self.drawHeatMapWith(crimes: response as! NSArray?)
+        })
     }
     
     func triggerLocationServices() {
