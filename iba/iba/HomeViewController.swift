@@ -274,9 +274,32 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
     
     func reportButtonPressed(sender: UIButton) {
         if (CLLocationManager.locationServicesEnabled()) {
+            
             let currentLocation = self.locationManager.location.coordinate
-            let rvc = ReportViewController(currentLocation: currentLocation)
-            self.navigationController?.pushViewController(rvc, animated: true)
+            
+            // Show loading hud
+            let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+            hud.mode = .Indeterminate
+            
+            // Reverse geocode the coordinate
+            let geocoder = GMSGeocoder()
+            geocoder.reverseGeocodeCoordinate(currentLocation, completionHandler: { (response: GMSReverseGeocodeResponse!, error: NSError!) -> Void in
+                hud.hide(true)
+                let result: GMSAddress = response.firstResult()
+                let streetName = result.thoroughfare!
+                if (!streetName.isEmpty) {
+                    let rvc = ReportViewController(currentLocation: currentLocation, streetName: streetName)
+                    self.navigationController?.pushViewController(rvc, animated: true)
+                } else {
+                    let alert = UIAlertController(title: "Whoops!", message: "We couldn't find your parking spot!", preferredStyle: UIAlertControllerStyle.Alert)
+                    alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: { (action: UIAlertAction!) -> Void in
+                        
+                    }))
+                    self.presentViewController(alert, animated: true, completion: nil)
+                }
+
+                
+            })
 
         } else {
             let alert = UIAlertController(title: "Whoops!", message: "You need to enable location services to send reports! You can do so in settings!", preferredStyle: UIAlertControllerStyle.Alert)
