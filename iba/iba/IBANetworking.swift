@@ -12,7 +12,7 @@ import CoreLocation
 
 class IBANetworking {
     
-    class func crimesInRegion(region: GMSVisibleRegion, completion: PFIdResultBlock) {
+    class func valuesInRegion(region: GMSVisibleRegion, values: String, completion: PFIdResultBlock) {
         
         let nearLeft = PFGeoPoint(latitude: region.nearLeft.latitude, longitude: region.nearLeft.longitude)
         let nearRight = PFGeoPoint(latitude: region.nearRight.latitude, longitude: region.nearRight.longitude)
@@ -21,7 +21,7 @@ class IBANetworking {
         
         let parameters = ["nearLeft": nearLeft, "nearRight": nearRight, "farLeft": farLeft, "farRight": farRight]
         
-        PFCloud.callFunctionInBackground("crimesInRegion", withParameters: parameters, block: completion)
+        PFCloud.callFunctionInBackground(values + "InRegion", withParameters: parameters, block: completion)
         
     }
     

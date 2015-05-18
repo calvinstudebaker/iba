@@ -31,6 +31,8 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
     let stopGuidanceButton: IBAButton
     let searchField: UITextField
     
+    var currentFilter: String = "crimes"
+    
     let kButtonPadding: CGFloat = 10
     let kButtonHeight = 45
     
@@ -79,18 +81,56 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
         setupCrimeButton()
         setupStopGuidanceButton()
         setupNavIcon()
+        
+        setSelectedButton(self.crimeButton)
     }
     
     override func viewDidAppear(animated: Bool) {
         
         triggerLocationServices()
         
-        let model: NSString = UIDevice.currentDevice().model as NSString
-        if (model.isEqualToString("iPhone Simulator")) {
-            self.mapView.animateToCameraPosition(GMSCameraPosition.cameraWithLatitude(37.75941, longitude: -122.4260365, zoom: 16))
+        if (NSUserDefaults.standardUserDefaults().valueForKey("LastLat") != nil) {
+            
+            let lastLat = NSUserDefaults.standardUserDefaults().valueForKey("LastLat") as! CLLocationDegrees
+            let lastLon = NSUserDefaults.standardUserDefaults().valueForKey("LastLon") as! CLLocationDegrees
+            
+            let lastCoordinate = CLLocationCoordinate2D(latitude: lastLat, longitude: lastLon)
+            let lastZoom = NSUserDefaults.standardUserDefaults().valueForKey("LastZoom") as! Float
+            let lastBearing = NSUserDefaults.standardUserDefaults().valueForKey("LastBearing") as! CLLocationDirection
+            let lastViewingAngle = NSUserDefaults.standardUserDefaults().valueForKey("LastViewingAngle") as! Double
+            
+            let lastCameraPosition: GMSCameraPosition = GMSCameraPosition(target: lastCoordinate, zoom: lastZoom, bearing: lastBearing, viewingAngle: lastViewingAngle)
+            self.mapView.animateToCameraPosition(lastCameraPosition)
+            
         } else {
-            self.mapView.animateToCameraPosition(GMSCameraPosition.cameraWithTarget(self.locationManager.location.coordinate, zoom: 16))
+            
+            let model: NSString = UIDevice.currentDevice().model as NSString
+            if (model.isEqualToString("iPhone Simulator")) {
+                self.mapView.animateToCameraPosition(GMSCameraPosition.cameraWithLatitude(37.75941, longitude: -122.4260365, zoom: 16))
+            } else {
+                if (self.locationManager.location != nil) {
+                    self.mapView.animateToCameraPosition(GMSCameraPosition.cameraWithTarget(self.locationManager.location.coordinate, zoom: 16))
+                } else {
+                    self.mapView.animateToCameraPosition(GMSCameraPosition.cameraWithLatitude(37.75941, longitude: -122.4260365, zoom: 16))
+                }
+            }
         }
+        
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        // Get the current camera location and store it in NSUserDefaults
+        let lastLat = self.mapView.camera.target.latitude
+        let lastLon = self.mapView.camera.target.longitude
+        let lastZoom = self.mapView.camera.zoom
+        let lastBearing = self.mapView.camera.bearing
+        let lastViewingAngle = self.mapView.camera.viewingAngle
+        
+        NSUserDefaults.standardUserDefaults().setValue(lastLat, forKey: "LastLat")
+        NSUserDefaults.standardUserDefaults().setValue(lastLon, forKey: "LastLon")
+        NSUserDefaults.standardUserDefaults().setValue(lastZoom, forKey: "LastZoom")
+        NSUserDefaults.standardUserDefaults().setValue(lastBearing, forKey: "LastBearing")
+        NSUserDefaults.standardUserDefaults().setValue(lastViewingAngle, forKey: "LastViewingAngle")
         
     }
     
@@ -104,8 +144,8 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
     }
     
     //TODO: Add gesture listener to switch heatmap generation @Leigh
-
-
+    
+    
     // MARK: Setup Methods
     
     func setupNavIcon() {
@@ -251,21 +291,48 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
     }
     
     func ticketButtonPressed(sender: UIButton) {
-        //TODO: implement ticketing heatmap
-        /* IBANetworking.ticketsInRegion(self.mapView.projection.visibleRegion(), completion: {response, error in
-        self.drawHeatMapWith(tickets: response as! NSArray?)
-        })*/
+        setSelectedButton(self.ticketButton)
+        self.currentFilter = "tickets"
+        reloadHeatMap()
     }
     
     func priceButtonPressed(sender: UIButton) {
-        //TODO: implement pricing heatmap
-        /* IBANetworking.pricesInRegion(self.mapView.projection.visibleRegion(), completion: {response, error in
-        self.drawHeatMapWith(prices: response as! NSArray?)
-        })*/
+        setSelectedButton(self.priceButton)
+        self.currentFilter = "prices"
+        reloadHeatMap()
     }
+    
     func crimeButtonPressed(sender: UIButton) {
-        //TODO: reload cime heatmap
-        IBANetworking.crimesInRegion(self.mapView.projection.visibleRegion(), completion: {response, error in
+        setSelectedButton(self.crimeButton)
+        self.currentFilter = "crimes"
+        reloadHeatMap()
+    }
+    
+    func setSelectedButton(sender: IBAButton) {
+        
+        self.priceButton.layer.borderColor = UIColor.lightGrayColor().CGColor
+        self.priceButton.setImage(UIImage(named: "price_icon_grey"), forState: .Normal)
+        self.ticketButton.layer.borderColor = UIColor.lightGrayColor().CGColor
+        self.ticketButton.setImage(UIImage(named: "ticket_icon_grey"), forState: .Normal)
+        self.crimeButton.layer.borderColor = UIColor.lightGrayColor().CGColor
+        self.crimeButton.setImage(UIImage(named: "crime_icon_grey"), forState: .Normal)
+        
+        if sender == self.crimeButton {
+            self.crimeButton.layer.borderColor = UIColor(red: 247/255, green: 71/255, blue: 71/255, alpha: 1).CGColor
+            self.crimeButton.setImage(UIImage(named: "crime_icon"), forState: .Normal)
+        } else if sender == self.ticketButton {
+            self.ticketButton.layer.borderColor = UIColor(red: 247/255, green: 71/255, blue: 71/255, alpha: 1).CGColor
+            self.ticketButton.setImage(UIImage(named: "ticket_icon"), forState: .Normal)
+
+        } else if sender == self.priceButton {
+            self.priceButton.layer.borderColor = UIColor(red: 247/255, green: 71/255, blue: 71/255, alpha: 1).CGColor
+            self.priceButton.setImage(UIImage(named: "price_icon"), forState: .Normal)
+            
+        }
+    }
+    
+    func reloadHeatMap() {
+        IBANetworking.valuesInRegion(self.mapView.projection.visibleRegion(), values: self.currentFilter, completion: {response, error in
             self.drawHeatMapWith(crimes: response as! NSArray?)
         })
     }
@@ -376,7 +443,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
         self.currentOverlay.map = nil;
         
         if (crimes == nil || crimes!.count == 0) {
-            displayErrorWithMessage("No Crimes in this region!")
+            displayErrorWithMessage("No " + self.currentFilter + " in this region!")
             return
         }
         
@@ -432,13 +499,8 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
     // MARK: GMSMapViewDelegate Methods
     
     func mapView(mapView: GMSMapView!, idleAtCameraPosition position: GMSCameraPosition!) {
-        
-        IBANetworking.crimesInRegion(self.mapView.projection.visibleRegion(), completion: {response, error in
-            self.drawHeatMapWith(crimes: response as! NSArray?)
-        })
+        reloadHeatMap()
     }
-
-    //TODO: Make separate functions crimeMapView, priceMapView, ticketMapView that call different IBANetworking functions to produce different heatMaps @Leigh
     
     // MARK: UITextfield Delegate Methods
     
