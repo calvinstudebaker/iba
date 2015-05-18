@@ -18,6 +18,8 @@ class ReportViewController: UIViewController {
     let spotPriceRateItem: IBARateItemView
     let ticketPriceRateItem: IBARateItemView
     
+    var currentLocation: CLLocationCoordinate2D
+    
     let descriptionLabel: UILabel
     let submitButton: IBAButton
     
@@ -33,6 +35,12 @@ class ReportViewController: UIViewController {
         self.init(nibName: nil, bundle: nil)
     }
     
+    convenience init(currentLocation: CLLocationCoordinate2D) {
+        self.init();
+        self.currentLocation = currentLocation;
+
+    }
+    
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
         
         // Setup the rate items
@@ -40,6 +48,8 @@ class ReportViewController: UIViewController {
         self.damageRateItem = IBARateItemView(title: "Damage to vehicle", lowText: "none", highText: "lots")
         self.spotPriceRateItem = IBARateItemView(title: "Price of spot", lowText: "free", highText: "expensive")
         self.ticketPriceRateItem = IBARateItemView(title: "Price of ticket", lowText: "no ticket", highText: "$100+")
+        
+        self.currentLocation = CLLocationCoordinate2DMake(0, 0)
         
         self.scrollView = UIScrollView(frame: CGRectZero)
         self.scrollView.alwaysBounceVertical = true
@@ -154,7 +164,7 @@ class ReportViewController: UIViewController {
         let damagePercent = self.damageRateItem.currentValue
         let spotPricePercent = self.spotPriceRateItem.currentValue
         let ticketPricePercent = self.ticketPriceRateItem.currentValue
-        let location = CLLocation(latitude: 37.7833, longitude: -122.41)
+        let location = CLLocation(latitude: self.currentLocation.latitude, longitude: self.currentLocation.longitude)
         
         let dict: [String: AnyObject] = [
             "easePercent": easePercent,

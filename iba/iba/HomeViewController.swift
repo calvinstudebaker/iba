@@ -273,8 +273,21 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
     }
     
     func reportButtonPressed(sender: UIButton) {
-        let rvc = ReportViewController()
-        self.navigationController?.pushViewController(rvc, animated: true)
+        if (CLLocationManager.locationServicesEnabled()) {
+            let currentLocation = self.locationManager.location.coordinate
+            let rvc = ReportViewController(currentLocation: currentLocation)
+            self.navigationController?.pushViewController(rvc, animated: true)
+
+        } else {
+            let alert = UIAlertController(title: "Whoops!", message: "You need to enable location services to send reports! You can do so in settings!", preferredStyle: UIAlertControllerStyle.Alert)
+            alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: { (action: UIAlertAction!) -> Void in
+                
+            }))
+            alert.addAction(UIAlertAction(title: "Settings", style: .Default, handler: { (action: UIAlertAction!) -> Void in
+                UIApplication.sharedApplication().openURL(NSURL(string: UIApplicationOpenSettingsURLString)!)
+            }))
+            self.presentViewController(alert, animated: true, completion: nil)
+        }
     }
     
     
