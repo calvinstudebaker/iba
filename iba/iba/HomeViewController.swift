@@ -273,9 +273,18 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
     }
     
     func reportButtonPressed(sender: UIButton) {
-        if (CLLocationManager.locationServicesEnabled()) {
+    
+        let model: NSString = UIDevice.currentDevice().model as NSString
+
+        if (CLLocationManager.locationServicesEnabled() || model.isEqualToString("iPhone Simulator")) {
             
-            let currentLocation = self.locationManager.location.coordinate
+            var currentLocation = CLLocationCoordinate2DMake(0, 0)
+            
+            if (model.isEqualToString("iPhone Simulator")) {
+                currentLocation = CLLocation(latitude: 37.4203696428215, longitude: -122.170106303061).coordinate
+            } else {
+                self.locationManager.location.coordinate
+            }
             
             // Show loading hud
             let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)

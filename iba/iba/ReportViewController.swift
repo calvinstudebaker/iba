@@ -120,6 +120,7 @@ class ReportViewController: UIViewController {
         self.submitButton.frame = CGRectMake(kRateItemPadding, originY + kRateItemPadding, self.view.frame.size.width - (kRateItemPadding * 2), kRateItemHeight/2)
         
         self.scrollView.frame = self.view.frame
+        self.scrollView.contentSize = CGSizeMake(self.view.bounds.size.width, originY + self.submitButton.frame.size.height + kRateItemPadding*2)
         
         // Add them as subviews
         self.view.addSubview(self.scrollView)
