@@ -37,44 +37,43 @@ fieldnames = (
 reader = csv.DictReader( csvfile, fieldnames)
 arr = []
 rowCount = 0
+try:
+	for row in reader:
+		if row["ticket_id"] == "ticket_id": continue
+		if rowCount > 2000 : break
+		rowCount+=1
+		d = dict()
 
-for row in reader:
-	if row["ticket_id"] == "ticket_id": continue
-	if rowCount > 1500 : break
-	rowCount+=1
-	d = dict()
+		csvDate = row["issue_datetime"]
+		tokens = csvDate.split()
+		date = tokens[0]
+		timeOfDay = tokens[1]
+		dateTime = date + "T" + timeOfDay + ".000Z"
+		d["timestamp"] = {"__type": "Date", "iso": dateTime}
 
-	csvDate = row["issue_datetime"]
-	tokens = csvDate.split()
-	date = tokens[0]
-	timeOfDay = tokens[1]
-	dateTime = date + "T" + timeOfDay + ".000Z"
-	d["timestamp"] = {"__type": "Date", "iso": dateTime}
+		d["ticketId"] = row["ticket_id"]
+		d["violationId"] = row["violation"]
+		d["violationDescription"] = row["violation_description"]
 
-	d["ticketId"] = row["ticket_id"]
-	d["violationId"] = row["violation"]
-	d["violationDescription"] = row["violation_description"]
+		address = row["location"]
+		d["address"] = address
 
-	address = row["location"]
-	d["address"] = address
+		url = "http://maps.googleapis.com/maps/api/geocode/json?address=" + address.replace(" ", "+") + ",+San+Francisco"
+		response = urllib2.urlopen(url)
+		data = json.load(response)
+		if data['status'] == 'OK':
+			location = data["results"][0]["geometry"]["location"]
+			d["location"] = {"__type": "GeoPoint", "latitude" : float(location["lat"]), "longitude" : float(location["lng"])}
 
-	url = "http://maps.googleapis.com/maps/api/geocode/json?address=" + address.replace(" ", "+") + ",+San+Francisco"
-	response = urllib2.urlopen(url)
-	data = json.load(response)
-	if data['status'] == 'OK':
-		location = data["results"][0]["geometry"]["location"]
-		d["location"] = {"__type": "GeoPoint", "latitude" : float(location["lat"]), "longitude" : float(location["lng"])}
+			arr.append(d)
+			
+		else:
+			print(data['status'])
+			print(rowCount)
+			print(data)
 
-		arr.append(d)
-		
-	else:
-		print(data['status'])
-		print(rowCount)
-		print(data)
-
-	#pause to not exceed google api usage limits
-	time.sleep(3)
-
-
-json.dump({"results" : arr}, jsonfile)
-print("done")
+		#pause to not exceed google api usage limits
+		time.sleep(2)
+finally:
+	json.dump({"results" : arr}, jsonfile)
+	print("done")
