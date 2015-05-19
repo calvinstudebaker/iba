@@ -1,0 +1,2158 @@
+{ "results": [
+	{
+        "addresss": "800 Block of SUTTER ST",
+        "category": "VANDALISM",
+        "createdAt": "2015-03-09T10:39:21.451Z",
+        "descript": "MALICIOUS MISCHIEF, VANDALISM",
+        "indicentId": 1.56043615e+08,
+        "location": {
+            "__type": "GeoPoint",
+            "latitude": 37.7884368260567,
+            "longitude": -122.414368110368
+        },
+        "objectId": "M43eMlUp3M",
+        "pdDiscrict": "CENTRAL",
+        "pdId": 1.560436152815e+13,
+        "resolution": "NONE",
+        "timestamp": {
+            "__type": "Date",
+            "iso": "2015-02-22T21:30:00.000Z"
+        },
+        "updatedAt": "2015-03-09T10:39:21.451Z",
+        "weight": 5
+    },
+	{
+        "addresss": "200 Block of PAUL AV",
+        "category": "ASSAULT",
+        "createdAt": "2015-03-09T10:39:21.460Z",
+        "descript": "THREATS AGAINST LIFE",
+        "indicentId": 1.50161704e+08,
+        "location": {
+            "__type": "GeoPoint",
+            "latitude": 37.7229041567607,
+            "longitude": -122.398034500753
+        },
+        "objectId": "I0ekVUrktQ",
+        "pdDiscrict": "BAYVIEW",
+        "pdId": 1.5016170419057e+13,
+        "resolution": "NONE",
+        "timestamp": {
+            "__type": "Date",
+            "iso": "2015-02-22T15:25:00.000Z"
+        },
+        "updatedAt": "2015-03-09T10:39:21.460Z",
+        "weight": 10
+    },
+	{
+        "addresss": "200 Block of PAUL AV",
+        "category": "TRESPASS",
+        "createdAt": "2015-03-09T10:39:21.468Z",
+        "descript": "TRESPASSING",
+        "indicentId": 1.50161704e+08,
+        "location": {
+            "__type": "GeoPoint",
+            "latitude": 37.7229041567607,
+            "longitude": -122.398034500753
+        },
+        "objectId": "VMjWpyczlF",
+        "pdDiscrict": "BAYVIEW",
+        "pdId": 1.5016170427195e+13,
+        "resolution": "NONE",
+        "timestamp": {
+            "__type": "Date",
+            "iso": "2015-02-22T15:25:00.000Z"
+        },
+        "updatedAt": "2015-03-09T10:39:21.468Z",
+        "weight": 4
+    },
+	{
+        "addresss": "SCOTT ST / BUSH ST",
+        "category": "LARCENY/THEFT",
+        "createdAt": "2015-03-09T10:39:21.476Z",
+        "descript": "GRAND THEFT FROM LOCKED AUTO",
+        "indicentId": 1.56043273e+08,
+        "location": {
+            "__type": "GeoPoint",
+            "latitude": 37.7863922340602,
+            "longitude": -122.438394869495
+        },
+        "objectId": "KfSRy5OIOQ",
+        "pdDiscrict": "RICHMOND",
+        "pdId": 1.5604327306244e+13,
+        "resolution": "NONE",
+        "timestamp": {
+            "__type": "Date",
+            "iso": "2015-02-22T15:00:00.000Z"
+        },
+        "updatedAt": "2015-03-09T10:39:21.476Z",
+        "weight": 10
+    },
+	{
+        "addresss": "GEARY BL / CLEARY CT",
+        "category": "LARCENY/THEFT",
+        "createdAt": "2015-03-09T10:39:21.483Z",
+        "descript": "GRAND THEFT FROM UNLOCKED AUTO",
+        "indicentId": 1.56043239e+08,
+        "location": {
+            "__type": "GeoPoint",
+            "latitude": 37.7851513851678,
+            "longitude": -122.426449161534
+        },
+        "objectId": "FgjHXzNhuj",
+        "pdDiscrict": "NORTHERN",
+        "pdId": 1.5604323906224e+13,
+        "resolution": "NONE",
+        "timestamp": {
+            "__type": "Date",
+            "iso": "2015-02-22T10:00:00.000Z"
+        },
+        "updatedAt": "2015-03-09T10:39:21.483Z",
+        "weight": 10
+    },
+	{
+        "addresss": "100 Block of JEFFERSON ST",
+        "category": "LARCENY/THEFT",
+        "createdAt": "2015-03-09T10:39:21.491Z",
+        "descript": "GRAND THEFT FROM LOCKED AUTO",
+        "indicentId": 1.56043637e+08,
+        "location": {
+            "__type": "GeoPoint",
+            "latitude": 37.8082613305439,
+            "longitude": -122.414988252591
+        },
+        "objectId": "bxsQEFcTw4",
+        "pdDiscrict": "CENTRAL",
+        "pdId": 1.5604363706244e+13,
+        "resolution": "NONE",
+        "timestamp": {
+            "__type": "Date",
+            "iso": "2015-02-22T09:35:00.000Z"
+        },
+        "updatedAt": "2015-03-09T10:39:21.491Z",
+        "weight": 10
+    },
+	{
+        "addresss": "500 Block of MONTGOMERY ST",
+        "category": "LARCENY/THEFT",
+        "createdAt": "2015-03-09T10:39:21.500Z",
+        "descript": "GRAND THEFT FROM LOCKED AUTO",
+        "indicentId": 1.56043643e+08,
+        "location": {
+            "__type": "GeoPoint",
+            "latitude": 37.7940204426882,
+            "longitude": -122.402936610374
+        },
+        "objectId": "Fqzxu96lr0",
+        "pdDiscrict": "CENTRAL",
+        "pdId": 1.5604364306244e+13,
+        "resolution": "NONE",
+        "timestamp": {
+            "__type": "Date",
+            "iso": "2015-02-22T05:47:00.000Z"
+        },
+        "updatedAt": "2015-03-09T10:39:21.500Z",
+        "weight": 10
+    },
+	{
+        "addresss": "POST ST / STOCKTON ST",
+        "category": "LARCENY/THEFT",
+        "createdAt": "2015-03-09T10:39:21.508Z",
+        "descript": "GRAND THEFT FROM UNLOCKED AUTO",
+        "indicentId": 1.56043659e+08,
+        "location": {
+            "__type": "GeoPoint",
+            "latitude": 37.7884982866148,
+            "longitude": -122.406775392392
+        },
+        "objectId": "PZZPjeAKh3",
+        "pdDiscrict": "CENTRAL",
+        "pdId": 1.5604365906224e+13,
+        "resolution": "NONE",
+        "timestamp": {
+            "__type": "Date",
+            "iso": "2015-02-22T04:00:00.000Z"
+        },
+        "updatedAt": "2015-03-09T10:39:21.508Z",
+        "weight": 10
+    },
+	{
+        "addresss": "SANSOME ST / PACIFIC AV",
+        "category": "LARCENY/THEFT",
+        "createdAt": "2015-03-09T10:39:21.516Z",
+        "descript": "GRAND THEFT FROM LOCKED AUTO",
+        "indicentId": 1.56043609e+08,
+        "location": {
+            "__type": "GeoPoint",
+            "latitude": 37.7975048898339,
+            "longitude": -122.402042584193
+        },
+        "objectId": "EMRtXCEx8y",
+        "pdDiscrict": "CENTRAL",
+        "pdId": 1.5604360906244e+13,
+        "resolution": "NONE",
+        "timestamp": {
+            "__type": "Date",
+            "iso": "2015-02-21T23:11:00.000Z"
+        },
+        "updatedAt": "2015-03-09T10:39:21.516Z",
+        "weight": 10
+    },
+	{
+        "addresss": "3RD ST / JERROLD AV",
+        "category": "NON-CRIMINAL",
+        "createdAt": "2015-03-09T10:39:21.523Z",
+        "descript": "FOUND PROPERTY",
+        "indicentId": 1.50161986e+08,
+        "location": {
+            "__type": "GeoPoint",
+            "latitude": 37.738741839511,
+            "longitude": -122.389310644607
+        },
+        "objectId": "upX2qeR3oP",
+        "pdDiscrict": "BAYVIEW",
+        "pdId": 1.5016198672e+13,
+        "resolution": "NONE",
+        "timestamp": {
+            "__type": "Date",
+            "iso": "2015-02-21T22:00:00.000Z"
+        },
+        "updatedAt": "2015-03-09T10:39:21.523Z",
+        "weight": 1
+    },
+	{
+        "addresss": "STOCKTON ST / CAMPTON PL",
+        "category": "LARCENY/THEFT",
+        "createdAt": "2015-03-09T10:39:21.531Z",
+        "descript": "GRAND THEFT FROM LOCKED AUTO",
+        "indicentId": 1.56043596e+08,
+        "location": {
+            "__type": "GeoPoint",
+            "latitude": 37.7889857451928,
+            "longitude": -122.406867519472
+        },
+        "objectId": "StIb9YnDoh",
+        "pdDiscrict": "CENTRAL",
+        "pdId": 1.5604359606244e+13,
+        "resolution": "NONE",
+        "timestamp": {
+            "__type": "Date",
+            "iso": "2015-02-21T22:00:00.000Z"
+        },
+        "updatedAt": "2015-03-09T10:39:21.531Z",
+        "weight": 10
+    },
+	{
+        "addresss": "400 Block of BURNETT AV",
+        "category": "LARCENY/THEFT",
+        "createdAt": "2015-03-09T10:39:21.539Z",
+        "descript": "GRAND THEFT FROM LOCKED AUTO",
+        "indicentId": 1.56043148e+08,
+        "location": {
+            "__type": "GeoPoint",
+            "latitude": 37.7560038618907,
+            "longitude": -122.444203110408
+        },
+        "objectId": "CyeFZbCNSd",
+        "pdDiscrict": "PARK",
+        "pdId": 1.5604314806244e+13,
+        "resolution": "NONE",
+        "timestamp": {
+            "__type": "Date",
+            "iso": "2015-02-21T22:00:00.000Z"
+        },
+        "updatedAt": "2015-03-09T10:39:21.539Z",
+        "weight": 10
+    },
+	{
+        "addresss": "GEARY ST / STOCKTON ST",
+        "category": "LARCENY/THEFT",
+        "createdAt": "2015-03-09T10:39:21.546Z",
+        "descript": "GRAND THEFT BICYCLE",
+        "indicentId": 1.56042924e+08,
+        "location": {
+            "__type": "GeoPoint",
+            "latitude": 37.7875673013055,
+            "longitude": -122.406592269796
+        },
+        "objectId": "PslSfyEEpS",
+        "pdDiscrict": "CENTRAL",
+        "pdId": 1.5604292406314e+13,
+        "resolution": "NONE",
+        "timestamp": {
+            "__type": "Date",
+            "iso": "2015-02-21T21:30:00.000Z"
+        },
+        "updatedAt": "2015-03-09T10:39:21.546Z",
+        "weight": 10
+    },
+	{
+        "addresss": "500 Block of HAIGHT ST",
+        "category": "LARCENY/THEFT",
+        "createdAt": "2015-03-09T10:39:21.554Z",
+        "descript": "GRAND THEFT FROM LOCKED AUTO",
+        "indicentId": 1.56043182e+08,
+        "location": {
+            "__type": "GeoPoint",
+            "latitude": 37.7720549755537,
+            "longitude": -122.431289969136
+        },
+        "objectId": "BNdDQz39HX",
+        "pdDiscrict": "NORTHERN",
+        "pdId": 1.5604318206244e+13,
+        "resolution": "NONE",
+        "timestamp": {
+            "__type": "Date",
+            "iso": "2015-02-21T20:40:00.000Z"
+        },
+        "updatedAt": "2015-03-09T10:39:21.554Z",
+        "weight": 10
+    },
+	{
+        "addresss": "400 Block of GEARY ST",
+        "category": "LARCENY/THEFT",
+        "createdAt": "2015-03-09T10:39:21.562Z",
+        "descript": "GRAND THEFT FROM LOCKED AUTO",
+        "indicentId": 1.56042952e+08,
+        "location": {
+            "__type": "GeoPoint",
+            "latitude": 37.7869881885308,
+            "longitude": -122.410699657634
+        },
+        "objectId": "dxFG0tZSH2",
+        "pdDiscrict": "CENTRAL",
+        "pdId": 1.5604295206244e+13,
+        "resolution": "NONE",
+        "timestamp": {
+            "__type": "Date",
+            "iso": "2015-02-21T19:30:00.000Z"
+        },
+        "updatedAt": "2015-03-09T10:39:21.562Z",
+        "weight": 10
+    },
+	{
+        "addresss": "100 Block of CHANNEL ST",
+        "category": "NON-CRIMINAL",
+        "createdAt": "2015-03-09T10:39:21.570Z",
+        "descript": "AIDED CASE, MENTAL DISTURBED",
+        "indicentId": 1.50161362e+08,
+        "location": {
+            "__type": "GeoPoint",
+            "latitude": 37.7743792347808,
+            "longitude": -122.390753273663
+        },
+        "objectId": "JWh6aaLpa5",
+        "pdDiscrict": "BAYVIEW",
+        "pdId": 1.501613626402e+13,
+        "resolution": "NONE",
+        "timestamp": {
+            "__type": "Date",
+            "iso": "2015-02-21T19:24:00.000Z"
+        },
+        "updatedAt": "2015-03-09T10:39:21.570Z",
+        "weight": 1
+    },
+	{
+        "addresss": "800 Block of BRYANT ST",
+        "category": "LARCENY/THEFT",
+        "createdAt": "2015-03-09T10:39:21.578Z",
+        "descript": "GRAND THEFT FROM LOCKED AUTO",
+        "indicentId": 1.56043267e+08,
+        "location": {
+            "__type": "GeoPoint",
+            "latitude": 37.775420706711,
+            "longitude": -122.403404791479
+        },
+        "objectId": "lEvMjQ84kT",
+        "pdDiscrict": "SOUTHERN",
+        "pdId": 1.5604326706244e+13,
+        "resolution": "NONE",
+        "timestamp": {
+            "__type": "Date",
+            "iso": "2015-02-21T19:10:00.000Z"
+        },
+        "updatedAt": "2015-03-09T10:39:21.578Z",
+        "weight": 10
+    },
+	{
+        "addresss": "ELLIS ST / FRANKLIN ST",
+        "category": "LARCENY/THEFT",
+        "createdAt": "2015-03-09T10:39:21.587Z",
+        "descript": "GRAND THEFT FROM LOCKED AUTO",
+        "indicentId": 1.56043201e+08,
+        "location": {
+            "__type": "GeoPoint",
+            "latitude": 37.7836201224351,
+            "longitude": -122.422654162984
+        },
+        "objectId": "kdfLLIyHHL",
+        "pdDiscrict": "NORTHERN",
+        "pdId": 1.5604320106244e+13,
+        "resolution": "NONE",
+        "timestamp": {
+            "__type": "Date",
+            "iso": "2015-02-21T19:00:00.000Z"
+        },
+        "updatedAt": "2015-03-09T10:39:21.587Z",
+        "weight": 10
+    },
+	{
+        "addresss": "THE EMBARCADERONORTH ST / BATTERY ST",
+        "category": "LARCENY/THEFT",
+        "createdAt": "2015-03-09T10:39:21.595Z",
+        "descript": "GRAND THEFT FROM UNLOCKED AUTO",
+        "indicentId": 1.56042918e+08,
+        "location": {
+            "__type": "GeoPoint",
+            "latitude": 37.8042568095058,
+            "longitude": -122.402038998271
+        },
+        "objectId": "jq9OkwVtew",
+        "pdDiscrict": "CENTRAL",
+        "pdId": 1.5604291806224e+13,
+        "resolution": "NONE",
+        "timestamp": {
+            "__type": "Date",
+            "iso": "2015-02-21T18:59:00.000Z"
+        },
+        "updatedAt": "2015-03-09T10:39:21.595Z",
+        "weight": 10
+    },
+	{
+        "addresss": "0 Block of CRESTLINE DR",
+        "category": "LARCENY/THEFT",
+        "createdAt": "2015-03-09T10:39:21.609Z",
+        "descript": "GRAND THEFT FROM LOCKED AUTO",
+        "indicentId": 1.56043154e+08,
+        "location": {
+            "__type": "GeoPoint",
+            "latitude": 37.750241057883,
+            "longitude": -122.446432100907
+        },
+        "objectId": "Oo6qMiP6sz",
+        "pdDiscrict": "PARK",
+        "pdId": 1.5604315406244e+13,
+        "resolution": "NONE",
+        "timestamp": {
+            "__type": "Date",
+            "iso": "2015-02-21T18:30:00.000Z"
+        },
+        "updatedAt": "2015-03-09T10:39:21.609Z",
+        "weight": 10
+    },
+	{
+        "addresss": "GOUGH ST / OAK ST",
+        "category": "LARCENY/THEFT",
+        "createdAt": "2015-03-09T10:39:21.617Z",
+        "descript": "GRAND THEFT FROM LOCKED AUTO",
+        "indicentId": 1.56042883e+08,
+        "location": {
+            "__type": "GeoPoint",
+            "latitude": 37.7750203945871,
+            "longitude": -122.42260112019
+        },
+        "objectId": "XjCucHF3Jf",
+        "pdDiscrict": "NORTHERN",
+        "pdId": 1.5604288306244e+13,
+        "resolution": "NONE",
+        "timestamp": {
+            "__type": "Date",
+            "iso": "2015-02-21T17:35:00.000Z"
+        },
+        "updatedAt": "2015-03-09T10:39:21.617Z",
+        "weight": 10
+    },
+	{
+        "addresss": "POST ST / GRANT AV",
+        "category": "LARCENY/THEFT",
+        "createdAt": "2015-03-09T10:39:21.625Z",
+        "descript": "GRAND THEFT FROM LOCKED AUTO",
+        "indicentId": 1.56042974e+08,
+        "location": {
+            "__type": "GeoPoint",
+            "latitude": 37.7886936920129,
+            "longitude": -122.405222821755
+        },
+        "objectId": "hGWMHq1Tt9",
+        "pdDiscrict": "CENTRAL",
+        "pdId": 1.5604297406244e+13,
+        "resolution": "NONE",
+        "timestamp": {
+            "__type": "Date",
+            "iso": "2015-02-21T17:15:00.000Z"
+        },
+        "updatedAt": "2015-03-09T10:39:21.625Z",
+        "weight": 10
+    },
+	{
+        "addresss": "1800 Block of FELL ST",
+        "category": "VEHICLE THEFT",
+        "createdAt": "2015-03-09T10:39:21.632Z",
+        "descript": "STOLEN AUTOMOBILE",
+        "indicentId": 1.50161691e+08,
+        "location": {
+            "__type": "GeoPoint",
+            "latitude": 37.7727368789292,
+            "longitude": -122.448347056211
+        },
+        "objectId": "VT2WKXn4QH",
+        "pdDiscrict": "PARK",
+        "pdId": 1.5016169107021e+13,
+        "resolution": "NONE",
+        "timestamp": {
+            "__type": "Date",
+            "iso": "2015-02-21T17:00:00.000Z"
+        },
+        "updatedAt": "2015-03-09T10:39:21.632Z",
+        "weight": 10
+    },
+	{
+        "addresss": "500 Block of TURK ST",
+        "category": "LARCENY/THEFT",
+        "createdAt": "2015-03-09T10:39:21.640Z",
+        "descript": "GRAND THEFT FROM LOCKED AUTO",
+        "indicentId": 1.56042899e+08,
+        "location": {
+            "__type": "GeoPoint",
+            "latitude": 37.7823263368922,
+            "longitude": -122.418192861208
+        },
+        "objectId": "KnsGyPok77",
+        "pdDiscrict": "NORTHERN",
+        "pdId": 1.5604289906244e+13,
+        "resolution": "NONE",
+        "timestamp": {
+            "__type": "Date",
+            "iso": "2015-02-21T17:00:00.000Z"
+        },
+        "updatedAt": "2015-03-09T10:39:21.640Z",
+        "weight": 10
+    },
+	{
+        "addresss": "1000 Block of JUNIPERO SERRA BL",
+        "category": "VEHICLE THEFT",
+        "createdAt": "2015-03-09T10:39:21.648Z",
+        "descript": "STOLEN AUTOMOBILE",
+        "indicentId": 1.50161817e+08,
+        "location": {
+            "__type": "GeoPoint",
+            "latitude": 37.7178681219403,
+            "longitude": -122.472711742243
+        },
+        "objectId": "3Crq0WTwq2",
+        "pdDiscrict": "TARAVAL",
+        "pdId": 1.5016181707021e+13,
+        "resolution": "NONE",
+        "timestamp": {
+            "__type": "Date",
+            "iso": "2015-02-21T16:30:00.000Z"
+        },
+        "updatedAt": "2015-03-09T10:39:21.648Z",
+        "weight": 10
+    },
+	{
+        "addresss": "300 Block of JEFFERSON ST",
+        "category": "LARCENY/THEFT",
+        "createdAt": "2015-03-09T10:39:21.656Z",
+        "descript": "PETTY THEFT OF PROPERTY",
+        "indicentId": 1.5604293e+08,
+        "location": {
+            "__type": "GeoPoint",
+            "latitude": 37.8078519838014,
+            "longitude": -122.418270696719
+        },
+        "objectId": "lSdXRpFNui",
+        "pdDiscrict": "CENTRAL",
+        "pdId": 1.5604293006372e+13,
+        "resolution": "NONE",
+        "timestamp": {
+            "__type": "Date",
+            "iso": "2015-02-21T16:30:00.000Z"
+        },
+        "updatedAt": "2015-03-09T10:39:21.656Z",
+        "weight": 10
+    },
+	{
+        "addresss": "700 Block of MARKET ST",
+        "category": "LARCENY/THEFT",
+        "createdAt": "2015-03-09T10:39:21.664Z",
+        "descript": "PETTY THEFT SHOPLIFTING",
+        "indicentId": 1.50160966e+08,
+        "location": {
+            "__type": "GeoPoint",
+            "latitude": 37.7871160984672,
+            "longitude": -122.403919148357
+        },
+        "objectId": "DHbNjhU4df",
+        "pdDiscrict": "SOUTHERN",
+        "pdId": 1.5016096606363e+13,
+        "resolution": "NONE",
+        "timestamp": {
+            "__type": "Date",
+            "iso": "2015-02-21T16:28:00.000Z"
+        },
+        "updatedAt": "2015-03-09T10:39:21.664Z",
+        "weight": 10
+    },
+	{
+        "addresss": "JOHNFKENNEDY DR / 30TH AV",
+        "category": "LARCENY/THEFT",
+        "createdAt": "2015-03-09T10:39:21.671Z",
+        "descript": "GRAND THEFT FROM LOCKED AUTO",
+        "indicentId": 1.56043079e+08,
+        "location": {
+            "__type": "GeoPoint",
+            "latitude": 37.7708917848848,
+            "longitude": -122.489804747862
+        },
+        "objectId": "PWGjASnT1X",
+        "pdDiscrict": "RICHMOND",
+        "pdId": 1.5604307906244e+13,
+        "resolution": "NONE",
+        "timestamp": {
+            "__type": "Date",
+            "iso": "2015-02-21T16:20:00.000Z"
+        },
+        "updatedAt": "2015-03-09T10:39:21.671Z",
+        "weight": 10
+    },
+	{
+        "addresss": "1900 Block of 15TH ST",
+        "category": "NON-CRIMINAL",
+        "createdAt": "2015-03-09T10:39:21.680Z",
+        "descript": "FIRE REPORT",
+        "indicentId": 1.50160916e+08,
+        "location": {
+            "__type": "GeoPoint",
+            "latitude": 37.7661073531609,
+            "longitude": -122.428282992711
+        },
+        "objectId": "My8W936AGI",
+        "pdDiscrict": "MISSION",
+        "pdId": 1.5016091668e+13,
+        "resolution": "NONE",
+        "timestamp": {
+            "__type": "Date",
+            "iso": "2015-02-21T16:00:00.000Z"
+        },
+        "updatedAt": "2015-03-09T10:39:21.680Z",
+        "weight": 1
+    },
+	{
+        "addresss": "400 Block of STOCKTON ST",
+        "category": "VEHICLE THEFT",
+        "createdAt": "2015-03-09T10:39:21.688Z",
+        "descript": "STOLEN AUTOMOBILE",
+        "indicentId": 1.50161356e+08,
+        "location": {
+            "__type": "GeoPoint",
+            "latitude": 37.789918101686,
+            "longitude": -122.406977563692
+        },
+        "objectId": "rHpw9SCknq",
+        "pdDiscrict": "CENTRAL",
+        "pdId": 1.5016135607021e+13,
+        "resolution": "NONE",
+        "timestamp": {
+            "__type": "Date",
+            "iso": "2015-02-21T16:00:00.000Z"
+        },
+        "updatedAt": "2015-03-09T10:39:21.688Z",
+        "weight": 10
+    },
+	{
+        "addresss": "1700 Block of 35TH AV",
+        "category": "NON-CRIMINAL",
+        "createdAt": "2015-03-09T10:39:21.696Z",
+        "descript": "LOCATED PROPERTY",
+        "indicentId": 1.50160944e+08,
+        "location": {
+            "__type": "GeoPoint",
+            "latitude": 37.7543968656925,
+            "longitude": -122.493752455456
+        },
+        "objectId": "ChciUa3A5c",
+        "pdDiscrict": "TARAVAL",
+        "pdId": 1.5016094473001e+13,
+        "resolution": "NONE",
+        "timestamp": {
+            "__type": "Date",
+            "iso": "2015-02-21T16:00:00.000Z"
+        },
+        "updatedAt": "2015-03-09T10:39:21.696Z",
+        "weight": 1
+    },
+	{
+        "addresss": "3900 Block of 18TH ST",
+        "category": "ASSAULT",
+        "createdAt": "2015-03-09T10:39:21.704Z",
+        "descript": "AGGRAVATED ASSAULT WITH BODILY FORCE",
+        "indicentId": 1.50160922e+08,
+        "location": {
+            "__type": "GeoPoint",
+            "latitude": 37.7611418813327,
+            "longitude": -122.431710082584
+        },
+        "objectId": "hlW2TaeaYX",
+        "pdDiscrict": "MISSION",
+        "pdId": 1.5016092204014e+13,
+        "resolution": "NONE",
+        "timestamp": {
+            "__type": "Date",
+            "iso": "2015-02-21T15:48:00.000Z"
+        },
+        "updatedAt": "2015-03-09T10:39:21.704Z",
+        "weight": 10
+    },
+	{
+        "addresss": "GROVE ST / WEBSTER ST",
+        "category": "LARCENY/THEFT",
+        "createdAt": "2015-03-09T10:39:21.724Z",
+        "descript": "GRAND THEFT FROM LOCKED AUTO",
+        "indicentId": 1.56042855e+08,
+        "location": {
+            "__type": "GeoPoint",
+            "latitude": 37.776975788523,
+            "longitude": -122.42968749628
+        },
+        "objectId": "u7ac5r9GZ0",
+        "pdDiscrict": "NORTHERN",
+        "pdId": 1.5604285506244e+13,
+        "resolution": "NONE",
+        "timestamp": {
+            "__type": "Date",
+            "iso": "2015-02-21T15:30:00.000Z"
+        },
+        "updatedAt": "2015-03-09T10:39:21.724Z",
+        "weight": 10
+    },
+	{
+        "addresss": "VANNESS AV / SUTTER ST",
+        "category": "LARCENY/THEFT",
+        "createdAt": "2015-03-09T10:39:21.732Z",
+        "descript": "GRAND THEFT FROM LOCKED AUTO",
+        "indicentId": 1.56042861e+08,
+        "location": {
+            "__type": "GeoPoint",
+            "latitude": 37.7875490095115,
+            "longitude": -122.421762501792
+        },
+        "objectId": "nOQcY7me6h",
+        "pdDiscrict": "NORTHERN",
+        "pdId": 1.5604286106244e+13,
+        "resolution": "NONE",
+        "timestamp": {
+            "__type": "Date",
+            "iso": "2015-02-21T15:30:00.000Z"
+        },
+        "updatedAt": "2015-03-09T10:39:21.732Z",
+        "weight": 10
+    },
+	{
+        "addresss": "800 Block of MISSION ST",
+        "category": "LARCENY/THEFT",
+        "createdAt": "2015-03-09T10:39:21.740Z",
+        "descript": "GRAND THEFT FROM PERSON",
+        "indicentId": 1.50160762e+08,
+        "location": {
+            "__type": "GeoPoint",
+            "latitude": 37.7835100715421,
+            "longitude": -122.405395493939
+        },
+        "objectId": "0aKgqH1tPo",
+        "pdDiscrict": "SOUTHERN",
+        "pdId": 1.5016076206153e+13,
+        "resolution": "NONE",
+        "timestamp": {
+            "__type": "Date",
+            "iso": "2015-02-21T15:14:00.000Z"
+        },
+        "updatedAt": "2015-03-09T10:39:21.740Z",
+        "weight": 10
+    },
+	{
+        "addresss": "FRANCISCO ST / MASON ST",
+        "category": "LARCENY/THEFT",
+        "createdAt": "2015-03-09T10:39:21.748Z",
+        "descript": "GRAND THEFT FROM LOCKED AUTO",
+        "indicentId": 1.56043013e+08,
+        "location": {
+            "__type": "GeoPoint",
+            "latitude": 37.8046850499582,
+            "longitude": -122.413433201999
+        },
+        "objectId": "XZN7Q4wDbN",
+        "pdDiscrict": "CENTRAL",
+        "pdId": 1.5604301306244e+13,
+        "resolution": "NONE",
+        "timestamp": {
+            "__type": "Date",
+            "iso": "2015-02-21T14:45:00.000Z"
+        },
+        "updatedAt": "2015-03-09T10:39:21.748Z",
+        "weight": 10
+    },
+	{
+        "addresss": "8TH ST / NATOMA ST",
+        "category": "OTHER OFFENSES",
+        "createdAt": "2015-03-09T10:39:21.756Z",
+        "descript": "DRIVERS LICENSE, SUSPENDED OR REVOKED",
+        "indicentId": 1.50160659e+08,
+        "location": {
+            "__type": "GeoPoint",
+            "latitude": 37.7766597984985,
+            "longitude": -122.412160931881
+        },
+        "objectId": "M6b5ga9ETW",
+        "pdDiscrict": "SOUTHERN",
+        "pdId": 1.5016065965016e+13,
+        "resolution": "NONE",
+        "timestamp": {
+            "__type": "Date",
+            "iso": "2015-02-21T14:41:00.000Z"
+        },
+        "updatedAt": "2015-03-09T10:39:21.756Z",
+        "weight": 1
+    },
+	{
+        "addresss": "GUERRERO ST / 14TH ST",
+        "category": "VANDALISM",
+        "createdAt": "2015-03-09T10:39:21.764Z",
+        "descript": "MALICIOUS MISCHIEF, BREAKING WINDOWS",
+        "indicentId": 1.5016053e+08,
+        "location": {
+            "__type": "GeoPoint",
+            "latitude": 37.7680054163824,
+            "longitude": -122.424412715064
+        },
+        "objectId": "Z77WZRa7wv",
+        "pdDiscrict": "MISSION",
+        "pdId": 1.50160530281e+13,
+        "resolution": "NONE",
+        "timestamp": {
+            "__type": "Date",
+            "iso": "2015-02-21T14:25:00.000Z"
+        },
+        "updatedAt": "2015-03-09T10:39:21.764Z",
+        "weight": 5
+    },
+	{
+        "addresss": "LEAVENWORTH ST / FILBERT ST",
+        "category": "LARCENY/THEFT",
+        "createdAt": "2015-03-09T10:39:21.772Z",
+        "descript": "GRAND THEFT OF PROPERTY",
+        "indicentId": 1.5604298e+08,
+        "location": {
+            "__type": "GeoPoint",
+            "latitude": 37.8003406138473,
+            "longitude": -122.417589710606
+        },
+        "objectId": "mI5MBqfmy4",
+        "pdDiscrict": "CENTRAL",
+        "pdId": 1.5604298006374e+13,
+        "resolution": "NONE",
+        "timestamp": {
+            "__type": "Date",
+            "iso": "2015-02-21T14:00:00.000Z"
+        },
+        "updatedAt": "2015-03-09T10:39:21.772Z",
+        "weight": 10
+    },
+	{
+        "addresss": "IVY ST / LAGUNA ST",
+        "category": "LARCENY/THEFT",
+        "createdAt": "2015-03-09T10:39:21.779Z",
+        "descript": "GRAND THEFT FROM UNLOCKED AUTO",
+        "indicentId": 1.56043176e+08,
+        "location": {
+            "__type": "GeoPoint",
+            "latitude": 37.7769313104957,
+            "longitude": -122.426360535365
+        },
+        "objectId": "BlWgb5Vd1r",
+        "pdDiscrict": "NORTHERN",
+        "pdId": 1.5604317606224e+13,
+        "resolution": "NONE",
+        "timestamp": {
+            "__type": "Date",
+            "iso": "2015-02-21T14:00:00.000Z"
+        },
+        "updatedAt": "2015-03-09T10:39:21.779Z",
+        "weight": 10
+    },
+	{
+        "addresss": "500 Block of JOHNFKENNEDY DR",
+        "category": "NON-CRIMINAL",
+        "createdAt": "2015-03-09T10:39:21.787Z",
+        "descript": "LOST PROPERTY",
+        "indicentId": 1.56043132e+08,
+        "location": {
+            "__type": "GeoPoint",
+            "latitude": 37.7725405391593,
+            "longitude": -122.466204667893
+        },
+        "objectId": "VBY6d1KE40",
+        "pdDiscrict": "RICHMOND",
+        "pdId": 1.5604313271e+13,
+        "resolution": "NONE",
+        "timestamp": {
+            "__type": "Date",
+            "iso": "2015-02-21T13:45:00.000Z"
+        },
+        "updatedAt": "2015-03-09T10:39:21.787Z",
+        "weight": 1
+    },
+	{
+        "addresss": "1400 Block of LAGUNA ST",
+        "category": "LARCENY/THEFT",
+        "createdAt": "2015-03-09T10:39:21.795Z",
+        "descript": "GRAND THEFT FROM LOCKED AUTO",
+        "indicentId": 1.56042877e+08,
+        "location": {
+            "__type": "GeoPoint",
+            "latitude": 37.7844435964858,
+            "longitude": -122.427954885331
+        },
+        "objectId": "Ld0pCjNCsJ",
+        "pdDiscrict": "NORTHERN",
+        "pdId": 1.5604287706244e+13,
+        "resolution": "NONE",
+        "timestamp": {
+            "__type": "Date",
+            "iso": "2015-02-21T13:30:00.000Z"
+        },
+        "updatedAt": "2015-03-09T10:39:21.795Z",
+        "weight": 10
+    },
+	{
+        "addresss": "0 Block of TWINPEAKS BL",
+        "category": "LARCENY/THEFT",
+        "createdAt": "2015-03-09T10:39:21.803Z",
+        "descript": "GRAND THEFT FROM LOCKED AUTO",
+        "indicentId": 1.50160734e+08,
+        "location": {
+            "__type": "GeoPoint",
+            "latitude": 37.7597348090272,
+            "longitude": -122.447055013255
+        },
+        "objectId": "7YxcrSf1Cw",
+        "pdDiscrict": "PARK",
+        "pdId": 1.5016073406244e+13,
+        "resolution": "NONE",
+        "timestamp": {
+            "__type": "Date",
+            "iso": "2015-02-21T13:00:00.000Z"
+        },
+        "updatedAt": "2015-03-09T10:39:21.803Z",
+        "weight": 10
+    },
+	{
+        "addresss": "400 Block of GOUGH ST",
+        "category": "LARCENY/THEFT",
+        "createdAt": "2015-03-09T10:39:21.811Z",
+        "descript": "GRAND THEFT OF PROPERTY",
+        "indicentId": 1.56042849e+08,
+        "location": {
+            "__type": "GeoPoint",
+            "latitude": 37.7771077210197,
+            "longitude": -122.42309400129
+        },
+        "objectId": "AxcJA8nLZW",
+        "pdDiscrict": "NORTHERN",
+        "pdId": 1.5604284906374e+13,
+        "resolution": "NONE",
+        "timestamp": {
+            "__type": "Date",
+            "iso": "2015-02-21T13:00:00.000Z"
+        },
+        "updatedAt": "2015-03-09T10:39:21.811Z",
+        "weight": 10
+    },
+	{
+        "addresss": "1100 Block of 9TH AV",
+        "category": "LARCENY/THEFT",
+        "createdAt": "2015-03-09T10:39:21.819Z",
+        "descript": "GRAND THEFT FROM LOCKED AUTO",
+        "indicentId": 1.56043085e+08,
+        "location": {
+            "__type": "GeoPoint",
+            "latitude": 37.7662014296859,
+            "longitude": -122.466504397113
+        },
+        "objectId": "mE1heygECa",
+        "pdDiscrict": "RICHMOND",
+        "pdId": 1.5604308506244e+13,
+        "resolution": "NONE",
+        "timestamp": {
+            "__type": "Date",
+            "iso": "2015-02-21T13:00:00.000Z"
+        },
+        "updatedAt": "2015-03-09T10:39:21.819Z",
+        "weight": 10
+    },
+	{
+        "addresss": "700 Block of FILLMORE ST",
+        "category": "LARCENY/THEFT",
+        "createdAt": "2015-03-09T10:39:21.833Z",
+        "descript": "PETTY THEFT OF PROPERTY",
+        "indicentId": 1.56043223e+08,
+        "location": {
+            "__type": "GeoPoint",
+            "latitude": 37.7762972389613,
+            "longitude": -122.431361636424
+        },
+        "objectId": "Z4KUXUT3rv",
+        "pdDiscrict": "NORTHERN",
+        "pdId": 1.5604322306372e+13,
+        "resolution": "NONE",
+        "timestamp": {
+            "__type": "Date",
+            "iso": "2015-02-21T12:57:00.000Z"
+        },
+        "updatedAt": "2015-03-09T10:39:21.833Z",
+        "weight": 10
+    },
+	{
+        "addresss": "POST ST / STEINER ST",
+        "category": "LARCENY/THEFT",
+        "createdAt": "2015-03-09T10:39:21.841Z",
+        "descript": "ATTEMPTED THEFT FROM UNLOCKED VEHICLE",
+        "indicentId": 1.50160251e+08,
+        "location": {
+            "__type": "GeoPoint",
+            "latitude": 37.7849443169969,
+            "longitude": -122.434733246333
+        },
+        "objectId": "SE48haqqDn",
+        "pdDiscrict": "NORTHERN",
+        "pdId": 1.501602510622e+13,
+        "resolution": "NONE",
+        "timestamp": {
+            "__type": "Date",
+            "iso": "2015-02-21T12:35:00.000Z"
+        },
+        "updatedAt": "2015-03-09T10:39:21.841Z",
+        "weight": 10
+    },
+	{
+        "addresss": "1400 Block of PHELPS ST",
+        "category": "MISSING PERSON",
+        "createdAt": "2015-03-09T10:39:21.849Z",
+        "descript": "MISSING JUVENILE",
+        "indicentId": 1.50161839e+08,
+        "location": {
+            "__type": "GeoPoint",
+            "latitude": 37.7364438996732,
+            "longitude": -122.394438859914
+        },
+        "objectId": "4BwXW2zmBV",
+        "pdDiscrict": "BAYVIEW",
+        "pdId": 1.501618397401e+13,
+        "resolution": "NONE",
+        "timestamp": {
+            "__type": "Date",
+            "iso": "2015-02-21T12:30:00.000Z"
+        },
+        "updatedAt": "2015-03-09T10:39:21.849Z",
+        "weight": 2
+    },
+	{
+        "addresss": "BALBOA ST / GREAT HY",
+        "category": "LARCENY/THEFT",
+        "createdAt": "2015-03-09T10:39:21.857Z",
+        "descript": "GRAND THEFT FROM LOCKED AUTO",
+        "indicentId": 1.56043251e+08,
+        "location": {
+            "__type": "GeoPoint",
+            "latitude": 37.775073326331,
+            "longitude": -122.511293798596
+        },
+        "objectId": "zInjyqs3dL",
+        "pdDiscrict": "RICHMOND",
+        "pdId": 1.5604325106244e+13,
+        "resolution": "NONE",
+        "timestamp": {
+            "__type": "Date",
+            "iso": "2015-02-21T12:25:00.000Z"
+        },
+        "updatedAt": "2015-03-09T10:39:21.857Z",
+        "weight": 10
+    },
+	{
+        "addresss": "300 Block of POST ST",
+        "category": "LARCENY/THEFT",
+        "createdAt": "2015-03-09T10:39:21.865Z",
+        "descript": "GRAND THEFT FROM A BUILDING",
+        "indicentId": 1.50160728e+08,
+        "location": {
+            "__type": "GeoPoint",
+            "latitude": 37.7884486019705,
+            "longitude": -122.407612885387
+        },
+        "objectId": "qbUbCoGG7M",
+        "pdDiscrict": "CENTRAL",
+        "pdId": 1.5016072806304e+13,
+        "resolution": "NONE",
+        "timestamp": {
+            "__type": "Date",
+            "iso": "2015-02-21T12:17:00.000Z"
+        },
+        "updatedAt": "2015-03-09T10:39:21.865Z",
+        "weight": 10
+    },
+	{
+        "addresss": "0 Block of MAIDEN LN",
+        "category": "LARCENY/THEFT",
+        "createdAt": "2015-03-09T10:39:21.872Z",
+        "descript": "PETTY THEFT SHOPLIFTING",
+        "indicentId": 1.50160176e+08,
+        "location": {
+            "__type": "GeoPoint",
+            "latitude": 37.7883830183627,
+            "longitude": -122.404366570224
+        },
+        "objectId": "t4BHrEf2Ko",
+        "pdDiscrict": "CENTRAL",
+        "pdId": 1.5016017606363e+13,
+        "resolution": "NONE",
+        "timestamp": {
+            "__type": "Date",
+            "iso": "2015-02-21T11:35:00.000Z"
+        },
+        "updatedAt": "2015-03-09T10:39:21.872Z",
+        "weight": 10
+    },
+	{
+        "addresss": "DAVIS ST / CLAY ST",
+        "category": "LARCENY/THEFT",
+        "createdAt": "2015-03-09T10:39:21.881Z",
+        "descript": "GRAND THEFT FROM UNLOCKED AUTO",
+        "indicentId": 1.56043029e+08,
+        "location": {
+            "__type": "GeoPoint",
+            "latitude": 37.7953124364807,
+            "longitude": -122.397977877257
+        },
+        "objectId": "ZTCNOcDLVC",
+        "pdDiscrict": "CENTRAL",
+        "pdId": 1.5604302906224e+13,
+        "resolution": "NONE",
+        "timestamp": {
+            "__type": "Date",
+            "iso": "2015-02-21T11:30:00.000Z"
+        },
+        "updatedAt": "2015-03-09T10:39:21.881Z",
+        "weight": 10
+    },
+	{
+        "addresss": "GEARY BL / 24TH AV",
+        "category": "LARCENY/THEFT",
+        "createdAt": "2015-03-09T10:39:21.888Z",
+        "descript": "GRAND THEFT FROM LOCKED AUTO",
+        "indicentId": 1.5604311e+08,
+        "location": {
+            "__type": "GeoPoint",
+            "latitude": 37.7801399018132,
+            "longitude": -122.483663577628
+        },
+        "objectId": "u72OAegfuS",
+        "pdDiscrict": "RICHMOND",
+        "pdId": 1.5604311006244e+13,
+        "resolution": "NONE",
+        "timestamp": {
+            "__type": "Date",
+            "iso": "2015-02-21T10:45:00.000Z"
+        },
+        "updatedAt": "2015-03-09T10:39:21.888Z",
+        "weight": 10
+    },
+	{
+        "addresss": "HYDE ST / SUTTER ST",
+        "category": "LARCENY/THEFT",
+        "createdAt": "2015-03-09T10:39:21.896Z",
+        "descript": "PETTY THEFT OF PROPERTY",
+        "indicentId": 1.56043621e+08,
+        "location": {
+            "__type": "GeoPoint",
+            "latitude": 37.788178697075,
+            "longitude": -122.4168291485
+        },
+        "objectId": "TDvQh2g6G0",
+        "pdDiscrict": "CENTRAL",
+        "pdId": 1.5604362106372e+13,
+        "resolution": "NONE",
+        "timestamp": {
+            "__type": "Date",
+            "iso": "2015-02-21T10:00:00.000Z"
+        },
+        "updatedAt": "2015-03-09T10:39:21.896Z",
+        "weight": 10
+    },
+	{
+        "addresss": "2500 Block of MISSION ST",
+        "category": "LARCENY/THEFT",
+        "createdAt": "2015-03-09T10:39:21.904Z",
+        "descript": "GRAND THEFT BICYCLE",
+        "indicentId": 1.5016016e+08,
+        "location": {
+            "__type": "GeoPoint",
+            "latitude": 37.7562166627216,
+            "longitude": -122.418891810986
+        },
+        "objectId": "2tFO1U9dOq",
+        "pdDiscrict": "MISSION",
+        "pdId": 1.5016016006314e+13,
+        "resolution": "NONE",
+        "timestamp": {
+            "__type": "Date",
+            "iso": "2015-02-21T08:23:00.000Z"
+        },
+        "updatedAt": "2015-03-09T10:39:21.904Z",
+        "weight": 10
+    },
+	{
+        "addresss": "GEARY BL / LAGUNA ST",
+        "category": "LARCENY/THEFT",
+        "createdAt": "2015-03-09T10:39:21.911Z",
+        "descript": "GRAND THEFT FROM LOCKED AUTO",
+        "indicentId": 1.56043198e+08,
+        "location": {
+            "__type": "GeoPoint",
+            "latitude": 37.7849531241612,
+            "longitude": -122.427991151911
+        },
+        "objectId": "bJvOcOcyac",
+        "pdDiscrict": "NORTHERN",
+        "pdId": 1.5604319806244e+13,
+        "resolution": "NONE",
+        "timestamp": {
+            "__type": "Date",
+            "iso": "2015-02-21T08:00:00.000Z"
+        },
+        "updatedAt": "2015-03-09T10:39:21.911Z",
+        "weight": 10
+    },
+	{
+        "addresss": "STJOSEPHS AV / ELLIS ST",
+        "category": "VEHICLE THEFT",
+        "createdAt": "2015-03-09T10:39:21.919Z",
+        "descript": "STOLEN AUTOMOBILE",
+        "indicentId": 1.50161118e+08,
+        "location": {
+            "__type": "GeoPoint",
+            "latitude": 37.7812344891521,
+            "longitude": -122.441340525823
+        },
+        "objectId": "Dg8LUjjjKe",
+        "pdDiscrict": "PARK",
+        "pdId": 1.5016111807021e+13,
+        "resolution": "NONE",
+        "timestamp": {
+            "__type": "Date",
+            "iso": "2015-02-21T06:45:00.000Z"
+        },
+        "updatedAt": "2015-03-09T10:39:21.919Z",
+        "weight": 10
+    },
+	{
+        "addresss": "0 Block of WILLIAMS AV",
+        "category": "OTHER OFFENSES",
+        "createdAt": "2015-03-09T10:39:21.927Z",
+        "descript": "LOST/STOLEN LICENSE PLATE",
+        "indicentId": 1.50161146e+08,
+        "location": {
+            "__type": "GeoPoint",
+            "latitude": 37.7294128620199,
+            "longitude": -122.394070665922
+        },
+        "objectId": "mnxHjGcRBR",
+        "pdDiscrict": "BAYVIEW",
+        "pdId": 1.501611467101e+13,
+        "resolution": "NONE",
+        "timestamp": {
+            "__type": "Date",
+            "iso": "2015-02-21T06:45:00.000Z"
+        },
+        "updatedAt": "2015-03-09T10:39:21.927Z",
+        "weight": 1
+    },
+	{
+        "addresss": "BUCHANAN ST / FELL ST",
+        "category": "VANDALISM",
+        "createdAt": "2015-03-09T10:39:21.935Z",
+        "descript": "MALICIOUS MISCHIEF, VANDALISM",
+        "indicentId": 1.56042758e+08,
+        "location": {
+            "__type": "GeoPoint",
+            "latitude": 37.7753157578409,
+            "longitude": -122.427727138394
+        },
+        "objectId": "p5HqZdlKE9",
+        "pdDiscrict": "NORTHERN",
+        "pdId": 1.560427582815e+13,
+        "resolution": "NONE",
+        "timestamp": {
+            "__type": "Date",
+            "iso": "2015-02-21T05:05:00.000Z"
+        },
+        "updatedAt": "2015-03-09T10:39:21.935Z",
+        "weight": 5
+    },
+	{
+        "addresss": "1600 Block of LASALLE AV",
+        "category": "VEHICLE THEFT",
+        "createdAt": "2015-03-09T10:39:21.946Z",
+        "descript": "STOLEN MOTORCYCLE",
+        "indicentId": 1.50160994e+08,
+        "location": {
+            "__type": "GeoPoint",
+            "latitude": 37.7368837969126,
+            "longitude": -122.389241311502
+        },
+        "objectId": "pAQ5DqbqQu",
+        "pdDiscrict": "BAYVIEW",
+        "pdId": 1.5016099407023e+13,
+        "resolution": "NONE",
+        "timestamp": {
+            "__type": "Date",
+            "iso": "2015-02-21T03:30:00.000Z"
+        },
+        "updatedAt": "2015-03-09T10:39:21.946Z",
+        "weight": 10
+    },
+	{
+        "addresss": "GEARY ST / HYDE ST",
+        "category": "VEHICLE THEFT",
+        "createdAt": "2015-03-09T10:39:21.953Z",
+        "descript": "STOLEN AUTOMOBILE",
+        "indicentId": 1.50160433e+08,
+        "location": {
+            "__type": "GeoPoint",
+            "latitude": 37.7863086885804,
+            "longitude": -122.416452065595
+        },
+        "objectId": "3kMxS50avx",
+        "pdDiscrict": "CENTRAL",
+        "pdId": 1.5016043307021e+13,
+        "resolution": "NONE",
+        "timestamp": {
+            "__type": "Date",
+            "iso": "2015-02-21T02:00:00.000Z"
+        },
+        "updatedAt": "2015-03-09T10:39:21.953Z",
+        "weight": 10
+    },
+	{
+        "addresss": "200 Block of INTERSTATE80 HY",
+        "category": "VEHICLE THEFT",
+        "createdAt": "2015-03-09T10:39:21.961Z",
+        "descript": "STOLEN AUTOMOBILE",
+        "indicentId": 1.50159113e+08,
+        "location": {
+            "__type": "GeoPoint",
+            "latitude": 37.8096707013239,
+            "longitude": -122.365565425353
+        },
+        "objectId": "yAOAQZRsOn",
+        "pdDiscrict": "SOUTHERN",
+        "pdId": 1.5015911307021e+13,
+        "resolution": "NONE",
+        "timestamp": {
+            "__type": "Date",
+            "iso": "2015-02-21T01:00:00.000Z"
+        },
+        "updatedAt": "2015-03-09T10:39:21.961Z",
+        "weight": 10
+    },
+	{
+        "addresss": "JONES ST / BUSH ST",
+        "category": "NON-CRIMINAL",
+        "createdAt": "2015-03-09T10:39:21.969Z",
+        "descript": "LOST PROPERTY",
+        "indicentId": 1.5604358e+08,
+        "location": {
+            "__type": "GeoPoint",
+            "latitude": 37.7895283021427,
+            "longitude": -122.413731461593
+        },
+        "objectId": "hlxK3owz71",
+        "pdDiscrict": "CENTRAL",
+        "pdId": 1.5604358071e+13,
+        "resolution": "NONE",
+        "timestamp": {
+            "__type": "Date",
+            "iso": "2015-02-21T00:01:00.000Z"
+        },
+        "updatedAt": "2015-03-09T10:39:21.969Z",
+        "weight": 1
+    },
+	{
+        "addresss": "200 Block of STOCKTON ST",
+        "category": "LARCENY/THEFT",
+        "createdAt": "2015-03-09T10:39:21.977Z",
+        "descript": "PETTY THEFT OF PROPERTY",
+        "indicentId": 1.56043007e+08,
+        "location": {
+            "__type": "GeoPoint",
+            "latitude": 37.7882745285785,
+            "longitude": -122.406658711008
+        },
+        "objectId": "2hnzdoBiJy",
+        "pdDiscrict": "CENTRAL",
+        "pdId": 1.5604300706372e+13,
+        "resolution": "NONE",
+        "timestamp": {
+            "__type": "Date",
+            "iso": "2015-02-21T00:01:00.000Z"
+        },
+        "updatedAt": "2015-03-09T10:39:21.977Z",
+        "weight": 10
+    },
+	{
+        "addresss": "3RD ST / EVANS AV",
+        "category": "VEHICLE THEFT",
+        "createdAt": "2015-03-09T10:39:21.985Z",
+        "descript": "STOLEN AUTOMOBILE",
+        "indicentId": 1.50158836e+08,
+        "location": {
+            "__type": "GeoPoint",
+            "latitude": 37.7427030847405,
+            "longitude": -122.387927387609
+        },
+        "objectId": "qsOPCY9LLN",
+        "pdDiscrict": "BAYVIEW",
+        "pdId": 1.5015883607021e+13,
+        "resolution": "NONE",
+        "timestamp": {
+            "__type": "Date",
+            "iso": "2015-02-20T23:15:00.000Z"
+        },
+        "updatedAt": "2015-03-09T10:39:21.985Z",
+        "weight": 10
+    },
+	{
+        "addresss": "3RD ST / EVANS AV",
+        "category": "VEHICLE THEFT",
+        "createdAt": "2015-03-09T10:39:21.992Z",
+        "descript": "STOLEN AND RECOVERED VEHICLE",
+        "indicentId": 1.50158836e+08,
+        "location": {
+            "__type": "GeoPoint",
+            "latitude": 37.7427030847405,
+            "longitude": -122.387927387609
+        },
+        "objectId": "byFEfMB0X9",
+        "pdDiscrict": "BAYVIEW",
+        "pdId": 1.501588360702e+13,
+        "resolution": "NONE",
+        "timestamp": {
+            "__type": "Date",
+            "iso": "2015-02-20T23:15:00.000Z"
+        },
+        "updatedAt": "2015-03-09T10:39:21.992Z",
+        "weight": 10
+    },
+	{
+        "addresss": "700 Block of PENNSYLVANIA AV",
+        "category": "OTHER OFFENSES",
+        "createdAt": "2015-03-09T10:39:22.001Z",
+        "descript": "LOST/STOLEN LICENSE PLATE",
+        "indicentId": 1.50160643e+08,
+        "location": {
+            "__type": "GeoPoint",
+            "latitude": 37.7563570227741,
+            "longitude": -122.393071223295
+        },
+        "objectId": "C9KrfwMyhb",
+        "pdDiscrict": "BAYVIEW",
+        "pdId": 1.501606437101e+13,
+        "resolution": "NONE",
+        "timestamp": {
+            "__type": "Date",
+            "iso": "2015-02-20T22:00:00.000Z"
+        },
+        "updatedAt": "2015-03-09T10:39:22.001Z",
+        "weight": 1
+    },
+	{
+        "addresss": "100 Block of BOSWORTH ST",
+        "category": "VEHICLE THEFT",
+        "createdAt": "2015-03-09T10:39:22.009Z",
+        "descript": "STOLEN AUTOMOBILE",
+        "indicentId": 1.50159715e+08,
+        "location": {
+            "__type": "GeoPoint",
+            "latitude": 37.7335671623152,
+            "longitude": -122.42814364018
+        },
+        "objectId": "h7D9adTlv1",
+        "pdDiscrict": "INGLESIDE",
+        "pdId": 1.5015971507021e+13,
+        "resolution": "NONE",
+        "timestamp": {
+            "__type": "Date",
+            "iso": "2015-02-20T22:00:00.000Z"
+        },
+        "updatedAt": "2015-03-09T10:39:22.009Z",
+        "weight": 10
+    },
+	{
+        "addresss": "JONES ST / LOMBARD ST",
+        "category": "LARCENY/THEFT",
+        "createdAt": "2015-03-09T10:39:22.017Z",
+        "descript": "GRAND THEFT FROM UNLOCKED AUTO",
+        "indicentId": 1.56042968e+08,
+        "location": {
+            "__type": "GeoPoint",
+            "latitude": 37.8024103177266,
+            "longitude": -122.416327623844
+        },
+        "objectId": "bZUfhOOiBJ",
+        "pdDiscrict": "CENTRAL",
+        "pdId": 1.5604296806224e+13,
+        "resolution": "NONE",
+        "timestamp": {
+            "__type": "Date",
+            "iso": "2015-02-20T21:30:00.000Z"
+        },
+        "updatedAt": "2015-03-09T10:39:22.017Z",
+        "weight": 10
+    },
+	{
+        "addresss": "0 Block of KAREN CT",
+        "category": "VEHICLE THEFT",
+        "createdAt": "2015-03-09T10:39:22.025Z",
+        "descript": "STOLEN AUTOMOBILE",
+        "indicentId": 1.50161077e+08,
+        "location": {
+            "__type": "GeoPoint",
+            "latitude": 37.7234814213797,
+            "longitude": -122.4068026167
+        },
+        "objectId": "9o6YiR3PCf",
+        "pdDiscrict": "BAYVIEW",
+        "pdId": 1.5016107707021e+13,
+        "resolution": "NONE",
+        "timestamp": {
+            "__type": "Date",
+            "iso": "2015-02-20T21:00:00.000Z"
+        },
+        "updatedAt": "2015-03-09T10:39:22.025Z",
+        "weight": 10
+    },
+	{
+        "addresss": "1900 Block of LEAVENWORTH ST",
+        "category": "LARCENY/THEFT",
+        "createdAt": "2015-03-09T10:39:22.033Z",
+        "descript": "GRAND THEFT FROM LOCKED AUTO",
+        "indicentId": 1.56041738e+08,
+        "location": {
+            "__type": "GeoPoint",
+            "latitude": 37.798730428122,
+            "longitude": -122.417199752523
+        },
+        "objectId": "iaK6Q5obSG",
+        "pdDiscrict": "CENTRAL",
+        "pdId": 1.5604173806244e+13,
+        "resolution": "NONE",
+        "timestamp": {
+            "__type": "Date",
+            "iso": "2015-02-20T21:00:00.000Z"
+        },
+        "updatedAt": "2015-03-09T10:39:22.033Z",
+        "weight": 10
+    },
+	{
+        "addresss": "OCEAN AV / DORADO TR",
+        "category": "LARCENY/THEFT",
+        "createdAt": "2015-03-09T10:39:22.041Z",
+        "descript": "GRAND THEFT FROM LOCKED AUTO",
+        "indicentId": 1.56041954e+08,
+        "location": {
+            "__type": "GeoPoint",
+            "latitude": 37.724950248764,
+            "longitude": -122.461208520613
+        },
+        "objectId": "5vegCZlUjO",
+        "pdDiscrict": "TARAVAL",
+        "pdId": 1.5604195406244e+13,
+        "resolution": "NONE",
+        "timestamp": {
+            "__type": "Date",
+            "iso": "2015-02-20T20:15:00.000Z"
+        },
+        "updatedAt": "2015-03-09T10:39:22.041Z",
+        "weight": 10
+    },
+	{
+        "addresss": "GEARY BL / FILLMORE ST",
+        "category": "LARCENY/THEFT",
+        "createdAt": "2015-03-09T10:39:22.055Z",
+        "descript": "GRAND THEFT FROM LOCKED AUTO",
+        "indicentId": 1.56042742e+08,
+        "location": {
+            "__type": "GeoPoint",
+            "latitude": 37.7843533426568,
+            "longitude": -122.432914603494
+        },
+        "objectId": "jWtPtQzI1p",
+        "pdDiscrict": "NORTHERN",
+        "pdId": 1.5604274206244e+13,
+        "resolution": "NONE",
+        "timestamp": {
+            "__type": "Date",
+            "iso": "2015-02-20T20:00:00.000Z"
+        },
+        "updatedAt": "2015-03-09T10:39:22.055Z",
+        "weight": 10
+    },
+	{
+        "addresss": "1500 Block of VANNESS AV",
+        "category": "LARCENY/THEFT",
+        "createdAt": "2015-03-09T10:39:22.063Z",
+        "descript": "GRAND THEFT FROM LOCKED AUTO",
+        "indicentId": 1.56042827e+08,
+        "location": {
+            "__type": "GeoPoint",
+            "latitude": 37.7899200014841,
+            "longitude": -122.422062730264
+        },
+        "objectId": "RBRwDNLANS",
+        "pdDiscrict": "NORTHERN",
+        "pdId": 1.5604282706244e+13,
+        "resolution": "NONE",
+        "timestamp": {
+            "__type": "Date",
+            "iso": "2015-02-20T20:00:00.000Z"
+        },
+        "updatedAt": "2015-03-09T10:39:22.063Z",
+        "weight": 10
+    },
+	{
+        "addresss": "GEARY BL / 22ND AV",
+        "category": "LARCENY/THEFT",
+        "createdAt": "2015-03-09T10:39:22.071Z",
+        "descript": "GRAND THEFT FROM LOCKED AUTO",
+        "indicentId": 1.56043091e+08,
+        "location": {
+            "__type": "GeoPoint",
+            "latitude": 37.7802227066368,
+            "longitude": -122.481516526312
+        },
+        "objectId": "XewTEZbvVA",
+        "pdDiscrict": "RICHMOND",
+        "pdId": 1.5604309106244e+13,
+        "resolution": "NONE",
+        "timestamp": {
+            "__type": "Date",
+            "iso": "2015-02-20T19:45:00.000Z"
+        },
+        "updatedAt": "2015-03-09T10:39:22.071Z",
+        "weight": 10
+    },
+	{
+        "addresss": "THE EMBARCADERONORTH ST / BATTERY ST",
+        "category": "LARCENY/THEFT",
+        "createdAt": "2015-03-09T10:39:22.080Z",
+        "descript": "GRAND THEFT FROM LOCKED AUTO",
+        "indicentId": 1.56041841e+08,
+        "location": {
+            "__type": "GeoPoint",
+            "latitude": 37.8042568095058,
+            "longitude": -122.402038998271
+        },
+        "objectId": "tcU4Cmhamv",
+        "pdDiscrict": "CENTRAL",
+        "pdId": 1.5604184106244e+13,
+        "resolution": "NONE",
+        "timestamp": {
+            "__type": "Date",
+            "iso": "2015-02-20T19:30:00.000Z"
+        },
+        "updatedAt": "2015-03-09T10:39:22.080Z",
+        "weight": 10
+    },
+	{
+        "addresss": "THE EMBARCADERONORTH ST / BATTERY ST",
+        "category": "LARCENY/THEFT",
+        "createdAt": "2015-03-09T10:39:22.088Z",
+        "descript": "GRAND THEFT FROM LOCKED AUTO",
+        "indicentId": 1.56043574e+08,
+        "location": {
+            "__type": "GeoPoint",
+            "latitude": 37.8042568095058,
+            "longitude": -122.402038998271
+        },
+        "objectId": "HAdDF0DGK8",
+        "pdDiscrict": "CENTRAL",
+        "pdId": 1.5604357406244e+13,
+        "resolution": "NONE",
+        "timestamp": {
+            "__type": "Date",
+            "iso": "2015-02-20T19:15:00.000Z"
+        },
+        "updatedAt": "2015-03-09T10:39:22.088Z",
+        "weight": 10
+    },
+	{
+        "addresss": "800 Block of BRYANT ST",
+        "category": "LARCENY/THEFT",
+        "createdAt": "2015-03-09T10:39:22.096Z",
+        "descript": "GRAND THEFT FROM LOCKED AUTO",
+        "indicentId": 1.56041681e+08,
+        "location": {
+            "__type": "GeoPoint",
+            "latitude": 37.775420706711,
+            "longitude": -122.403404791479
+        },
+        "objectId": "K9U3VWxWCb",
+        "pdDiscrict": "SOUTHERN",
+        "pdId": 1.5604168106244e+13,
+        "resolution": "NONE",
+        "timestamp": {
+            "__type": "Date",
+            "iso": "2015-02-20T19:15:00.000Z"
+        },
+        "updatedAt": "2015-03-09T10:39:22.096Z",
+        "weight": 10
+    },
+	{
+        "addresss": "700 Block of PINE ST",
+        "category": "LARCENY/THEFT",
+        "createdAt": "2015-03-09T10:39:22.103Z",
+        "descript": "GRAND THEFT FROM LOCKED AUTO",
+        "indicentId": 1.56042946e+08,
+        "location": {
+            "__type": "GeoPoint",
+            "latitude": 37.7911972507673,
+            "longitude": -122.40768078831
+        },
+        "objectId": "c7ZpB2q1Am",
+        "pdDiscrict": "CENTRAL",
+        "pdId": 1.5604294606244e+13,
+        "resolution": "NONE",
+        "timestamp": {
+            "__type": "Date",
+            "iso": "2015-02-20T19:10:00.000Z"
+        },
+        "updatedAt": "2015-03-09T10:39:22.103Z",
+        "weight": 10
+    },
+	{
+        "addresss": "FRANKLIN ST / GOLDEN GATE AV",
+        "category": "VANDALISM",
+        "createdAt": "2015-03-09T10:39:22.117Z",
+        "descript": "MALICIOUS MISCHIEF, VANDALISM",
+        "indicentId": 1.56042833e+08,
+        "location": {
+            "__type": "GeoPoint",
+            "latitude": 37.7808219708329,
+            "longitude": -122.422090267887
+        },
+        "objectId": "axcXyddMau",
+        "pdDiscrict": "NORTHERN",
+        "pdId": 1.560428332815e+13,
+        "resolution": "NONE",
+        "timestamp": {
+            "__type": "Date",
+            "iso": "2015-02-20T19:00:00.000Z"
+        },
+        "updatedAt": "2015-03-09T10:39:22.117Z",
+        "weight": 5
+    },
+	{
+        "addresss": "CABRILLO ST / 46TH AV",
+        "category": "LARCENY/THEFT",
+        "createdAt": "2015-03-09T10:39:22.125Z",
+        "descript": "GRAND THEFT FROM UNLOCKED AUTO",
+        "indicentId": 1.56043126e+08,
+        "location": {
+            "__type": "GeoPoint",
+            "latitude": 37.7734052631424,
+            "longitude": -122.506818965003
+        },
+        "objectId": "sl45Kxp1fV",
+        "pdDiscrict": "RICHMOND",
+        "pdId": 1.5604312606224e+13,
+        "resolution": "NONE",
+        "timestamp": {
+            "__type": "Date",
+            "iso": "2015-02-20T19:00:00.000Z"
+        },
+        "updatedAt": "2015-03-09T10:39:22.125Z",
+        "weight": 10
+    },
+	{
+        "addresss": "1800 Block of SUTTER ST",
+        "category": "LARCENY/THEFT",
+        "createdAt": "2015-03-09T10:39:22.133Z",
+        "descript": "GRAND THEFT FROM LOCKED AUTO",
+        "indicentId": 1.56042792e+08,
+        "location": {
+            "__type": "GeoPoint",
+            "latitude": 37.7864562307955,
+            "longitude": -122.430791511808
+        },
+        "objectId": "QCkAGzDDsR",
+        "pdDiscrict": "NORTHERN",
+        "pdId": 1.5604279206244e+13,
+        "resolution": "NONE",
+        "timestamp": {
+            "__type": "Date",
+            "iso": "2015-02-20T19:00:00.000Z"
+        },
+        "updatedAt": "2015-03-09T10:39:22.133Z",
+        "weight": 10
+    },
+	{
+        "addresss": "100 Block of AVILA ST",
+        "category": "VANDALISM",
+        "createdAt": "2015-03-09T10:39:22.142Z",
+        "descript": "MALICIOUS MISCHIEF, VANDALISM",
+        "indicentId": 1.56042902e+08,
+        "location": {
+            "__type": "GeoPoint",
+            "latitude": 37.8019715280364,
+            "longitude": -122.440578594925
+        },
+        "objectId": "3XqkcJvUBY",
+        "pdDiscrict": "NORTHERN",
+        "pdId": 1.560429022815e+13,
+        "resolution": "NONE",
+        "timestamp": {
+            "__type": "Date",
+            "iso": "2015-02-20T19:00:00.000Z"
+        },
+        "updatedAt": "2015-03-09T10:39:22.142Z",
+        "weight": 5
+    },
+	{
+        "addresss": "800 Block of BRYANT ST",
+        "category": "LARCENY/THEFT",
+        "createdAt": "2015-03-09T10:39:22.150Z",
+        "descript": "PETTY THEFT OF PROPERTY",
+        "indicentId": 1.56041788e+08,
+        "location": {
+            "__type": "GeoPoint",
+            "latitude": 37.775420706711,
+            "longitude": -122.403404791479
+        },
+        "objectId": "t6jqG7u3V6",
+        "pdDiscrict": "SOUTHERN",
+        "pdId": 1.5604178806372e+13,
+        "resolution": "NONE",
+        "timestamp": {
+            "__type": "Date",
+            "iso": "2015-02-20T18:50:00.000Z"
+        },
+        "updatedAt": "2015-03-09T10:39:22.150Z",
+        "weight": 10
+    },
+	{
+        "addresss": "JONES ST / CHESTNUT ST",
+        "category": "LARCENY/THEFT",
+        "createdAt": "2015-03-09T10:39:22.165Z",
+        "descript": "GRAND THEFT FROM UNLOCKED AUTO",
+        "indicentId": 1.56041835e+08,
+        "location": {
+            "__type": "GeoPoint",
+            "latitude": 37.8033467206612,
+            "longitude": -122.416514507406
+        },
+        "objectId": "PtmUiylU65",
+        "pdDiscrict": "CENTRAL",
+        "pdId": 1.5604183506224e+13,
+        "resolution": "NONE",
+        "timestamp": {
+            "__type": "Date",
+            "iso": "2015-02-20T18:45:00.000Z"
+        },
+        "updatedAt": "2015-03-09T10:39:22.165Z",
+        "weight": 10
+    },
+	{
+        "addresss": "1300 Block of HAIGHT ST",
+        "category": "LARCENY/THEFT",
+        "createdAt": "2015-03-09T10:39:22.173Z",
+        "descript": "GRAND THEFT FROM LOCKED AUTO",
+        "indicentId": 1.560417e+08,
+        "location": {
+            "__type": "GeoPoint",
+            "latitude": 37.7702619702403,
+            "longitude": -122.444502333693
+        },
+        "objectId": "ho5EfmNhMA",
+        "pdDiscrict": "PARK",
+        "pdId": 1.5604170006244e+13,
+        "resolution": "NONE",
+        "timestamp": {
+            "__type": "Date",
+            "iso": "2015-02-20T18:43:00.000Z"
+        },
+        "updatedAt": "2015-03-09T10:39:22.173Z",
+        "weight": 10
+    },
+	{
+        "addresss": "BUSH ST / POLK ST",
+        "category": "VANDALISM",
+        "createdAt": "2015-03-09T10:39:22.181Z",
+        "descript": "MALICIOUS MISCHIEF, VANDALISM",
+        "indicentId": 1.5604272e+08,
+        "location": {
+            "__type": "GeoPoint",
+            "latitude": 37.7886989511647,
+            "longitude": -122.420307355721
+        },
+        "objectId": "d4rqW9oGSB",
+        "pdDiscrict": "NORTHERN",
+        "pdId": 1.560427202815e+13,
+        "resolution": "NONE",
+        "timestamp": {
+            "__type": "Date",
+            "iso": "2015-02-20T18:30:00.000Z"
+        },
+        "updatedAt": "2015-03-09T10:39:22.181Z",
+        "weight": 5
+    },
+	{
+        "addresss": "TAYLOR ST / BAY ST",
+        "category": "LARCENY/THEFT",
+        "createdAt": "2015-03-09T10:39:22.189Z",
+        "descript": "GRAND THEFT FROM LOCKED AUTO",
+        "indicentId": 1.56041807e+08,
+        "location": {
+            "__type": "GeoPoint",
+            "latitude": 37.8054165242789,
+            "longitude": -122.415245418291
+        },
+        "objectId": "KHTkyTbPXC",
+        "pdDiscrict": "CENTRAL",
+        "pdId": 1.5604180706244e+13,
+        "resolution": "NONE",
+        "timestamp": {
+            "__type": "Date",
+            "iso": "2015-02-20T18:10:00.000Z"
+        },
+        "updatedAt": "2015-03-09T10:39:22.189Z",
+        "weight": 10
+    },
+	{
+        "addresss": "CHESTNUT ST / MONTGOMERY ST",
+        "category": "VEHICLE THEFT",
+        "createdAt": "2015-03-09T10:39:22.197Z",
+        "descript": "STOLEN AUTOMOBILE",
+        "indicentId": 1.50160392e+08,
+        "location": {
+            "__type": "GeoPoint",
+            "latitude": 37.80476375718,
+            "longitude": -122.405178220847
+        },
+        "objectId": "fxqRa9HOxv",
+        "pdDiscrict": "CENTRAL",
+        "pdId": 1.5016039207021e+13,
+        "resolution": "NONE",
+        "timestamp": {
+            "__type": "Date",
+            "iso": "2015-02-20T18:00:00.000Z"
+        },
+        "updatedAt": "2015-03-09T10:39:22.197Z",
+        "weight": 10
+    },
+	{
+        "addresss": "1900 Block of BEACH ST",
+        "category": "ROBBERY",
+        "createdAt": "2015-03-09T10:39:22.205Z",
+        "descript": "ROBBERY ON THE STREET WITH A KNIFE",
+        "indicentId": 1.50157913e+08,
+        "location": {
+            "__type": "GeoPoint",
+            "latitude": 37.803964400901,
+            "longitude": -122.440624097021
+        },
+        "objectId": "oyDgs5TF1c",
+        "pdDiscrict": "NORTHERN",
+        "pdId": 1.5015791303012e+13,
+        "resolution": "NONE",
+        "timestamp": {
+            "__type": "Date",
+            "iso": "2015-02-20T18:00:00.000Z"
+        },
+        "updatedAt": "2015-03-09T10:39:22.205Z",
+        "weight": 10
+    },
+	{
+        "addresss": "300 Block of 7TH AV",
+        "category": "VEHICLE THEFT",
+        "createdAt": "2015-03-09T10:39:22.213Z",
+        "descript": "STOLEN AND RECOVERED VEHICLE",
+        "indicentId": 1.50157747e+08,
+        "location": {
+            "__type": "GeoPoint",
+            "latitude": 37.7819129193277,
+            "longitude": -122.465352199094
+        },
+        "objectId": "WWkfqdyS7V",
+        "pdDiscrict": "RICHMOND",
+        "pdId": 1.501577470702e+13,
+        "resolution": "NONE",
+        "timestamp": {
+            "__type": "Date",
+            "iso": "2015-02-20T17:09:00.000Z"
+        },
+        "updatedAt": "2015-03-09T10:39:22.213Z",
+        "weight": 10
+    },
+	{
+        "addresss": "300 Block of 7TH AV",
+        "category": "VEHICLE THEFT",
+        "createdAt": "2015-03-09T10:39:22.221Z",
+        "descript": "STOLEN TRUCK",
+        "indicentId": 1.50157747e+08,
+        "location": {
+            "__type": "GeoPoint",
+            "latitude": 37.7819129193277,
+            "longitude": -122.465352199094
+        },
+        "objectId": "3AotUlol2o",
+        "pdDiscrict": "RICHMOND",
+        "pdId": 1.5015774707025e+13,
+        "resolution": "NONE",
+        "timestamp": {
+            "__type": "Date",
+            "iso": "2015-02-20T17:09:00.000Z"
+        },
+        "updatedAt": "2015-03-09T10:39:22.221Z",
+        "weight": 10
+    },
+	{
+        "addresss": "1500 Block of VANNESS AV",
+        "category": "LARCENY/THEFT",
+        "createdAt": "2015-03-09T10:39:22.229Z",
+        "descript": "GRAND THEFT FROM LOCKED AUTO",
+        "indicentId": 1.56043217e+08,
+        "location": {
+            "__type": "GeoPoint",
+            "latitude": 37.7899200014841,
+            "longitude": -122.422062730264
+        },
+        "objectId": "JOKit7oslC",
+        "pdDiscrict": "NORTHERN",
+        "pdId": 1.5604321706244e+13,
+        "resolution": "NONE",
+        "timestamp": {
+            "__type": "Date",
+            "iso": "2015-02-20T17:00:00.000Z"
+        },
+        "updatedAt": "2015-03-09T10:39:22.229Z",
+        "weight": 10
+    },
+	{
+        "addresss": "0 Block of WILDER ST",
+        "category": "VEHICLE THEFT",
+        "createdAt": "2015-03-09T10:39:22.236Z",
+        "descript": "STOLEN AUTOMOBILE",
+        "indicentId": 1.50157935e+08,
+        "location": {
+            "__type": "GeoPoint",
+            "latitude": 37.7340899662655,
+            "longitude": -122.433410011879
+        },
+        "objectId": "D7t6Db587U",
+        "pdDiscrict": "INGLESIDE",
+        "pdId": 1.5015793507021e+13,
+        "resolution": "NONE",
+        "timestamp": {
+            "__type": "Date",
+            "iso": "2015-02-20T15:00:00.000Z"
+        },
+        "updatedAt": "2015-03-09T10:39:22.236Z",
+        "weight": 10
+    },
+	{
+        "addresss": "500 Block of JOHNFKENNEDY DR",
+        "category": "LARCENY/THEFT",
+        "createdAt": "2015-03-09T10:39:22.245Z",
+        "descript": "GRAND THEFT FROM LOCKED AUTO",
+        "indicentId": 1.56043063e+08,
+        "location": {
+            "__type": "GeoPoint",
+            "latitude": 37.7725405391593,
+            "longitude": -122.466204667893
+        },
+        "objectId": "oMYmxkbpr6",
+        "pdDiscrict": "RICHMOND",
+        "pdId": 1.5604306306244e+13,
+        "resolution": "NONE",
+        "timestamp": {
+            "__type": "Date",
+            "iso": "2015-02-20T14:45:00.000Z"
+        },
+        "updatedAt": "2015-03-09T10:39:22.245Z",
+        "weight": 10
+    },
+	{
+        "addresss": "600 Block of CALIFORNIA ST",
+        "category": "LARCENY/THEFT",
+        "createdAt": "2015-03-09T10:39:22.253Z",
+        "descript": "GRAND THEFT OF PROPERTY",
+        "indicentId": 1.56041794e+08,
+        "location": {
+            "__type": "GeoPoint",
+            "latitude": 37.792508340252,
+            "longitude": -122.405025778458
+        },
+        "objectId": "Gxf3pJYCZ4",
+        "pdDiscrict": "CENTRAL",
+        "pdId": 1.5604179406374e+13,
+        "resolution": "NONE",
+        "timestamp": {
+            "__type": "Date",
+            "iso": "2015-02-20T14:10:00.000Z"
+        },
+        "updatedAt": "2015-03-09T10:39:22.253Z",
+        "weight": 10
+    },
+	{
+        "addresss": "POST ST / POWELL ST",
+        "category": "LARCENY/THEFT",
+        "createdAt": "2015-03-09T10:39:22.261Z",
+        "descript": "PETTY THEFT FROM LOCKED AUTO",
+        "indicentId": 1.5015683e+08,
+        "location": {
+            "__type": "GeoPoint",
+            "latitude": 37.7882933915158,
+            "longitude": -122.408403859899
+        },
+        "objectId": "EFcgRA2Xls",
+        "pdDiscrict": "CENTRAL",
+        "pdId": 1.5015683006243e+13,
+        "resolution": "NONE",
+        "timestamp": {
+            "__type": "Date",
+            "iso": "2015-02-20T13:15:00.000Z"
+        },
+        "updatedAt": "2015-03-09T10:39:22.261Z",
+        "weight": 10
+    },
+	{
+        "addresss": "0 Block of UNITEDNATIONS PZ",
+        "category": "NON-CRIMINAL",
+        "createdAt": "2015-03-09T10:39:22.275Z",
+        "descript": "AIDED CASE, MENTAL DISTURBED",
+        "indicentId": 1.50156802e+08,
+        "location": {
+            "__type": "GeoPoint",
+            "latitude": 37.7799444052046,
+            "longitude": -122.414317857881
+        },
+        "objectId": "qW9PqIYXIk",
+        "pdDiscrict": "TENDERLOIN",
+        "pdId": 1.501568026402e+13,
+        "resolution": "UNFOUNDED",
+        "timestamp": {
+            "__type": "Date",
+            "iso": "2015-02-20T13:15:00.000Z"
+        },
+        "updatedAt": "2015-03-09T10:39:22.275Z",
+        "weight": 1
+    }
+] }
