@@ -188,6 +188,45 @@ Parse.Cloud.job("putCrimeData", function(request, response){
 	jobs.putCrimeDataFromURL(crimeDataURL, request, resopnse);
 });
 
+//To run hourly, detecting cars that are parked in street sweeping zones
+Parse.Cloud.job("activeSweepingRoutes", function(request, resposnse){
+	var days = ["Sun", "Mon", "Tues", "Wed", "Thu", "Fri", "Sat"];
+	var d = new Date();
+	var hour = d.getHours().toString();
+	if (hour.length == 1) {
+		hour = "0" + hour;
+	}
+
+	var StreetSweepingRoute = Parse.Object.extend("StreetSweepingRoute");
+	var query = new Parse.Query(StreetSweepingRoute);
+	query.startsWith("start_time", hour);
+	query.equals("weekday", days[d.getDay()]);
+
+	query.find({
+		success: function(results){
+			var data = [];
+			for (var entryIndex in results){
+				var currentRoute = new Object();
+				var entry = results[entryIndex];
+				currentRoute["streetName"] = entry.get("streetname");
+				currentRoute["rightFromAddress"] = entry.get("right_from_address");
+				currentRoute["rightToAddress"] = entry.get("right_to_address");
+				currentRoute["leftFromAddress"] = entry.get("left_from_address");
+				currentRoute["leftToAddress"] = entry.get("left_to_address");
+				currentRoute["endTime"] = entry.get("end_time");
+				data.push(currentRoute);
+			}
+			console.log(data.length + " active routes found: ");
+			console.log(data);
+			response.success(data);
+		},
+		error: function(error){
+			response.error("Unable to retrieve routes. Error: " + error.code + " " + error.message);
+		}
+
+	});
+});
+
 //Test function to make sure cloud code is working. Exemplifies using a separate
 //javascript module (test.js)
 Parse.Cloud.define("test", function(request, response){
