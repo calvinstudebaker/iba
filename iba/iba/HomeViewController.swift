@@ -326,7 +326,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
     func shareButtonPressed(sender: UIButton) {
         let textToShare = "Tired of stressing over where to park? Try Parq today!"
         
-        if let myWebsite = NSURL(string: "http://www.parqtheapp.com/")
+        if let myWebsite = NSURL(string: "http://www.parqtheapp.com?ref=" + PFInstallation.currentInstallation().objectId!)
         {
             let objectsToShare = [textToShare, myWebsite]
             let activityVC = UIActivityViewController(activityItems: objectsToShare, applicationActivities: nil)

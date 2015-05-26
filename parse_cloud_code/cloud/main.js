@@ -229,6 +229,40 @@ Parse.Cloud.define("carStatusChanged", function(request, response) {
 	});
 })
 
+Parse.Cloud.define("carDinged", function(request, response) {
+
+	var query = new Parse.Query("Car");
+	query.equalTo("objectId", request.params.carId);
+	query.find({
+		success: function(results) {
+			if (results.length > 0) {
+
+				var car = results[0];
+
+				var installationId = car.get("installation").id;
+				
+				var push = require("cloud/push.js");
+				var pushDict = {
+					"pushText": "We've detected that your car has been dinged.",
+					"pushType": "CAR_DING", 
+					"installationId": installationId
+				};
+
+				console.log("trying to send push to: " + installationId);
+
+				var result = push.sendPush(pushDict);
+				response.success("Sending push to " + installationId);
+
+			} else {
+				response.error("Couldn't find a car with that id");
+			}
+		},
+		error: function() {
+			response.error("Car lookup failed");
+		}
+	});
+})
+
 
 //inject initial data into ParkingMeter table from dataSF.org
 Parse.Cloud.job("putMeterData", function(request, response){
