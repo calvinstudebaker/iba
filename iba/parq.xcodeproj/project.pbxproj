@@ -49,6 +49,8 @@
 		AF674E451AD6198F00C0BA16 /* IBAButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF674E441AD6198F00C0BA16 /* IBAButton.swift */; };
 		AF8C0A741AF958EE0076C942 /* crime_icon_grey.png in Resources */ = {isa = PBXBuildFile; fileRef = AF8C0A731AF958EE0076C942 /* crime_icon_grey.png */; };
 		AFB753CF1AD717630078246F /* MDDirectionService.m in Sources */ = {isa = PBXBuildFile; fileRef = AFB753CE1AD717630078246F /* MDDirectionService.m */; };
+		AFD507591B144DF100C6360A /* DingAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFD507581B144DF100C6360A /* DingAlertViewController.swift */; };
+		AFD5075B1B14519000C6360A /* audi_vector_dinged.png in Resources */ = {isa = PBXBuildFile; fileRef = AFD5075A1B14519000C6360A /* audi_vector_dinged.png */; };
 		AFDEE6371AF9407700F213FD /* audi_vector.png in Resources */ = {isa = PBXBuildFile; fileRef = AFDEE6361AF9407700F213FD /* audi_vector.png */; };
 		D4B406BC8ECB8D1ED17BAD49 /* libPods-iba.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E82C9291DF6C9871051377D3 /* libPods-iba.a */; };
 		DC51158B1AF860A00032F6DC /* ticket_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = DC51158A1AF860A00032F6DC /* ticket_icon.png */; };
@@ -121,6 +123,8 @@
 		AF8C0A731AF958EE0076C942 /* crime_icon_grey.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = crime_icon_grey.png; sourceTree = "<group>"; };
 		AFB753CD1AD717630078246F /* MDDirectionService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDDirectionService.h; sourceTree = "<group>"; };
 		AFB753CE1AD717630078246F /* MDDirectionService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDDirectionService.m; sourceTree = "<group>"; };
+		AFD507581B144DF100C6360A /* DingAlertViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DingAlertViewController.swift; sourceTree = "<group>"; };
+		AFD5075A1B14519000C6360A /* audi_vector_dinged.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = audi_vector_dinged.png; sourceTree = "<group>"; };
 		AFDEE6361AF9407700F213FD /* audi_vector.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = audi_vector.png; sourceTree = "<group>"; };
 		DC51158A1AF860A00032F6DC /* ticket_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ticket_icon.png; sourceTree = "<group>"; };
 		DC51158E1AF865C70032F6DC /* price_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = price_icon.png; sourceTree = "<group>"; };
@@ -285,6 +289,7 @@
 				AF38CA7C1AAD5C6A003892D0 /* MovingAlertViewController.swift */,
 				AF674E401AD5D72000C0BA16 /* ReportViewController.swift */,
 				AF485A421AF1B998003CCEFA /* ConnectCarViewController.swift */,
+				AFD507581B144DF100C6360A /* DingAlertViewController.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -334,6 +339,7 @@
 		DC9B50AA1AAD80A4006E2323 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				AFD5075A1B14519000C6360A /* audi_vector_dinged.png */,
 				AF674E421AD5E1ED00C0BA16 /* slider_circle@2x.png */,
 				AF21B1271AAC041600669016 /* Images.xcassets */,
 				AF21B1291AAC041600669016 /* LaunchScreen.xib */,
@@ -402,6 +408,11 @@
 					AF21B11A1AAC041600669016 = {
 						CreatedOnToolsVersion = 6.1;
 						DevelopmentTeam = Y6FLUCNFEW;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+						};
 					};
 					AF21B12F1AAC041600669016 = {
 						CreatedOnToolsVersion = 6.1;
@@ -443,6 +454,7 @@
 				DC9B50AC1AAD80CE006E2323 /* car_icon.png in Resources */,
 				DC5115971AF956B60032F6DC /* ticket_icon_grey.png in Resources */,
 				DC5115911AF86B3F0032F6DC /* crime_icon.png in Resources */,
+				AFD5075B1B14519000C6360A /* audi_vector_dinged.png in Resources */,
 				DC51158F1AF865C70032F6DC /* price_icon.png in Resources */,
 				AF21B1281AAC041600669016 /* Images.xcassets in Resources */,
 				DC5115961AF956B60032F6DC /* price_icon_grey.png in Resources */,
@@ -505,6 +517,7 @@
 				AF38CA591AAD5485003892D0 /* HomeViewController.swift in Sources */,
 				AF38CA801AAD5D9B003892D0 /* IBAUtils.swift in Sources */,
 				AF38CA7D1AAD5C6A003892D0 /* MovingAlertViewController.swift in Sources */,
+				AFD507591B144DF100C6360A /* DingAlertViewController.swift in Sources */,
 				AF674E3E1AD5D0AF00C0BA16 /* IBARateItemView.swift in Sources */,
 				AF485A431AF1B998003CCEFA /* ConnectCarViewController.swift in Sources */,
 			);
@@ -627,8 +640,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Raymond Kennedy (BARG5WWWW2)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Raymond Kennedy (BARG5WWWW2)";
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -653,8 +666,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Raymond Kennedy (BARG5WWWW2)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Raymond Kennedy (BARG5WWWW2)";
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",

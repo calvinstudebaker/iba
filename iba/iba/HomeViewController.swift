@@ -81,9 +81,19 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
         setupCrimeButton()
         setupStopGuidanceButton()
         setupNavIcon()
+        
+        setSelectedButton(self.crimeButton)
     }
     
     override func viewDidAppear(animated: Bool) {
+        
+//        delay(1.0, { () -> () in
+//            let nav = UINavigationController()
+//            let dvc = DingAlertViewController()
+//            nav.viewControllers = [dvc]
+//            self.navigationController?.presentViewController(nav, animated: true, completion: nil)
+//            return
+//        })
         
         triggerLocationServices()
         
@@ -271,19 +281,74 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
     }
     
     func reportButtonPressed(sender: UIButton) {
-        let rvc = ReportViewController()
-        self.navigationController?.pushViewController(rvc, animated: true)
+    
+        let model: NSString = UIDevice.currentDevice().model as NSString
+
+        if (CLLocationManager.locationServicesEnabled() || model.isEqualToString("iPhone Simulator")) {
+            
+            var currentLocation = CLLocationCoordinate2DMake(0, 0)
+            
+            if (model.isEqualToString("iPhone Simulator")) {
+                currentLocation = CLLocation(latitude: 37.4203696428215, longitude: -122.170106303061).coordinate
+            } else {
+                self.locationManager.location.coordinate
+            }
+            
+            // Show loading hud
+            let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+            hud.mode = .Indeterminate
+            
+            // Reverse geocode the coordinate
+            let geocoder = GMSGeocoder()
+            geocoder.reverseGeocodeCoordinate(currentLocation, completionHandler: { (response: GMSReverseGeocodeResponse!, error: NSError!) -> Void in
+                hud.hide(true)
+                let result: GMSAddress = response.firstResult()
+                let streetName = result.thoroughfare!
+                if (!streetName.isEmpty) {
+                    let rvc = ReportViewController(type: .Regular, currentLocation: currentLocation, streetName: streetName)
+                    self.navigationController?.pushViewController(rvc, animated: true)
+                } else {
+                    let alert = UIAlertController(title: "Whoops!", message: "We couldn't find your parking spot!", preferredStyle: UIAlertControllerStyle.Alert)
+                    alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: { (action: UIAlertAction!) -> Void in
+                        
+                    }))
+                    self.presentViewController(alert, animated: true, completion: nil)
+                }
+
+                
+            })
+
+        } else {
+            let alert = UIAlertController(title: "Whoops!", message: "You need to enable location services to send reports! You can do so in settings!", preferredStyle: UIAlertControllerStyle.Alert)
+            alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: { (action: UIAlertAction!) -> Void in
+                
+            }))
+            alert.addAction(UIAlertAction(title: "Settings", style: .Default, handler: { (action: UIAlertAction!) -> Void in
+                UIApplication.sharedApplication().openURL(NSURL(string: UIApplicationOpenSettingsURLString)!)
+            }))
+            self.presentViewController(alert, animated: true, completion: nil)
+        }
     }
     
     
     func shareButtonPressed(sender: UIButton) {
         let textToShare = "Tired of stressing over where to park? Try Parq today!"
         
-        if let myWebsite = NSURL(string: "http://www.parqtheapp.com/")
+        if let myWebsite = NSURL(string: "http://www.parqtheapp.com?ref=" + PFInstallation.currentInstallation().objectId!)
         {
             let objectsToShare = [textToShare, myWebsite]
             let activityVC = UIActivityViewController(activityItems: objectsToShare, applicationActivities: nil)
             
+            activityVC.completionHandler = {
+                (activityType, completed) in
+                if completed == false {
+                    return
+                }
+                IBANetworking.shareHit(activityType, completion: { (completed, error) -> Void in
+                    
+                })
+                return
+            }
             self.presentViewController(activityVC, animated: true, completion: nil)
         }
     }

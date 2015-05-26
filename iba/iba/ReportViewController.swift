@@ -10,6 +10,11 @@ import UIKit
 
 class ReportViewController: UIViewController {
     
+    enum ReportType {
+        case Regular
+        case Ding
+    }
+    
     let kRateItemHeight: CGFloat = 90
     let kRateItemPadding: CGFloat = 20
     
@@ -17,6 +22,10 @@ class ReportViewController: UIViewController {
     let damageRateItem: IBARateItemView
     let spotPriceRateItem: IBARateItemView
     let ticketPriceRateItem: IBARateItemView
+    
+    var currentLocation: CLLocationCoordinate2D
+    var streetName: String
+    var reportType: ReportType
     
     let descriptionLabel: UILabel
     let submitButton: IBAButton
@@ -33,6 +42,23 @@ class ReportViewController: UIViewController {
         self.init(nibName: nil, bundle: nil)
     }
     
+    convenience init(type: ReportType, currentLocation: CLLocationCoordinate2D?, streetName: String?) {
+        
+        self.init()
+        if (currentLocation != nil) {
+            self.currentLocation = currentLocation!
+        }
+        if (streetName != nil) {
+            self.streetName = streetName!
+        }
+        
+        self.reportType = type
+
+        setupDescriptionLabel();
+        self.submitButton.addTarget(self, action: "submitPressed:", forControlEvents: .TouchUpInside)
+
+    }
+    
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
         
         // Setup the rate items
@@ -41,6 +67,10 @@ class ReportViewController: UIViewController {
         self.spotPriceRateItem = IBARateItemView(title: "Price of spot", lowText: "free", highText: "expensive")
         self.ticketPriceRateItem = IBARateItemView(title: "Price of ticket", lowText: "no ticket", highText: "$100+")
         
+        self.currentLocation = CLLocationCoordinate2DMake(0, 0)
+        self.streetName = ""
+        self.reportType = .Regular
+        
         self.scrollView = UIScrollView(frame: CGRectZero)
         self.scrollView.alwaysBounceVertical = true
         
@@ -48,10 +78,7 @@ class ReportViewController: UIViewController {
         self.submitButton = IBAButton(frame: CGRectZero, title: "Submit", colorScheme: UIColor(red: 0.18, green: 0.8, blue: 0.44, alpha: 1.0), clear: true)
         
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-        
-        setupDescriptionLabel();
-        self.submitButton.addTarget(self, action: "submitPressed:", forControlEvents: .TouchUpInside)
-        
+
     }
     
     // MARK: ViewController Life Cycle
@@ -107,6 +134,7 @@ class ReportViewController: UIViewController {
         self.submitButton.frame = CGRectMake(kRateItemPadding, originY + kRateItemPadding, self.view.frame.size.width - (kRateItemPadding * 2), kRateItemHeight/2)
         
         self.scrollView.frame = self.view.frame
+        self.scrollView.contentSize = CGSizeMake(self.view.bounds.size.width, originY + self.submitButton.frame.size.height + kRateItemPadding*2)
         
         // Add them as subviews
         self.view.addSubview(self.scrollView)
@@ -135,7 +163,11 @@ class ReportViewController: UIViewController {
                 hud.hide(true, afterDelay: 1.0)
 
                 delay(1.0, { () -> () in
-                    self.navigationController?.popViewControllerAnimated(true)
+                    if (self.reportType == .Regular) {
+                        self.navigationController?.popViewControllerAnimated(true)
+                    } else if (self.reportType == .Ding) {
+                        self.navigationController?.dismissViewControllerAnimated(true, completion: nil)
+                    }
                     return
                 })
 
@@ -154,9 +186,14 @@ class ReportViewController: UIViewController {
         let damagePercent = self.damageRateItem.currentValue
         let spotPricePercent = self.spotPriceRateItem.currentValue
         let ticketPricePercent = self.ticketPriceRateItem.currentValue
-        let location = CLLocation(latitude: 37.7833, longitude: -122.41)
+        let location = CLLocation(latitude: self.currentLocation.latitude, longitude: self.currentLocation.longitude)
+        var rt = "regular"
+        if (self.reportType == .Ding) {
+            rt = "ding"
+        }
         
         let dict: [String: AnyObject] = [
+            "reportType": rt,
             "easePercent": easePercent,
             "damagePercent": damagePercent,
             "spotPricePercent": spotPricePercent,
@@ -171,7 +208,7 @@ class ReportViewController: UIViewController {
         self.descriptionLabel.font = UIFont(name: "HelveticaNeue-Light", size: 21)
         self.descriptionLabel.textColor = UIColor.blackColor()
         self.descriptionLabel.textAlignment = .Center
-        self.descriptionLabel.text = "Let us know how your parking spot on Berry St. was!"
+        self.descriptionLabel.text = "Let us know how your parking spot at " + self.streetName + " was!"
         self.descriptionLabel.numberOfLines = 3
         self.scrollView.addSubview(self.descriptionLabel)
     }
