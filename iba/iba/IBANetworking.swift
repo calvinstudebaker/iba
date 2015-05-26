@@ -39,8 +39,13 @@ class IBANetworking {
         uGenReport["installation"] = PFInstallation.currentInstallation()
         uGenReport.saveInBackgroundWithBlock(completion)
         
-        
-        
+    }
+    
+    class func shareHit(type: String, completion: PFBooleanResultBlock) {
+        let share = PFObject(className: "Share");
+        share["type"] = type;
+        share["installation"] = PFInstallation.currentInstallation()
+        share.saveInBackgroundWithBlock(completion);
     }
     
     class func searchForDestination(destination: String, completion: (complete: Bool, location: CLLocation?) -> ()) {
