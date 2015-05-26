@@ -291,7 +291,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
             if (model.isEqualToString("iPhone Simulator")) {
                 currentLocation = CLLocation(latitude: 37.4203696428215, longitude: -122.170106303061).coordinate
             } else {
-                self.locationManager.location.coordinate
+                currentLocation = self.locationManager.location.coordinate
             }
             
             // Show loading hud
