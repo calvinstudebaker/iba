@@ -6,7 +6,8 @@ import urllib2	#uses Google Maps API to convert address to geopoint
 
 
 csvfile = open(sys.argv[1], 'r')
-jsonfile = open(sys.argv[2], 'w')
+oldjson = open(sys.argv[2], 'r')
+newjson = open(sys.argv[3], 'w')
 
 fieldnames = (
 	"ticket_id",
@@ -35,15 +36,18 @@ fieldnames = (
 )
 
 reader = csv.DictReader( csvfile, fieldnames)
-arr = []
 rowCount = 0
+oldObject = json.load(oldjson)
+arr = oldObject["results"]
+oldRowCount = arr[len(arr)-1]["ticketId"]
+
 try:
 	for row in reader:
-		if row["ticket_id"] == "ticket_id": continue
-		if rowCount > 2000 : break
-		rowCount+=1
+		if row["ticket_id"] == "ticket_id": continue #skip first line of csv
+		if int(row["ticket_id"]) <= oldRowCount: continue #get to next non-processed line
+		if rowCount > 2400 : break	#limit API calls to not overflow daily limit
+		
 		d = dict()
-
 		csvDate = row["issue_datetime"]
 		tokens = csvDate.split()
 		date = tokens[0]
@@ -51,7 +55,7 @@ try:
 		dateTime = date + "T" + timeOfDay + ".000Z"
 		d["timestamp"] = {"__type": "Date", "iso": dateTime}
 
-		d["ticketId"] = row["ticket_id"]
+		d["ticketId"] = int(row["ticket_id"])
 		d["violationId"] = row["violation"]
 		d["violationDescription"] = row["violation_description"]
 
@@ -72,8 +76,9 @@ try:
 			print(rowCount)
 			print(data)
 
+		rowCount+=1
 		#pause to not exceed google api usage limits
 		time.sleep(2)
 finally:
-	json.dump({"results" : arr}, jsonfile)
+	json.dump({"results" : arr}, newjson)
 	print("done")
