@@ -331,6 +331,13 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
             let objectsToShare = [textToShare, myWebsite]
             let activityVC = UIActivityViewController(activityItems: objectsToShare, applicationActivities: nil)
             
+            activityVC.completionHandler = {
+                (activityType, completed) in
+                IBANetworking.shareHit(activityType, completion: { (completed, error) -> Void in
+                    
+                })
+                return
+            }
             self.presentViewController(activityVC, animated: true, completion: nil)
         }
     }
