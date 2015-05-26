@@ -31,6 +31,7 @@ class IBANetworking {
         
         let location: CLLocation = report["location"] as! CLLocation
         
+        uGenReport["type"] = report["reportType"] as! String
         uGenReport["damageRating"] = NSNumber(float: report["damagePercent"] as! Float)
         uGenReport["easeRating"] = NSNumber(float: report["easePercent"] as! Float)
         uGenReport["priceRating"] = NSNumber(float: report["spotPricePercent"] as! Float)

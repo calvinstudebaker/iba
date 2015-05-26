@@ -87,6 +87,14 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
     
     override func viewDidAppear(animated: Bool) {
         
+//        delay(1.0, { () -> () in
+//            let nav = UINavigationController()
+//            let dvc = DingAlertViewController()
+//            nav.viewControllers = [dvc]
+//            self.navigationController?.presentViewController(nav, animated: true, completion: nil)
+//            return
+//        })
+        
         triggerLocationServices()
         
         if (NSUserDefaults.standardUserDefaults().valueForKey("LastLat") != nil) {
@@ -297,7 +305,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
                 let result: GMSAddress = response.firstResult()
                 let streetName = result.thoroughfare!
                 if (!streetName.isEmpty) {
-                    let rvc = ReportViewController(currentLocation: currentLocation, streetName: streetName)
+                    let rvc = ReportViewController(type: .Regular, currentLocation: currentLocation, streetName: streetName)
                     self.navigationController?.pushViewController(rvc, animated: true)
                 } else {
                     let alert = UIAlertController(title: "Whoops!", message: "We couldn't find your parking spot!", preferredStyle: UIAlertControllerStyle.Alert)

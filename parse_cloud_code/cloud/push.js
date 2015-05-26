@@ -11,6 +11,8 @@ exports.sendPush = function(params) {
 		where: pushQuery,
 		data: {
 			alert: pushText,
+			"content-available": "1",
+			custom: pushType
 		}
 	}, {
 		success: function() {

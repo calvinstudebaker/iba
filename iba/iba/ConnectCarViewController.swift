@@ -145,9 +145,6 @@ class ConnectCarViewController: UIViewController {
             self.scrollView.addSubview(self.carDescriptionLabel)
             
         }
-        
-
-        
     }
     
     func disconnectCar(sender: AnyObject) {
