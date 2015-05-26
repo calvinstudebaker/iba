@@ -207,20 +207,20 @@ Parse.Cloud.define("carStatusChanged", function(request, response) {
 			response.error("Unable to find a Car! Error: " + error.code + ", " + error.message);
 		}
 	});
-})
+});
 
 Parse.Cloud.define("carDinged", function(request, response) {
 
 	var query = new Parse.Query("Car");
 	query.equalTo("objectId", request.params.carId);
-	query.include(["installation.objectId"]);
+	query.include("installation");
 	query.find({
 		success: function(results) {
 			if (results.length > 0) {
 
 				var car = results[0];
 
-				var installationId = car.get("installation.objectId");
+				var installationId = car.get("installation").id;
 				
 				var push = require("cloud/push.js");
 				var pushDict = {
@@ -231,7 +231,7 @@ Parse.Cloud.define("carDinged", function(request, response) {
 
 				console.log("trying to send push to: " + installationId);
 
-				var result = push.sendPush(pushDict);
+				push.sendPush(pushDict);
 				response.success("Sending push to " + installationId);
 
 			} else {
@@ -242,8 +242,23 @@ Parse.Cloud.define("carDinged", function(request, response) {
 			response.error("Car lookup failed");
 		}
 	});
-})
+});
 
+
+// Parse.Cloud.define("userReferralClicked", function(request, response){
+// 	var refId = request.params.ref;
+// 	var installationQuery = Parse.Query.("Installation");
+// 	installationQuery.get(refId, {
+// 		success: function(installation){
+// 			installation.increment("numReferrals");
+// 			installation.save();
+// 			response.success("referral noted");
+// 		},
+// 		error: function(object, error){
+// 			response.error("referral save failed");
+// 		}
+// 	});
+// });
 
 //inject initial data into ParkingMeter table from dataSF.org
 Parse.Cloud.job("putMeterData", function(request, response){
@@ -259,9 +274,10 @@ Parse.Cloud.job("putCrimeData", function(request, response){
 Parse.Cloud.job("activeSweepingRoutes", function(request, response){
 	var streetSweeping = require("cloud/streetSweeping.js");
 	var push = require("cloud/push.js");
+	var _ = require("underscore.js");
 	var days = ["Sun", "Mon", "Tues", "Wed", "Thu", "Fri", "Sat"];
 	var d = new Date();
-	var hour = (d.getHours() + 1).toString();
+	var hour = d.getHours().toString();
 	if (hour.length == 1) {
 		hour = "0" + hour;
 	}
@@ -269,14 +285,14 @@ Parse.Cloud.job("activeSweepingRoutes", function(request, response){
 	var StreetSweepingRoute = Parse.Object.extend("StreetSweepingRoute");
 	var sweepingQuery = new Parse.Query(StreetSweepingRoute);
 	sweepingQuery.startsWith("start_time", hour);
-	sweepingQuery.equals("weekday", days[d.getDay()]);
+	sweepingQuery.equalTo("weekday", days[d.getDay()]);
 	sweepingQuery.select("streetname", "right_from_address", "right_to_address", "left_from_address", "left_to_address", "end_time");
 
 	var carQuery = new Parse.Query("Car");
-	carQuery.equals("isParked", true);
+	carQuery.equalTo("isParked", true);
 	carQuery.exists("location");
 	carQuery.exists("installation");
-	carQuery.include(["installation.objectId"]);
+	carQuery.include("installation");
 
 	var activeRoutes = [];
 
@@ -303,7 +319,7 @@ Parse.Cloud.job("activeSweepingRoutes", function(request, response){
 		response.error("Unable to retrieve routes. Error: " + error.code + " " + error.message);
 	}).then(function(parkedCars){
 		var promises = [];
-
+		console.log(parkedCars);
 		_.each(parkedCars, function(parkedCar){
 			for (var route in activeRoutes){
 				if(streetSweeping.isInSweepingRoute(parkedCar,route)){
@@ -312,14 +328,14 @@ Parse.Cloud.job("activeSweepingRoutes", function(request, response){
 					var pushDict = {
 						"pushText": "Street sweeping starting! Move your car ya dingus.",
 						"pushType": "STREET_SWEEPING", 
-						"installationId": parkedCar.get("installation.objectId")
+						"installationId": parkedCar.get("installation").id
 					};
-
 					promises.push(push.sendPush(pushDict));
 					break;
 				}
 			}
 		});
+		
 
 		return Parse.Promise.when(promises);
 	}, function(error){
