@@ -50,6 +50,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if (type == CAR_DINGED) {
             // do car ding stuff
             println("Your car has been dinged");
+            
+            let nav = UINavigationController()
+            let dvc = DingAlertViewController()
+            nav.viewControllers = [dvc]
+            let mainNav = self.window!.rootViewController as! UINavigationController
+            mainNav.presentViewController(nav, animated: true, completion: nil)
+
         }
         
         completionHandler(UIBackgroundFetchResult.NoData)

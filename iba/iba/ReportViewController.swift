@@ -10,6 +10,11 @@ import UIKit
 
 class ReportViewController: UIViewController {
     
+    enum ReportType {
+        case Regular
+        case Ding
+    }
+    
     let kRateItemHeight: CGFloat = 90
     let kRateItemPadding: CGFloat = 20
     
@@ -20,6 +25,7 @@ class ReportViewController: UIViewController {
     
     var currentLocation: CLLocationCoordinate2D
     var streetName: String
+    var reportType: ReportType
     
     let descriptionLabel: UILabel
     let submitButton: IBAButton
@@ -36,10 +42,17 @@ class ReportViewController: UIViewController {
         self.init(nibName: nil, bundle: nil)
     }
     
-    convenience init(currentLocation: CLLocationCoordinate2D, streetName: String) {
+    convenience init(type: ReportType, currentLocation: CLLocationCoordinate2D?, streetName: String?) {
+        
         self.init()
-        self.currentLocation = currentLocation
-        self.streetName = streetName
+        if (currentLocation != nil) {
+            self.currentLocation = currentLocation!
+        }
+        if (streetName != nil) {
+            self.streetName = streetName!
+        }
+        
+        self.reportType = type
 
         setupDescriptionLabel();
         self.submitButton.addTarget(self, action: "submitPressed:", forControlEvents: .TouchUpInside)
@@ -56,6 +69,7 @@ class ReportViewController: UIViewController {
         
         self.currentLocation = CLLocationCoordinate2DMake(0, 0)
         self.streetName = ""
+        self.reportType = .Regular
         
         self.scrollView = UIScrollView(frame: CGRectZero)
         self.scrollView.alwaysBounceVertical = true
@@ -149,7 +163,11 @@ class ReportViewController: UIViewController {
                 hud.hide(true, afterDelay: 1.0)
 
                 delay(1.0, { () -> () in
-                    self.navigationController?.popViewControllerAnimated(true)
+                    if (self.reportType == .Regular) {
+                        self.navigationController?.popViewControllerAnimated(true)
+                    } else if (self.reportType == .Ding) {
+                        self.navigationController?.dismissViewControllerAnimated(true, completion: nil)
+                    }
                     return
                 })
 
@@ -169,8 +187,13 @@ class ReportViewController: UIViewController {
         let spotPricePercent = self.spotPriceRateItem.currentValue
         let ticketPricePercent = self.ticketPriceRateItem.currentValue
         let location = CLLocation(latitude: self.currentLocation.latitude, longitude: self.currentLocation.longitude)
+        var rt = "regular"
+        if (self.reportType == .Ding) {
+            rt = "ding"
+        }
         
         let dict: [String: AnyObject] = [
+            "reportType": rt,
             "easePercent": easePercent,
             "damagePercent": damagePercent,
             "spotPricePercent": spotPricePercent,
