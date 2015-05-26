@@ -402,6 +402,11 @@
 					AF21B11A1AAC041600669016 = {
 						CreatedOnToolsVersion = 6.1;
 						DevelopmentTeam = Y6FLUCNFEW;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+						};
 					};
 					AF21B12F1AAC041600669016 = {
 						CreatedOnToolsVersion = 6.1;

@@ -244,7 +244,7 @@ Parse.Cloud.define("carDinged", function(request, response) {
 				var push = require("cloud/push.js");
 				var pushDict = {
 					"pushText": "We've detected that your car has been dinged.",
-					"pushType": "CAR_DING", 
+					"pushType": "CAR_DINGED", 
 					"installationId": installationId
 				};
 

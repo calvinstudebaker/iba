@@ -11,6 +11,8 @@ import UIKit
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
+    let CAR_DINGED: String = "CAR_DINGED";
+    
     var window: UIWindow?
     let googleMapsApiKey = "AIzaSyDLqY2Bq_dD1dei_t-DorEzGAe2Azx1h9c"
     
@@ -38,6 +40,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func askForPush(application: UIApplication) {
         application.registerUserNotificationSettings(UIUserNotificationSettings(forTypes: (.Sound | .Alert | .Badge), categories: nil))
         application.registerForRemoteNotifications()
+    }
+    
+    func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject], fetchCompletionHandler completionHandler: (UIBackgroundFetchResult) -> Void) {
+        
+        let pushDict: NSDictionary = userInfo as NSDictionary
+        let type: String = pushDict.valueForKey("custom") as! String
+        
+        if (type == CAR_DINGED) {
+            // do car ding stuff
+            println("Your car has been dinged");
+        }
+        
+        completionHandler(UIBackgroundFetchResult.NoData)
     }
     
     func setupView() {
