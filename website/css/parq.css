@@ -1,0 +1,33 @@
+
+
+#header{
+	color: #ccfff0;
+	font-family: 'Raleway', sans-serif;
+}
+
+#emphasis{
+	color: #75ffe8;
+}
+
+#logo{
+	display: inline;
+}
+
+#request_info{
+	z-index: 1;
+}
+
+#request_form{
+	z-index: 1;
+	width:300px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+#text_form{
+	padding-bottom:30px;
+}
+
+#thank_you{
+	display: none;
+}
