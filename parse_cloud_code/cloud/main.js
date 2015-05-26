@@ -275,7 +275,6 @@ Parse.Cloud.job("activeSweepingRoutes", function(request, resposnse){
 		error: function(error){
 			response.error("Unable to retrieve routes. Error: " + error.code + " " + error.message);
 		}
-
 	});
 });
 
