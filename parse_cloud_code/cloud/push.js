@@ -7,7 +7,7 @@ exports.sendPush = function(params) {
 	var pushQuery = new Parse.Query(Parse.Installation);
 	pushQuery.equalTo("objectId", installationId);
 
-	Parse.Push.send({
+	var promise = Parse.Push.send({
 		where: pushQuery,
 		data: {
 			alert: pushText,
@@ -16,12 +16,13 @@ exports.sendPush = function(params) {
 		}
 	}, {
 		success: function() {
-			console.log("Push notification sent!");
-			return("Push notification sent!");
+			console.log("Push notification sent: " + pushText);
 		},
 		error: function(error) {
-			return("Got an error " + error.code + " : " + error.message);
+			console.log("Got an error " + error.code + " : " + error.message);
 		}
 	}
 	);
-}
+
+	return promise;
+};
