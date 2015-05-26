@@ -333,6 +333,9 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
             
             activityVC.completionHandler = {
                 (activityType, completed) in
+                if completed == false {
+                    return
+                }
                 IBANetworking.shareHit(activityType, completion: { (completed, error) -> Void in
                     
                 })
