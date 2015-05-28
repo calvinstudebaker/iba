@@ -1,8 +1,8 @@
 # Author: Narek Tovmasyan (IBA)
 # Date: 05/18/2015
 
+
 setwd("~/iba/crimes_data/")
-#setwd("~/Desktop/CS 210/")
 
 install.packages('RJSONIO')
 library(RJSONIO)
@@ -10,7 +10,7 @@ stopifnot( isValidJSON('Crime.json') )
 
 crimeList <- fromJSON('Crime.json')
 #saveRDS(crimeList, file = "allCrimes.RData")
-crimeList = readRDS(file = "allCrimes.RData")
+#crimeList = readRDS(file = "allCrimes.RData")
 
 crimes.all = crimeList$results  # not idempotent!
 singleCrime = crimeList[[1]]
@@ -27,7 +27,6 @@ names(singleCrime$timestamp)  # "__type" "iso"
 #[1] -122.4144
 
 length(crimes.all)  # there are a total of 840,396 crime incidents!
-hundredThousandCrimes <- crimes.all[1:100000]
 
 
 #options(error = traceback)
@@ -42,7 +41,6 @@ toCSV <- function(selectedCrimes, filename) {
                     resolution = crime$resolution, timestamp = tstamp, updatedAt = crime$updatedAt)
     df
   }))
-  #saveRDS(result, "dfObj.RData")
   write.table(result, filename)
 }
 
@@ -51,14 +49,6 @@ processCrimes <- function(fromIndex, toIndex) {
   toCSV(crimes.all[fromIndex:toIndex], fname)
 }
 
-processCrimes(1, 1000)
 processCrimes(1, 10000)
-
-
-
-
-
-
-#rslt <- readRDS("dfObj.RData")
 
 
