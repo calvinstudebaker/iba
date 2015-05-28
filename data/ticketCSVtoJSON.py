@@ -39,14 +39,14 @@ reader = csv.DictReader( csvfile, fieldnames)
 rowCount = 0
 oldObject = json.load(oldjson)
 arr = oldObject["results"]
-oldRowCount = arr[len(arr)-1]["ticketId"]
-
+oldRowCount = int(arr[len(arr)-1]["ticketId"])
+print "oldID = " + str(oldRowCount)
 try:
 	for row in reader:
 		if row["ticket_id"] == "ticket_id": continue #skip first line of csv
 		if int(row["ticket_id"]) <= oldRowCount: continue #get to next non-processed line
-		if rowCount > 2400 : break	#limit API calls to not overflow daily limit
-		
+		if rowCount > 2450 : break	#limit API calls to not overflow daily limit
+		print "rowCount = " + str(rowCount) + " id = " + row["ticket_id"]
 		d = dict()
 		csvDate = row["issue_datetime"]
 		tokens = csvDate.split()
@@ -75,6 +75,7 @@ try:
 			print(data['status'])
 			print(rowCount)
 			print(data)
+			if data['status'] == 'OVER_QUERY_LIMIT': break
 
 		rowCount+=1
 		#pause to not exceed google api usage limits
