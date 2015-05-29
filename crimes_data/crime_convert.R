@@ -3,6 +3,7 @@
 
 
 setwd("~/iba/crimes_data/")
+setwd('~/Desktop/CS 210/')
 
 install.packages('RJSONIO')
 library(RJSONIO)
@@ -12,8 +13,8 @@ crimeList <- fromJSON('Crime.json')
 #saveRDS(crimeList, file = "allCrimes.RData")
 #crimeList = readRDS(file = "allCrimes.RData")
 
-crimes.all = crimeList$results  # not idempotent!
-singleCrime = crimeList[[1]]
+crimes.all = crimeList$results
+singleCrime = crimes.all[[1]]
 class(singleCrime$location)  # list
 class(singleCrime$timestamp)  # character (vector)
 names(singleCrime$timestamp)  # "__type" "iso"
@@ -50,5 +51,6 @@ processCrimes <- function(fromIndex, toIndex) {
 }
 
 processCrimes(1, 10000)
-
+processCrimes(10001, 50000)
+processCrimes(50001, 250000)
 

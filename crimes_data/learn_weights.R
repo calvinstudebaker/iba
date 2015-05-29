@@ -60,3 +60,35 @@ head(cloc.df, 25)
 
 
 
+########## Converthing Into Probabilities crime-category-wise ###############
+
+N = nrow(caddr.df)
+probability.any.incident <- caddr.df / N
+
+# Now, address-/location-based prob. calc.'s for every crime type..
+singleAddr <- caddr.df[93,]
+singleAddr <- names(singleAddr)
+ss.in.addr <- subset(crTable, address == singleAddr)
+
+# Confirming it keeps all the (crime) factor levels..
+length( levels(ss.in.addr$category) ) == nrow(ct.df)
+m = nrow(ct.df)
+
+tt <- table(ss.in.addr$category)
+# Doing Laplace smoothing..
+probs.crime.types <- (tt + 1) / (sum(tt) + m)
+
+# Ensuring these are valid probability values..
+stopifnot( sum(probs.crime.types) == 1 )
+
+
+print ("Probability of any incident happening in this address:")
+probOfAnything = probability.any.incident[singleAddr,]
+probOfAnything
+names(probOfAnything) = NULL
+
+# Finally -- reporting all crime-type prob.'s for this single address!
+probOfAnything * probs.crime.types
+
+
+
