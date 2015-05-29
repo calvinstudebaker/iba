@@ -99,3 +99,12 @@ all.addr.all.crimes # matrix
 
 rownames(all.addr.all.crimes) <- NULL
 
+
+probs.crime.category <- apply(all.addr.all.crimes, 2, mean)
+crimeCategProbs <- sort(probs.crime.category, decreasing = T)
+probs.crime.type <- as.data.frame(crimeCategProbs)
+
+
+
+
+
