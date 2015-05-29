@@ -66,29 +66,36 @@ N = nrow(caddr.df)
 probability.any.incident <- caddr.df / N
 
 # Now, address-/location-based prob. calc.'s for every crime type..
-singleAddr <- caddr.df[93,]
-singleAddr <- names(singleAddr)
-ss.in.addr <- subset(crTable, address == singleAddr)
+#singleAddr <- caddr.df[93,]
 
-# Confirming it keeps all the (crime) factor levels..
-length( levels(ss.in.addr$category) ) == nrow(ct.df)
-m = nrow(ct.df)
+all.addr.all.crimes = NULL
+for (idx in 1:N) {
+  singleAddr <- caddr.df[idx,]
+  singleAddr <- names(singleAddr)
+  ss.in.addr <- subset(crTable, address == singleAddr)
 
-tt <- table(ss.in.addr$category)
-# Doing Laplace smoothing..
-probs.crime.types <- (tt + 1) / (sum(tt) + m)
+  # Confirming it keeps all the (crime) factor levels..
+  length( levels(ss.in.addr$category) ) == nrow(ct.df)
+  m = nrow(ct.df)
 
-# Ensuring these are valid probability values..
-stopifnot( sum(probs.crime.types) == 1 )
+  tt <- table(ss.in.addr$category)
+  # Doing Laplace smoothing..
+  probs.crime.types <- (tt + 1) / (sum(tt) + m)
 
-
-print ("Probability of any incident happening in this address:")
-probOfAnything = probability.any.incident[singleAddr,]
-probOfAnything
-names(probOfAnything) = NULL
-
-# Finally -- reporting all crime-type prob.'s for this single address!
-probOfAnything * probs.crime.types
+  # Ensuring these are valid probability values..
+  stopifnot( sum(probs.crime.types) == 1 )
 
 
+  #print ("Probability of any incident happening in this address:")
+  probOfAnything = probability.any.incident[singleAddr,]
+  #probOfAnything
+  names(probOfAnything) = NULL
+
+  # Finally -- reporting all crime-type prob.'s for this single address!
+  pTable = probOfAnything * probs.crime.types
+  all.addr.all.crimes <- rbind(all.addr.all.crimes, pTable)
+}
+all.addr.all.crimes # matrix
+
+rownames(all.addr.all.crimes) <- NULL
 
