@@ -4,7 +4,6 @@
 
 setwd("~/iba/crimes_data/")
 
-crTable <- read.table("crimes_1_10000.csv")
 
 ########## Crime Description (cd) Freq. Analysis ###############
 
@@ -44,12 +43,19 @@ subset(ct.df, `Crime Type Freq.` >= 1000)
 
 ########## Crime Address/Location Freq. Analysis ###############
 
-caddr.table <- table(crTable$address)
-dim(caddr.table)
-caddr.descending <- sort(caddr.table, decreasing = T)
-caddr.df <- as.data.frame(caddr.descending)
-colnames(caddr.df) = "Crime Address Freq."
-head(caddr.df, 50)
+crime.freq.by <- function(crimeSpreadSheet, headCount = 50) {
+  caddr.table <- table(crimeSpreadSheet$address)
+  print("Counts for total crime incidents per unique address/location:")
+  print( dim(caddr.table) )
+  
+  caddr.descending <- sort(caddr.table, decreasing = T)
+  caddr.df <- as.data.frame(caddr.descending)
+  colnames(caddr.df) = "Crime Address Freq."
+  
+  print( paste("Showing top", headCount, "addresses by crime frequency:") )
+  print( head(caddr.df, headCount) )
+  caddr.df
+}
 
 cloc.table <- table(crTable$location)
 dim(cloc.table)
@@ -59,6 +65,9 @@ colnames(cloc.df) = "Crime Location Freq."
 head(cloc.df, 25)
 
 
+
+crTable <- read.table("crimes_1_10000.csv")
+caddr.df <- crime.freq.by(crTable, headCount = 10)
 
 ########## Converthing Into Probabilities crime-category-wise ###############
 
