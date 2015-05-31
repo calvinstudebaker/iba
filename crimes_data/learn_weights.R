@@ -68,9 +68,7 @@ probability.any.incident <- caddr.df / N
 # Now, address-/location-based prob. calc.'s for every crime type..
 #singleAddr <- caddr.df[93,]
 
-all.addr.all.crimes = NULL
-for (idx in 1:N) {
-  singleAddr <- caddr.df[idx,]
+all.types.Probs <- function(singleAddr) {
   singleAddr <- names(singleAddr)
   ss.in.addr <- subset(crTable, address == singleAddr)
 
@@ -85,18 +83,19 @@ for (idx in 1:N) {
   # Ensuring these are valid probability values..
   stopifnot( sum(probs.crime.types) == 1 )
 
-
-  #print ("Probability of any incident happening in this address:")
   probOfAnything = probability.any.incident[singleAddr,]
-  #probOfAnything
   names(probOfAnything) = NULL
 
   # Finally -- reporting all crime-type prob.'s for this single address!
   pTable = probOfAnything * probs.crime.types
-  all.addr.all.crimes <- rbind(all.addr.all.crimes, pTable)
+  pTable
 }
-all.addr.all.crimes # matrix
 
+all.addr.all.crimes = NULL
+apply(caddr.df, 1, function(x) {
+  all.addr.all.crimes <- rbind(all.addr.all.crimes, all.types.Probs(x))
+})
+all.addr.all.crimes # matrix
 rownames(all.addr.all.crimes) <- NULL
 
 
