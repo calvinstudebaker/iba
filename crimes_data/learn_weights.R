@@ -43,31 +43,51 @@ subset(ct.df, `Crime Type Freq.` >= 1000)
 
 ########## Crime Address/Location Freq. Analysis ###############
 
-crime.freq.by <- function(crimeSpreadSheet, headCount = 50) {
-  caddr.table <- table(crimeSpreadSheet$address)
+crime.freq.by <- function(crimeSpreadSheet, addr.geoloc.toggle = "address", headCount = 25) {
+  if (addr.geoloc.toggle == "address") {
+    caddr.table <- table(crimeSpreadSheet$address)
+  } else if (addr.geoloc.toggle == "location") {
+    cloc.table <- table(crimeSpreadSheet$location)
+  }
   print("Counts for total crime incidents per unique address/location:")
-  print( dim(caddr.table) )
+  if (addr.geoloc.toggle == "address" ) {
+    print( dim(caddr.table) )
+  } else if (addr.geoloc.toggle == "location") {
+    print( dim(cloc.table) )
+  }
   
-  caddr.descending <- sort(caddr.table, decreasing = T)
-  caddr.df <- as.data.frame(caddr.descending)
-  colnames(caddr.df) = "Crime Address Freq."
+  if (addr.geoloc.toggle == "address" ) {
+    caddr.descending <- sort(caddr.table, decreasing = T)
+    caddr.df <- as.data.frame(caddr.descending)
+    colnames(caddr.df) = "Crime Address Freq."
+  } else if (addr.geoloc.toggle == "location") {
+    cloc.descending <- sort(cloc.table, decreasing = T)
+    cloc.df <- as.data.frame(cloc.descending)
+    colnames(cloc.df) = "Crime Location Freq."
+  }
   
-  print( paste("Showing top", headCount, "addresses by crime frequency:") )
-  print( head(caddr.df, headCount) )
-  caddr.df
+  print( paste("Showing top", headCount, "addresses/locations by crime frequency:") )
+  if (addr.geoloc.toggle == "address" ) {
+    print( head(caddr.df, headCount) ) 
+    caddr.df
+  } else if (addr.geoloc.toggle == "location") {
+    print( head(cloc.df, headCount) ) 
+    cloc.df
+  }
 }
 
-cloc.table <- table(crTable$location)
-dim(cloc.table)
-cloc.descending <- sort(cloc.table, decreasing = T)
-cloc.df <- as.data.frame(cloc.descending)
-colnames(cloc.df) = "Crime Location Freq."
-head(cloc.df, 25)
 
 
 
+setwd("~/iba/crimes_data/")
 crTable <- read.table("crimes_1_10000.csv")
-caddr.df <- crime.freq.by(crTable, headCount = 10)
+
+setwd("~/Desktop/CS 210/")
+crTable1 <- read.table("crimes_10001_50000.csv")
+crimeTabular.all <- rbind(crTable, crTable1)
+
+crTable <- crimeTabular.all
+caddr.df <- crime.freq.by(crTable, "address", 10)
 
 ########## Converthing Into Probabilities crime-category-wise ###############
 
