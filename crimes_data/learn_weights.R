@@ -26,13 +26,28 @@ strsplit(allWords, split = " ")
 
 
 
+
+
+setwd("~/iba/crimes_data/")
+crTable <- read.table("crimes_1_10000.csv")
+
+setwd("~/Desktop/CS 210/")
+crTable1 <- read.table("crimes_10001_50000.csv")
+crimeTabular.all <- rbind(crTable, crTable1)
+
+crTable <- crimeTabular.all
+
 ########## Crime Type/Category (ct) Freq. Analysis ###############
 
 ct.table <- table(crTable$category)
+stopifnot( sum(ct.table) == dim(crTable)[1] )
 ct.descending <- sort(ct.table, decreasing = T)
 ct.df <- as.data.frame(ct.descending)
 colnames(ct.df) = "Crime Type Freq."
 
+print( paste("There are found to be a total of", nrow(ct.df), "crime types!") )
+
+############################ The BENCHMARK #######################
 subset(ct.df, `Crime Type Freq.` == 1)
 subset(ct.df, `Crime Type Freq.` > 1 & `Crime Type Freq.` < 10)
 subset(ct.df, `Crime Type Freq.` >= 10 & `Crime Type Freq.` < 100)
@@ -68,25 +83,14 @@ crime.freq.by <- function(crimeSpreadSheet, addr.geoloc.toggle = "address", head
   
   print( paste("Showing top", headCount, "addresses/locations by crime frequency:") )
   if (addr.geoloc.toggle == "address" ) {
-    print( head(caddr.df, headCount) ) 
+    print( head(caddr.df, headCount) )
     caddr.df
   } else if (addr.geoloc.toggle == "location") {
-    print( head(cloc.df, headCount) ) 
+    print( head(cloc.df, headCount) )
     cloc.df
   }
 }
 
-
-
-
-setwd("~/iba/crimes_data/")
-crTable <- read.table("crimes_1_10000.csv")
-
-setwd("~/Desktop/CS 210/")
-crTable1 <- read.table("crimes_10001_50000.csv")
-crimeTabular.all <- rbind(crTable, crTable1)
-
-crTable <- crimeTabular.all
 caddr.df <- crime.freq.by(crTable, "address", 10)
 
 ########## Converthing Into Probabilities crime-category-wise ###############
@@ -120,18 +124,26 @@ all.types.Probs <- function(singleAddr) {
   pTable
 }
 
-all.addr.all.crimes = NULL
-apply(caddr.df, 1, function(x) {
-  all.addr.all.crimes <- rbind(all.addr.all.crimes, all.types.Probs(x))
-})
-all.addr.all.crimes # matrix
-rownames(all.addr.all.crimes) <- NULL
+
+#all.addr.all.crimes = matrix(nrow = 0, ncol = nrow(ct.df))
+#apply(caddr.df, 1, function(x) {
+allAddresses = rownames(caddr.df)
+allCrimeTypes = rownames(ct.df)
+all.addr.all.crimes = matrix(nrow = nrow(caddr.df), ncol = nrow(ct.df), 
+                             dimnames = list(allAddresses, allCrimeTypes))
+for (idx in 1:nrow(caddr.df)) {
+  currRow = caddr.df[idx,]
+  #all.addr.all.crimes <- rbind(all.addr.all.crimes, all.types.Probs(x))
+  all.addr.all.crimes[idx,] <- all.types.Probs(currRow)
+}
+all.addr.all.crimes
 
 
 probs.crime.category <- apply(all.addr.all.crimes, 2, mean)
 crimeCategProbs <- sort(probs.crime.category, decreasing = T)
 probs.crime.type <- as.data.frame(crimeCategProbs)
 
+write.table(probs.crime.type, file = "probOfEveryCrimeType.csv")
 
 
 
