@@ -151,6 +151,21 @@ names(probs.crime.type) <- "Probability of Crime Type"
 write.table(probs.crime.type, file = "probOfEveryCrimeType.csv")
 
 
-unlike <- 
+# So called un-likelihood (seriousness) of each crime..
+# We achieve that by inverting the probability values:
+inverseProbs <- 1 / probs.crime.type
+names(inverseProbs) <- "Seriousness of Crime"
+
+lhOfRange <- as.numeric( head(inverseProbs, 1) )
+rhOfRange <- as.numeric( tail(inverseProbs, 1) )
+rangeSize = rhOfRange - lhOfRange
+
+# the size of each weight "step" (in the scale of 1 through 10)..
+stepsize = rangeSize / 9
+weights <- 1 + (inverseProbs - lhOfRange) / stepsize
+names(weights) <- "Weight of Crime Type"
+
+write.table(weights, file = "crimeTypeWeights.csv")
+
 
 
