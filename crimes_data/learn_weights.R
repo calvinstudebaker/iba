@@ -139,12 +139,18 @@ for (idx in 1:nrow(caddr.df)) {
 all.addr.all.crimes
 
 
-probs.crime.category <- apply(all.addr.all.crimes, 2, mean)
-crimeCategProbs <- sort(probs.crime.category, decreasing = T)
-probs.crime.type <- as.data.frame(crimeCategProbs)
+likelihoods.crime.category <- apply(all.addr.all.crimes, 2, mean)
+crimeCategChances <- sort(likelihoods.crime.category, decreasing = T)
+likelihoods.crime.type <- as.data.frame(crimeCategChances)
+names(likelihoods.crime.type) <- "Likelihood of Crime Type"
+
+probs.crime.type <- likelihoods.crime.type / sum(likelihoods.crime.type)
+stopifnot( sum(probs.crime.type) <= 1 )
+names(probs.crime.type) <- "Probability of Crime Type"
 
 write.table(probs.crime.type, file = "probOfEveryCrimeType.csv")
 
 
+unlike <- 
 
 
