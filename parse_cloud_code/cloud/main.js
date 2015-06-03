@@ -160,17 +160,13 @@ Parse.Cloud.define("pricesInRegion", function(request, response){
 
 
 Parse.Cloud.define("carStatusChanged", function(request, response) {
-	var reqParams = request.params;
-	var status = reqParams.status;
-	var car = reqParams.car;
+	var status = request.params.status;
 
 	var Car = Parse.Object.extend("Car");
 	var query = new Parse.Query(Car);
+	query.include("installation");
 
-	//query.equalTo("objectId", car);
-	//query.find();
-	var carId = reqParams.car;
-	query.get(carId, {
+	query.get(request.params.carId, {
 		success: function(carObject) {
 			var isMove = carObject.get("isMoving");
 			var isPark = carObject.get("isParked");
@@ -181,26 +177,62 @@ Parse.Cloud.define("carStatusChanged", function(request, response) {
 				PARKED: 3
 			};
 
-			if (isMove && status === possibleUpdates.PARKED) {
-				carObject.save(null, {
-					success: function(carObject) {
-						carObject.set("isMoving", false);
-						carObject.set("isParked", true);
-						console.log("Switched the car status to PARKED!");
-					}
-				})
+			var promise = new Parse.Promise();
 
-			} 
-			else if (isPark && (status === possibleUpdates.BEGAN || status === possibleUpdates.STOPPED)) {
-				carObject.save(null, {
-					success: function(carObject) {
-						carObject.set("isMoving", true);
-						carObject.set("isParked", false);
-						console.log("Switched the car status to MOVING!");
-					}
-				})
+			if (isMove && status === possibleUpdates.PARKED) {
+				carObject.set("isMoving", false);
+				carObject.set("isParked", true);
+				carObject.save(null,{
+			        success: function (object) { 
+			        	console.log("Switched the car status to PARKED!");
+			        	
+			        	// Send the update push
+			        	var push = require("cloud/push.js");
+			        	var installationId = object.get("installation").id;
+
+			        	var pushDict = {
+							"pushText": "We've detected that your car has parked.",
+							"pushType": "CAR_PARKED", 
+							"installationId": installationId
+						};
+						console.log("trying to send push to: " + installationId);
+						push.sendPush(pushDict);
+
+			            response.success(object);
+			        }, 
+			        error: function (object, error) { 
+			            response.error(error);
+			        }
+			    });
+			} else if (isPark && (status === possibleUpdates.BEGAN || status === possibleUpdates.STOPPED)) {
+				carObject.set("isMoving", true);
+				carObject.set("isParked", false);
+				carObject.save(null,{
+                    success: function (object) { 
+	                    console.log("Switched the car status to MOVING!");
+						
+						// Send the update push
+			        	var push = require("cloud/push.js");
+			        	var installationId = object.get("installation").id;
+
+			        	var pushDict = {
+							"pushText": "We've detected that your car is moving.",
+							"pushType": "CAR_MOVING", 
+							"installationId": installationId
+						};
+						console.log("trying to send push to: " + installationId);
+						push.sendPush(pushDict);
+
+
+	                    response.success(object);
+			        }, 
+			        error: function (object, error) { 
+			         	response.error(error);
+			        }
+			    });
+			} else {
+				response.success("Nothing to update");
 			}
-			response.success("Updated data here!");
 		},
 		error: function(object, error) {
 			console.log("Trying to find a Car failed! Error code: " + error.message);

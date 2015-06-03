@@ -25,11 +25,9 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
     
     let reportButton: IBAButton
     let shareButton: IBAButton
-    let ticketButton: IBAButton
-    let priceButton: IBAButton
-    let crimeButton: IBAButton
     let stopGuidanceButton: IBAButton
     let searchField: UITextField
+    let segment: UISegmentedControl
     
     var currentFilter: String = "crimes"
     
@@ -53,11 +51,9 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
         
         self.reportButton = IBAButton(frame: CGRectZero, title: "Report", colorScheme: UIColor(red: 0.2, green: 0.6, blue: 0.86, alpha: 1), clear: false)
         self.shareButton = IBAButton(frame: CGRectZero, title: "Share", colorScheme: UIColor(red: 46/255, green: 204/255, blue: 113/255, alpha: 1), clear: false)
-        self.ticketButton = IBAButton(frame: CGRectZero, title: "", colorScheme: UIColor(red: 247/255, green: 71/255, blue: 71/255, alpha: 1), clear: false)
-        self.priceButton = IBAButton(frame: CGRectZero, title: "", colorScheme: UIColor(red: 247/255, green: 71/255, blue: 71/255, alpha: 1), clear: false)
-        self.crimeButton = IBAButton(frame: CGRectZero, title: "", colorScheme: UIColor(red: 247/255, green: 71/255, blue: 71/255, alpha: 1), clear: false)
         self.stopGuidanceButton = IBAButton(frame: CGRectZero, title: "X", colorScheme: UIColor(red: 231/255, green: 76/255, blue: 60/255, alpha: 1.0), clear: false)
         self.searchField = UITextField(frame: CGRectZero)
+        self.segment = UISegmentedControl(items: ["Crimes", "Tickets", "Price"])
         
         self.waypoints = NSMutableArray()
         self.waypointStrings = NSMutableArray()
@@ -76,13 +72,8 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
         setupLocationManager()
         setupReportButton()
         setupShareButton()
-        setupTicketButton()
-        setupPriceButton()
-        setupCrimeButton()
         setupStopGuidanceButton()
         setupNavIcon()
-        
-        setSelectedButton(self.crimeButton)
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -172,8 +163,21 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
         mapView.delegate = self
         self.view.addSubview(mapView);
         
+        var originY = navBarHeight + kButtonPadding
+        self.segment.frame = CGRectMake(kButtonPadding, originY, self.view.bounds.size.width - (kButtonPadding * 2), 30)
+        let whiteView = UIView(frame: self.segment.frame)
+        whiteView.backgroundColor = UIColor.whiteColor()
+        whiteView.userInteractionEnabled = false
+        whiteView.layer.cornerRadius = 4.0
+        self.view.addSubview(whiteView)
+        self.view.addSubview(self.segment)
+        self.segment.selectedSegmentIndex = 0
+        self.segment.addTarget(self, action: "segmentHit:", forControlEvents: UIControlEvents.ValueChanged)
+
+        originY += kButtonPadding + self.segment.bounds.size.height
+
         // Add the text field to the top of the map view
-        self.searchField.frame = CGRectMake(kButtonPadding, kButtonPadding + navBarHeight, self.view.bounds.size.width - (kButtonPadding * 2), 45)
+        self.searchField.frame = CGRectMake(kButtonPadding, originY, self.view.bounds.size.width - (kButtonPadding * 2), 45)
         self.searchField.backgroundColor = UIColor.whiteColor()
         self.searchField.placeholder = "Enter Destination"
         self.searchField.textColor = UIColor.blackColor()
@@ -193,6 +197,9 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
         self.searchField.delegate = self
         self.searchField.returnKeyType = .Done
         self.view.addSubview(self.searchField)
+        
+        
+        
     }
     
     func setupReportButton() {
@@ -207,36 +214,6 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
         self.shareButton.backgroundColor = UIColor.whiteColor()
         self.shareButton.addTarget(self, action: "shareButtonPressed:", forControlEvents: .TouchUpInside)
         self.view.addSubview(self.shareButton)
-    }
-    
-    func setupTicketButton() {
-        self.ticketButton.frame = CGRectMake(self.view.bounds.size.width - kButtonPadding - 45, self.view.bounds.size.height - (kButtonPadding * 2) - (45 * 2), 45, 45)
-        self.ticketButton.backgroundColor = UIColor.whiteColor()
-        let ticketImage = UIImage(named: "ticket_icon") as UIImage?
-        ticketButton.setImage(ticketImage, forState: .Normal)
-        ticketButton.imageEdgeInsets = UIEdgeInsetsMake(5,5,5,5)
-        self.ticketButton.addTarget(self, action: "ticketButtonPressed:", forControlEvents: .TouchUpInside)
-        self.view.addSubview(self.ticketButton)
-    }
-    
-    func setupPriceButton() {
-        self.priceButton.frame = CGRectMake(self.view.bounds.size.width - kButtonPadding - 45, self.view.bounds.size.height - (kButtonPadding * 3) - (45 * 3), 45, 45)
-        self.priceButton.backgroundColor = UIColor.whiteColor()
-        let priceImage = UIImage(named: "price_icon") as UIImage?
-        priceButton.setImage(priceImage, forState: .Normal)
-        priceButton.imageEdgeInsets = UIEdgeInsetsMake(5,5,5,5)
-        self.priceButton.addTarget(self, action: "priceButtonPressed:", forControlEvents: .TouchUpInside)
-        self.view.addSubview(self.priceButton)
-    }
-    
-    func setupCrimeButton() {
-        self.crimeButton.frame = CGRectMake(self.view.bounds.size.width - kButtonPadding - 45, self.view.bounds.size.height - (kButtonPadding * 4) - (45 * 4), 45, 45)
-        self.crimeButton.backgroundColor = UIColor.whiteColor()
-        let crimeImage = UIImage(named: "crime_icon") as UIImage?
-        crimeButton.setImage(crimeImage, forState: .Normal)
-        crimeButton.imageEdgeInsets = UIEdgeInsetsMake(5,5,5,5)
-        self.crimeButton.addTarget(self, action: "crimeButtonPressed:", forControlEvents: .TouchUpInside)
-        self.view.addSubview(self.crimeButton)
     }
     
     func setupStopGuidanceButton() {
@@ -256,6 +233,27 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
     }
     
     // MARK: Private Methods
+    
+    func segmentHit(sender: UISegmentedControl) {
+        if (sender.selectedSegmentIndex == 0) {
+            
+            // Crimes
+            self.currentFilter = "crimes"
+            reloadHeatMap()
+            
+        } else if (sender.selectedSegmentIndex == 1) {
+            
+            // Tickets
+            self.currentFilter = "tickets"
+            reloadHeatMap()
+            
+        } else if (sender.selectedSegmentIndex == 2) {
+            
+            // Price
+            self.currentFilter = "prices"
+            reloadHeatMap()
+        }
+    }
     
     func connectCar(sender: AnyObject) {
         
@@ -350,47 +348,6 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
                 return
             }
             self.presentViewController(activityVC, animated: true, completion: nil)
-        }
-    }
-    
-    func ticketButtonPressed(sender: UIButton) {
-        setSelectedButton(self.ticketButton)
-        self.currentFilter = "tickets"
-        reloadHeatMap()
-    }
-    
-    func priceButtonPressed(sender: UIButton) {
-        setSelectedButton(self.priceButton)
-        self.currentFilter = "prices"
-        reloadHeatMap()
-    }
-    
-    func crimeButtonPressed(sender: UIButton) {
-        setSelectedButton(self.crimeButton)
-        self.currentFilter = "crimes"
-        reloadHeatMap()
-    }
-    
-    func setSelectedButton(sender: IBAButton) {
-        
-        self.priceButton.layer.borderColor = UIColor.lightGrayColor().CGColor
-        self.priceButton.setImage(UIImage(named: "price_icon_grey"), forState: .Normal)
-        self.ticketButton.layer.borderColor = UIColor.lightGrayColor().CGColor
-        self.ticketButton.setImage(UIImage(named: "ticket_icon_grey"), forState: .Normal)
-        self.crimeButton.layer.borderColor = UIColor.lightGrayColor().CGColor
-        self.crimeButton.setImage(UIImage(named: "crime_icon_grey"), forState: .Normal)
-        
-        if sender == self.crimeButton {
-            self.crimeButton.layer.borderColor = UIColor(red: 247/255, green: 71/255, blue: 71/255, alpha: 1).CGColor
-            self.crimeButton.setImage(UIImage(named: "crime_icon"), forState: .Normal)
-        } else if sender == self.ticketButton {
-            self.ticketButton.layer.borderColor = UIColor(red: 247/255, green: 71/255, blue: 71/255, alpha: 1).CGColor
-            self.ticketButton.setImage(UIImage(named: "ticket_icon"), forState: .Normal)
-
-        } else if sender == self.priceButton {
-            self.priceButton.layer.borderColor = UIColor(red: 247/255, green: 71/255, blue: 71/255, alpha: 1).CGColor
-            self.priceButton.setImage(UIImage(named: "price_icon"), forState: .Normal)
-            
         }
     }
     
