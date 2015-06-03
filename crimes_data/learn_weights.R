@@ -114,7 +114,7 @@ all.types.Probs <- function(singleAddr) {
   probs.crime.types <- (tt + 1) / (sum(tt) + m)
 
   # Ensuring these are valid probability values..
-  stopifnot( sum(probs.crime.types) == 1 )
+  #stopifnot( sum(probs.crime.types) == 1 )
 
   probOfAnything = probability.any.incident[singleAddr,]
   names(probOfAnything) = NULL
@@ -165,7 +165,8 @@ stepsize = rangeSize / 9
 weights <- 1 + (inverseProbs - lhOfRange) / stepsize
 names(weights) <- "Weight of Crime Type"
 
-write.table(weights, file = "crimeTypeWeights.csv")
+#write.table(weights, file = "crimeTypeWeights.csv")
 
+write.table(weights, file = "~/iba/crimeTypeWeights_50000.csv")
 
 
