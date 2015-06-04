@@ -3,6 +3,7 @@ exports.sendPush = function(params) {
 	var pushText = params.pushText;
 	var pushType = params.pushType;
 	var installationId = params.installationId;
+	var optional = params.optional;
 
 	var pushQuery = new Parse.Query(Parse.Installation);
 	pushQuery.equalTo("objectId", installationId);
@@ -12,7 +13,8 @@ exports.sendPush = function(params) {
 		data: {
 			alert: pushText,
 			sound: "default",
-			custom: pushType
+			custom: pushType,
+			"optional": optional
 		}
 	}, {
 		success: function() {

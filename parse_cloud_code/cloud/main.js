@@ -189,11 +189,12 @@ Parse.Cloud.define("carStatusChanged", function(request, response) {
 			        	// Send the update push
 			        	var push = require("cloud/push.js");
 			        	var installationId = object.get("installation").id;
-
+			        	var carLocation = object.get("location");
 			        	var pushDict = {
-							"pushText": "We've detected that your car has parked.",
+							"pushText": "We've detected that your car has parked. Would you like to keep track of the parking meter?",
 							"pushType": "CAR_PARKED", 
-							"installationId": installationId
+							"installationId": installationId,
+							"optional" : {"carLocation" : carLocation}
 						};
 						console.log("trying to send push to: " + installationId);
 						push.sendPush(pushDict);

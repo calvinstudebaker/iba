@@ -32,7 +32,12 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
     var currentFilter: String = "crimes"
     
     let kButtonPadding: CGFloat = 10
-    let kButtonHeight = 45
+    let kButtonHeight: CGFloat = 45
+    let kButtonWidth: CGFloat = 80
+    
+    let parkingMeterTimerLabel: UILabel
+    let parkingMeterTimerBackground: UIView
+    var parkingMeterInterval: NSTimeInterval
     
     // MARK: Init Methods
     
@@ -55,6 +60,10 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
         self.searchField = UITextField(frame: CGRectZero)
         self.segment = UISegmentedControl(items: ["Crimes", "Tickets", "Price"])
         
+        self.parkingMeterTimerLabel = UILabel(frame: CGRectZero)
+        self.parkingMeterTimerBackground = UIView(frame: CGRectZero)
+        self.parkingMeterInterval = 0
+        
         self.waypoints = NSMutableArray()
         self.waypointStrings = NSMutableArray()
         
@@ -74,19 +83,31 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
         setupShareButton()
         setupStopGuidanceButton()
         setupNavIcon()
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "carStatusChanged", name: CAR_STATUS_CHANGED, object: nil)
     }
     
     override func viewDidAppear(animated: Bool) {
         
 //        delay(1.0, { () -> () in
 //            let nav = UINavigationController()
-//            let dvc = DingAlertViewController()
-//            nav.viewControllers = [dvc]
+//            nav.viewControllers = [ParkingViewController()]
 //            self.navigationController?.presentViewController(nav, animated: true, completion: nil)
 //            return
 //        })
         
         triggerLocationServices()
+        
+        if (NSUserDefaults.standardUserDefaults().valueForKey(PARKED_LOCATION_LAT) != nil) {
+            
+            carStatusChanged()
+            return
+        } else {
+            self.parkingMeterTimerLabel.removeFromSuperview()
+            self.parkingMeterTimerBackground.removeFromSuperview()
+            NSUserDefaults.standardUserDefaults().setValue(nil, forKey: PARKING_METER_END_DATE)
+
+        }
         
         if (NSUserDefaults.standardUserDefaults().valueForKey("LastLat") != nil) {
             
@@ -198,19 +219,17 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
         self.searchField.returnKeyType = .Done
         self.view.addSubview(self.searchField)
         
-        
-        
     }
     
     func setupReportButton() {
-        self.reportButton.frame = CGRectMake(self.view.bounds.size.width - kButtonPadding - 100, self.view.bounds.size.height - kButtonPadding - 45, 100, 45)
+        self.reportButton.frame = CGRectMake(self.view.bounds.size.width - kButtonPadding - kButtonWidth, self.view.bounds.size.height - kButtonPadding - 45, kButtonWidth, 45)
         self.reportButton.backgroundColor = UIColor.whiteColor()
         self.reportButton.addTarget(self, action: "reportButtonPressed:", forControlEvents: .TouchUpInside)
         self.view.addSubview(self.reportButton)
     }
     
     func setupShareButton() {
-        self.shareButton.frame = CGRectMake(kButtonPadding, self.view.bounds.size.height - kButtonPadding - 45, 80, 45)
+        self.shareButton.frame = CGRectMake(kButtonPadding, self.view.bounds.size.height - kButtonPadding - 45, kButtonWidth, 45)
         self.shareButton.backgroundColor = UIColor.whiteColor()
         self.shareButton.addTarget(self, action: "shareButtonPressed:", forControlEvents: .TouchUpInside)
         self.view.addSubview(self.shareButton)
@@ -232,7 +251,120 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
         self.locationManager.distanceFilter = 10
     }
     
+    // Sets up the parking timer
+    func setupParkingTimer() {
+        
+        // Add the background 
+        self.parkingMeterTimerBackground.frame =  CGRectMake(self.shareButton.frame.origin.x + self.shareButton.bounds.size.width + kButtonPadding, self.shareButton.frame.origin.y, self.view.bounds.size.width - (kButtonWidth * 2) - (kButtonPadding * 4), kButtonHeight)
+        self.parkingMeterTimerBackground.alpha = 0.7
+        self.parkingMeterTimerBackground.backgroundColor = UIColor.blackColor()
+        self.parkingMeterTimerBackground.layer.cornerRadius = 6.0
+        self.view.addSubview(self.parkingMeterTimerBackground)
+        
+        // Add the meter text label
+        self.parkingMeterTimerLabel.frame = self.parkingMeterTimerBackground.frame
+        self.parkingMeterTimerLabel.font = UIFont(name: "HelveticaNeue-Light", size: 30)
+        self.parkingMeterTimerLabel.text = "00:00"
+        self.parkingMeterTimerLabel.textAlignment = .Center
+        self.parkingMeterTimerLabel.textColor = UIColor.whiteColor()
+        self.view.addSubview(self.parkingMeterTimerLabel)
+        
+        self.parkingMeterTimerLabel.text = stringForTimeInterval(self.parkingMeterInterval)
+        
+        // Upate the timer
+        NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: "updateTimer:", userInfo: nil, repeats: true)
+        
+    }
+    
     // MARK: Private Methods
+    
+    func carStatusChanged() {
+        
+        if (NSUserDefaults.standardUserDefaults().valueForKey(PARKED_LOCATION_LAT) != nil) {
+            
+            // Set the camera to the position of the parked car
+            let lat: NSNumber = NSUserDefaults.standardUserDefaults().valueForKey(PARKED_LOCATION_LAT) as! NSNumber
+            let lon: NSNumber = NSUserDefaults.standardUserDefaults().valueForKey(PARKED_LOCATION_LON) as! NSNumber
+            
+            let cameraPosition: GMSCameraPosition = GMSCameraPosition(target: CLLocationCoordinate2DMake(lat.doubleValue, lon.doubleValue), zoom: Float(DEFAULT_ZOOM), bearing: 0, viewingAngle: 0.0)
+            self.mapView.animateToCameraPosition(cameraPosition)
+            
+            let marker: GMSMarker = GMSMarker(position: CLLocationCoordinate2DMake(lat.doubleValue, lon.doubleValue))
+            marker.map = self.mapView
+            marker.rotation = 0
+            marker.icon = UIImage(named: "car_icon.png")!
+            marker.snippet = "your parked car"
+            
+            // The car is parked -- check if there is a timer for the parking metetr
+            if (NSUserDefaults.standardUserDefaults().valueForKey(PARKING_METER_END_DATE) != nil) {
+                
+                let endDate = NSUserDefaults.standardUserDefaults().valueForKey(PARKING_METER_END_DATE) as! NSDate
+                self.parkingMeterInterval = endDate.timeIntervalSinceNow
+                
+                // see if the end date has passed
+                if self.parkingMeterInterval >= 0.0 {
+                    
+                    // the date has not passed -- add the timer
+                    setupParkingTimer()
+                    
+                } else {
+                    
+                    // the date has passed -- remove the end date
+                    self.parkingMeterTimerLabel.removeFromSuperview()
+                    self.parkingMeterTimerBackground.removeFromSuperview()
+                    NSUserDefaults.standardUserDefaults().setValue(nil, forKey: PARKING_METER_END_DATE)
+                }
+            } else {
+                self.parkingMeterTimerLabel.removeFromSuperview()
+                self.parkingMeterTimerBackground.removeFromSuperview()
+            }
+            
+            return
+        } else {
+            self.parkingMeterTimerLabel.removeFromSuperview()
+            self.parkingMeterTimerBackground.removeFromSuperview()
+            NSUserDefaults.standardUserDefaults().setValue(nil, forKey: PARKING_METER_END_DATE)
+        }
+        
+    }
+    
+    func stringForTimeInterval(timeInterval: NSTimeInterval) -> String {
+        let hours = Int(floor(timeInterval / (60 * 60)))
+        let minute_divisor = timeInterval % (60 * 60);
+        
+        let minutes = Int(floor(minute_divisor / 60))
+        
+        let seconds_divisor = timeInterval % 60;
+        let seconds = Int(ceil(seconds_divisor))
+        
+        var hoursString = String(format: "%02d", hours)
+        var minutesString = String(format: "%02d", minutes)
+        var secondsString = String(format: "%02d", seconds)
+        
+        if count(hoursString) == 1 {
+            hoursString += "0"
+        }
+        if count(minutesString) == 1 {
+            minutesString += "0"
+        }
+        if count(secondsString) == 1 {
+            secondsString += "0"
+        }
+        
+        return "\(hoursString):\(minutesString):\(secondsString)"
+    }
+    
+    func updateTimer(sender: NSTimer!) {
+        
+        self.parkingMeterInterval--
+        if (self.parkingMeterInterval <= 0) {
+            self.parkingMeterTimerLabel.text = "00:00:00"
+            sender.invalidate()
+        } else {
+            self.parkingMeterTimerLabel.text = stringForTimeInterval(self.parkingMeterInterval)
+        }
+        
+    }
     
     func segmentHit(sender: UISegmentedControl) {
         if (sender.selectedSegmentIndex == 0) {
