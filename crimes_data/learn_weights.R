@@ -170,3 +170,13 @@ names(weights) <- "Weight of Crime Type"
 write.table(weights, file = "~/iba/crimeTypeWeights_50000.csv")
 
 
+
+
+###################### CLUSTERING METHOD ########################
+
+# Now we define 3 clusters / high-level "categories" of crime types 
+# on which to do the samy probabilistic method-based weight estimation, individually..
+
+category.I <- c("SEX OFFENSES, FORCIBLE", "KIDNAPPING", "ARSON", "ASSAULT", "WEAPON LAWS")
+category.II <- c("VEHICLE THEFT", "FAMILY OFFENSES", "SEX OFFENSES, NON FORCIBLE", "TRESPASS", "STOLEN PROPERTY", "DRIVING UNDER THE INFLUENCE", "RUNAWAY", "LARCENY/THEFT", "OTHER OFFENSES")
+category.III <- c("PORNOGRAPHY/OBSCENE MAT", "TREA", "GAMBLING", "LIQUOR LAWS", "LOITERING", "DRUNKENNESS", "PROSTITUTION", "DISORDERLY CONDUCT", "NON-CRIMINAL")
