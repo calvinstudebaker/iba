@@ -13,6 +13,7 @@ import Parse
 class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapViewDelegate, UITextFieldDelegate {
     
     var mapView: GMSMapView
+    var carMarker: GMSMarker = GMSMarker()
     var waypoints: NSMutableArray
     var waypointStrings: NSMutableArray
     
@@ -25,16 +26,19 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
     
     let reportButton: IBAButton
     let shareButton: IBAButton
-    let ticketButton: IBAButton
-    let priceButton: IBAButton
-    let crimeButton: IBAButton
     let stopGuidanceButton: IBAButton
     let searchField: UITextField
+    let segment: UISegmentedControl
     
     var currentFilter: String = "crimes"
     
     let kButtonPadding: CGFloat = 10
-    let kButtonHeight = 45
+    let kButtonHeight: CGFloat = 45
+    let kButtonWidth: CGFloat = 80
+    
+    let parkingMeterTimerLabel: UILabel
+    let parkingMeterTimerBackground: UIView
+    var parkingMeterInterval: NSTimeInterval
     
     // MARK: Init Methods
     
@@ -53,11 +57,13 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
         
         self.reportButton = IBAButton(frame: CGRectZero, title: "Report", colorScheme: UIColor(red: 0.2, green: 0.6, blue: 0.86, alpha: 1), clear: false)
         self.shareButton = IBAButton(frame: CGRectZero, title: "Share", colorScheme: UIColor(red: 46/255, green: 204/255, blue: 113/255, alpha: 1), clear: false)
-        self.ticketButton = IBAButton(frame: CGRectZero, title: "", colorScheme: UIColor(red: 247/255, green: 71/255, blue: 71/255, alpha: 1), clear: false)
-        self.priceButton = IBAButton(frame: CGRectZero, title: "", colorScheme: UIColor(red: 247/255, green: 71/255, blue: 71/255, alpha: 1), clear: false)
-        self.crimeButton = IBAButton(frame: CGRectZero, title: "", colorScheme: UIColor(red: 247/255, green: 71/255, blue: 71/255, alpha: 1), clear: false)
         self.stopGuidanceButton = IBAButton(frame: CGRectZero, title: "X", colorScheme: UIColor(red: 231/255, green: 76/255, blue: 60/255, alpha: 1.0), clear: false)
         self.searchField = UITextField(frame: CGRectZero)
+        self.segment = UISegmentedControl(items: ["Crimes", "Tickets", "Price"])
+        
+        self.parkingMeterTimerLabel = UILabel(frame: CGRectZero)
+        self.parkingMeterTimerBackground = UIView(frame: CGRectZero)
+        self.parkingMeterInterval = 0
         
         self.waypoints = NSMutableArray()
         self.waypointStrings = NSMutableArray()
@@ -71,31 +77,38 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
         super.viewDidLoad()
         
         self.title = "Parq"
+    
         
         setupMapView()
         setupLocationManager()
         setupReportButton()
         setupShareButton()
-        setupTicketButton()
-        setupPriceButton()
-        setupCrimeButton()
         setupStopGuidanceButton()
         setupNavIcon()
         
-        setSelectedButton(self.crimeButton)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "carStatusChanged", name: CAR_STATUS_CHANGED, object: nil)
     }
     
     override func viewDidAppear(animated: Bool) {
         
 //        delay(1.0, { () -> () in
 //            let nav = UINavigationController()
-//            let dvc = DingAlertViewController()
-//            nav.viewControllers = [dvc]
+//            nav.viewControllers = [ParkingViewController()]
 //            self.navigationController?.presentViewController(nav, animated: true, completion: nil)
 //            return
 //        })
         
         triggerLocationServices()
+        
+        if (NSUserDefaults.standardUserDefaults().valueForKey(PARKED_LOCATION_LAT) != nil) {
+            
+            carStatusChanged()
+            return
+        } else {
+            self.parkingMeterTimerLabel.removeFromSuperview()
+            self.parkingMeterTimerBackground.removeFromSuperview()
+            NSUserDefaults.standardUserDefaults().setValue(nil, forKey: PARKING_METER_END_DATE)
+       }
         
         if (NSUserDefaults.standardUserDefaults().valueForKey("LastLat") != nil) {
             
@@ -151,11 +164,11 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
         // Dispose of any resources that can be recreated.
     }
     
-    //TODO: Add gesture listener to switch heatmap generation @Leigh
-    
-    
     // MARK: Setup Methods
     
+    /**
+        Setup the navbar icon
+    */
     func setupNavIcon() {
         var carImage: UIImage? = UIImage(named: "car_nav_icon")
         carImage = carImage?.imageWithRenderingMode(UIImageRenderingMode.AlwaysOriginal)
@@ -164,6 +177,10 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
         navigationItem.leftBarButtonItem = carButton
     }
     
+    
+    /**
+        Setup the map view
+    */
     func setupMapView() {
         let navBarHeight = self.navigationController!.navigationBar.frame.size.height + UIApplication.sharedApplication().statusBarFrame.size.height
         
@@ -172,8 +189,21 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
         mapView.delegate = self
         self.view.addSubview(mapView);
         
+        var originY = navBarHeight + kButtonPadding
+        self.segment.frame = CGRectMake(kButtonPadding, originY, self.view.bounds.size.width - (kButtonPadding * 2), 30)
+        let whiteView = UIView(frame: self.segment.frame)
+        whiteView.backgroundColor = UIColor.whiteColor()
+        whiteView.userInteractionEnabled = false
+        whiteView.layer.cornerRadius = 4.0
+        self.view.addSubview(whiteView)
+        self.view.addSubview(self.segment)
+        self.segment.selectedSegmentIndex = 0
+        self.segment.addTarget(self, action: "segmentHit:", forControlEvents: UIControlEvents.ValueChanged)
+
+        originY += kButtonPadding + self.segment.bounds.size.height
+
         // Add the text field to the top of the map view
-        self.searchField.frame = CGRectMake(kButtonPadding, kButtonPadding + navBarHeight, self.view.bounds.size.width - (kButtonPadding * 2), 45)
+        self.searchField.frame = CGRectMake(kButtonPadding, originY, self.view.bounds.size.width - (kButtonPadding * 2), 45)
         self.searchField.backgroundColor = UIColor.whiteColor()
         self.searchField.placeholder = "Enter Destination"
         self.searchField.textColor = UIColor.blackColor()
@@ -193,52 +223,38 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
         self.searchField.delegate = self
         self.searchField.returnKeyType = .Done
         self.view.addSubview(self.searchField)
+        
+        self.carMarker = GMSMarker(position: CLLocationCoordinate2DMake(0, 0))
+        self.carMarker.rotation = 0
+        self.carMarker.icon = UIImage(named: "car_icon.png")!
+        self.carMarker.snippet = "your parked car"
+        self.carMarker.map = nil
+        
     }
     
+    /**
+        Setup the report button
+    */
     func setupReportButton() {
-        self.reportButton.frame = CGRectMake(self.view.bounds.size.width - kButtonPadding - 100, self.view.bounds.size.height - kButtonPadding - 45, 100, 45)
+        self.reportButton.frame = CGRectMake(self.view.bounds.size.width - kButtonPadding - kButtonWidth, self.view.bounds.size.height - kButtonPadding - 45, kButtonWidth, 45)
         self.reportButton.backgroundColor = UIColor.whiteColor()
         self.reportButton.addTarget(self, action: "reportButtonPressed:", forControlEvents: .TouchUpInside)
         self.view.addSubview(self.reportButton)
     }
     
+    /**
+        Setup the share button
+    */
     func setupShareButton() {
-        self.shareButton.frame = CGRectMake(kButtonPadding, self.view.bounds.size.height - kButtonPadding - 45, 80, 45)
+        self.shareButton.frame = CGRectMake(kButtonPadding, self.view.bounds.size.height - kButtonPadding - 45, kButtonWidth, 45)
         self.shareButton.backgroundColor = UIColor.whiteColor()
         self.shareButton.addTarget(self, action: "shareButtonPressed:", forControlEvents: .TouchUpInside)
         self.view.addSubview(self.shareButton)
     }
     
-    func setupTicketButton() {
-        self.ticketButton.frame = CGRectMake(self.view.bounds.size.width - kButtonPadding - 45, self.view.bounds.size.height - (kButtonPadding * 2) - (45 * 2), 45, 45)
-        self.ticketButton.backgroundColor = UIColor.whiteColor()
-        let ticketImage = UIImage(named: "ticket_icon") as UIImage?
-        ticketButton.setImage(ticketImage, forState: .Normal)
-        ticketButton.imageEdgeInsets = UIEdgeInsetsMake(5,5,5,5)
-        self.ticketButton.addTarget(self, action: "ticketButtonPressed:", forControlEvents: .TouchUpInside)
-        self.view.addSubview(self.ticketButton)
-    }
-    
-    func setupPriceButton() {
-        self.priceButton.frame = CGRectMake(self.view.bounds.size.width - kButtonPadding - 45, self.view.bounds.size.height - (kButtonPadding * 3) - (45 * 3), 45, 45)
-        self.priceButton.backgroundColor = UIColor.whiteColor()
-        let priceImage = UIImage(named: "price_icon") as UIImage?
-        priceButton.setImage(priceImage, forState: .Normal)
-        priceButton.imageEdgeInsets = UIEdgeInsetsMake(5,5,5,5)
-        self.priceButton.addTarget(self, action: "priceButtonPressed:", forControlEvents: .TouchUpInside)
-        self.view.addSubview(self.priceButton)
-    }
-    
-    func setupCrimeButton() {
-        self.crimeButton.frame = CGRectMake(self.view.bounds.size.width - kButtonPadding - 45, self.view.bounds.size.height - (kButtonPadding * 4) - (45 * 4), 45, 45)
-        self.crimeButton.backgroundColor = UIColor.whiteColor()
-        let crimeImage = UIImage(named: "crime_icon") as UIImage?
-        crimeButton.setImage(crimeImage, forState: .Normal)
-        crimeButton.imageEdgeInsets = UIEdgeInsetsMake(5,5,5,5)
-        self.crimeButton.addTarget(self, action: "crimeButtonPressed:", forControlEvents: .TouchUpInside)
-        self.view.addSubview(self.crimeButton)
-    }
-    
+    /**
+        Setup stop guidance button
+    */
     func setupStopGuidanceButton() {
         self.stopGuidanceButton.frame = CGRectMake(kButtonPadding, self.searchField.frame.origin.y + self.searchField.frame.size.height + kButtonPadding, 50, 50)
         self.stopGuidanceButton.backgroundColor = UIColor.whiteColor()
@@ -248,14 +264,168 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
         self.stopGuidanceButton.alpha = 0.0;
     }
     
-    // Sets up the locationManager
+    /**
+        Setup stop location manager
+    */
     func setupLocationManager() {
         self.locationManager.delegate = self
         self.locationManager.desiredAccuracy = kCLLocationAccuracyBest
         self.locationManager.distanceFilter = 10
     }
     
+    /*
+        Setup the parking timer
+    */
+    func setupParkingTimer() {
+        
+        // Add the background 
+        self.parkingMeterTimerBackground.frame =  CGRectMake(self.shareButton.frame.origin.x + self.shareButton.bounds.size.width + kButtonPadding, self.shareButton.frame.origin.y, self.view.bounds.size.width - (kButtonWidth * 2) - (kButtonPadding * 4), kButtonHeight)
+        self.parkingMeterTimerBackground.alpha = 0.7
+        self.parkingMeterTimerBackground.backgroundColor = UIColor.blackColor()
+        self.parkingMeterTimerBackground.layer.cornerRadius = 6.0
+        self.view.addSubview(self.parkingMeterTimerBackground)
+        
+        // Add the meter text label
+        self.parkingMeterTimerLabel.frame = self.parkingMeterTimerBackground.frame
+        self.parkingMeterTimerLabel.font = UIFont(name: "HelveticaNeue-Light", size: 30)
+        self.parkingMeterTimerLabel.text = "00:00"
+        self.parkingMeterTimerLabel.textAlignment = .Center
+        self.parkingMeterTimerLabel.textColor = UIColor.whiteColor()
+        self.view.addSubview(self.parkingMeterTimerLabel)
+        
+        self.parkingMeterTimerLabel.text = stringForTimeInterval(self.parkingMeterInterval)
+        
+        // Upate the timer
+        NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: "updateTimer:", userInfo: nil, repeats: true)
+        
+    }
+    
     // MARK: Private Methods
+    
+    /**
+        What to do when the car status changes
+    */
+    func carStatusChanged() {
+        
+        if (NSUserDefaults.standardUserDefaults().valueForKey(PARKED_LOCATION_LAT) != nil) {
+            
+            // Set the camera to the position of the parked car
+            let lat: NSNumber = NSUserDefaults.standardUserDefaults().valueForKey(PARKED_LOCATION_LAT) as! NSNumber
+            let lon: NSNumber = NSUserDefaults.standardUserDefaults().valueForKey(PARKED_LOCATION_LON) as! NSNumber
+            
+            let cameraPosition: GMSCameraPosition = GMSCameraPosition(target: CLLocationCoordinate2DMake(lat.doubleValue, lon.doubleValue), zoom: Float(DEFAULT_ZOOM), bearing: 0, viewingAngle: 0.0)
+            self.mapView.animateToCameraPosition(cameraPosition)
+            
+            self.carMarker.map = self.mapView
+            self.carMarker.position = CLLocationCoordinate2DMake(lat.doubleValue, lon.doubleValue)
+            
+            // The car is parked -- check if there is a timer for the parking metetr
+            if (NSUserDefaults.standardUserDefaults().valueForKey(PARKING_METER_END_DATE) != nil) {
+                
+                let endDate = NSUserDefaults.standardUserDefaults().valueForKey(PARKING_METER_END_DATE) as! NSDate
+                self.parkingMeterInterval = endDate.timeIntervalSinceNow
+                
+                // see if the end date has passed
+                if self.parkingMeterInterval >= 0.0 {
+                    
+                    // the date has not passed -- add the timer
+                    setupParkingTimer()
+                    
+                    
+                } else {
+                    
+                    // the date has passed -- remove the end date
+                    self.parkingMeterTimerLabel.removeFromSuperview()
+                    self.parkingMeterTimerBackground.removeFromSuperview()
+                    NSUserDefaults.standardUserDefaults().setValue(nil, forKey: PARKING_METER_END_DATE)
+
+                    // Remove any markers on the map
+                    self.carMarker.map = nil;
+
+                }
+            } else {
+                self.parkingMeterTimerLabel.removeFromSuperview()
+                self.parkingMeterTimerBackground.removeFromSuperview()
+            
+            }
+            
+            return
+        } else {
+            self.parkingMeterTimerLabel.removeFromSuperview()
+            self.parkingMeterTimerBackground.removeFromSuperview()
+            NSUserDefaults.standardUserDefaults().setValue(nil, forKey: PARKING_METER_END_DATE)
+        
+            // Remove any markers on the map
+            self.carMarker.map = nil;
+        }
+        
+    }
+    
+    /**
+        Get the string date for timer interval
+    */
+    func stringForTimeInterval(timeInterval: NSTimeInterval) -> String {
+        let hours = Int(floor(timeInterval / (60 * 60)))
+        let minute_divisor = timeInterval % (60 * 60);
+        
+        let minutes = Int(floor(minute_divisor / 60))
+        
+        let seconds_divisor = timeInterval % 60;
+        let seconds = Int(ceil(seconds_divisor))
+        
+        var hoursString = String(format: "%02d", hours)
+        var minutesString = String(format: "%02d", minutes)
+        var secondsString = String(format: "%02d", seconds)
+        
+        if count(hoursString) == 1 {
+            hoursString += "0"
+        }
+        if count(minutesString) == 1 {
+            minutesString += "0"
+        }
+        if count(secondsString) == 1 {
+            secondsString += "0"
+        }
+        
+        return "\(hoursString):\(minutesString):\(secondsString)"
+    }
+    
+    
+    /**
+        Called every second to update the timer
+    */
+    func updateTimer(sender: NSTimer!) {
+        
+        self.parkingMeterInterval--
+        if (self.parkingMeterInterval <= 0) {
+            self.parkingMeterTimerLabel.text = "00:00:00"
+            sender.invalidate()
+        } else {
+            self.parkingMeterTimerLabel.text = stringForTimeInterval(self.parkingMeterInterval)
+        }
+        
+    }
+    
+    func segmentHit(sender: UISegmentedControl) {
+        if (sender.selectedSegmentIndex == 0) {
+            
+            // Crimes
+            self.currentFilter = "crimes"
+            reloadHeatMap()
+            
+        } else if (sender.selectedSegmentIndex == 1) {
+            
+            // Tickets
+            self.currentFilter = "tickets"
+            reloadHeatMap()
+            
+        } else if (sender.selectedSegmentIndex == 2) {
+            
+            // Price
+            self.currentFilter = "prices"
+            reloadHeatMap()
+        }
+    }
     
     func connectCar(sender: AnyObject) {
         
@@ -350,47 +520,6 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
                 return
             }
             self.presentViewController(activityVC, animated: true, completion: nil)
-        }
-    }
-    
-    func ticketButtonPressed(sender: UIButton) {
-        setSelectedButton(self.ticketButton)
-        self.currentFilter = "tickets"
-        reloadHeatMap()
-    }
-    
-    func priceButtonPressed(sender: UIButton) {
-        setSelectedButton(self.priceButton)
-        self.currentFilter = "prices"
-        reloadHeatMap()
-    }
-    
-    func crimeButtonPressed(sender: UIButton) {
-        setSelectedButton(self.crimeButton)
-        self.currentFilter = "crimes"
-        reloadHeatMap()
-    }
-    
-    func setSelectedButton(sender: IBAButton) {
-        
-        self.priceButton.layer.borderColor = UIColor.lightGrayColor().CGColor
-        self.priceButton.setImage(UIImage(named: "price_icon_grey"), forState: .Normal)
-        self.ticketButton.layer.borderColor = UIColor.lightGrayColor().CGColor
-        self.ticketButton.setImage(UIImage(named: "ticket_icon_grey"), forState: .Normal)
-        self.crimeButton.layer.borderColor = UIColor.lightGrayColor().CGColor
-        self.crimeButton.setImage(UIImage(named: "crime_icon_grey"), forState: .Normal)
-        
-        if sender == self.crimeButton {
-            self.crimeButton.layer.borderColor = UIColor(red: 247/255, green: 71/255, blue: 71/255, alpha: 1).CGColor
-            self.crimeButton.setImage(UIImage(named: "crime_icon"), forState: .Normal)
-        } else if sender == self.ticketButton {
-            self.ticketButton.layer.borderColor = UIColor(red: 247/255, green: 71/255, blue: 71/255, alpha: 1).CGColor
-            self.ticketButton.setImage(UIImage(named: "ticket_icon"), forState: .Normal)
-
-        } else if sender == self.priceButton {
-            self.priceButton.layer.borderColor = UIColor(red: 247/255, green: 71/255, blue: 71/255, alpha: 1).CGColor
-            self.priceButton.setImage(UIImage(named: "price_icon"), forState: .Normal)
-            
         }
     }
     

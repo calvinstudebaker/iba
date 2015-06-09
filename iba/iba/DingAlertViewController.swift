@@ -68,7 +68,7 @@ class DingAlertViewController: UIViewController {
     
     func layoutSubviews() {
         
-        var originY = self.navigationBar.bounds.size.height + kXPadding
+        var originY = kXPadding
         
         // Setup the description label
         let descriptionString = "We've detected a ding on your car in the highlighted area." as NSString

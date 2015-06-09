@@ -11,7 +11,9 @@ import UIKit
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
-    let CAR_DINGED: String = "CAR_DINGED";
+    let CAR_DINGED: String = "CAR_DINGED"
+    let CAR_PARKED: String = "CAR_PARKED"
+    let CAR_MOVING: String = "CAR_MOVING"
     
     var window: UIWindow?
     let googleMapsApiKey = "AIzaSyDLqY2Bq_dD1dei_t-DorEzGAe2Azx1h9c"
@@ -56,6 +58,37 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             nav.viewControllers = [dvc]
             let mainNav = self.window!.rootViewController as! UINavigationController
             mainNav.presentViewController(nav, animated: true, completion: nil)
+
+        } else if (type == CAR_MOVING) {
+            
+            println("Your car has started moving")
+            NSUserDefaults.standardUserDefaults().setValue(nil, forKey: PARKING_METER_END_DATE)
+            NSUserDefaults.standardUserDefaults().setValue(nil, forKey: PARKED_LOCATION_LAT)
+            NSUserDefaults.standardUserDefaults().setValue(nil, forKey: PARKED_LOCATION_LON)
+            
+            NSNotificationCenter.defaultCenter().postNotificationName(CAR_STATUS_CHANGED, object: self)
+            
+        } else if (type == CAR_PARKED) {
+            
+            // Present the parked car view controller
+            println("Your car has parked");
+            
+            let optional = pushDict.valueForKey("optional") as! NSDictionary
+            let carLocation = optional.valueForKey("carLocation") as! NSDictionary
+            let lat = carLocation.valueForKey("latitude") as! Double
+            let lon = carLocation.valueForKey("longitude") as! Double
+            let loc = PFGeoPoint(latitude: lat, longitude: lon)
+            
+            let nav = UINavigationController()
+            let dvc = ParkingViewController()
+            nav.viewControllers = [dvc]
+            let mainNav = self.window!.rootViewController as! UINavigationController
+            mainNav.presentViewController(nav, animated: true, completion: nil)
+            
+            NSUserDefaults.standardUserDefaults().setValue(NSNumber(double: lat), forKey: PARKED_LOCATION_LAT)
+            NSUserDefaults.standardUserDefaults().setValue(NSNumber(double: lon), forKey: PARKED_LOCATION_LON)
+            
+            NSNotificationCenter.defaultCenter().postNotificationName(CAR_STATUS_CHANGED, object: self)
 
         }
         

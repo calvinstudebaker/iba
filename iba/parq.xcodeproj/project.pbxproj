@@ -52,6 +52,7 @@
 		AFD507591B144DF100C6360A /* DingAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFD507581B144DF100C6360A /* DingAlertViewController.swift */; };
 		AFD5075B1B14519000C6360A /* audi_vector_dinged.png in Resources */ = {isa = PBXBuildFile; fileRef = AFD5075A1B14519000C6360A /* audi_vector_dinged.png */; };
 		AFDEE6371AF9407700F213FD /* audi_vector.png in Resources */ = {isa = PBXBuildFile; fileRef = AFDEE6361AF9407700F213FD /* audi_vector.png */; };
+		AFFF2E961B1F973B004C4F08 /* ParkingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFFF2E951B1F973B004C4F08 /* ParkingViewController.swift */; };
 		D4B406BC8ECB8D1ED17BAD49 /* libPods-iba.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E82C9291DF6C9871051377D3 /* libPods-iba.a */; };
 		DC51158B1AF860A00032F6DC /* ticket_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = DC51158A1AF860A00032F6DC /* ticket_icon.png */; };
 		DC51158F1AF865C70032F6DC /* price_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = DC51158E1AF865C70032F6DC /* price_icon.png */; };
@@ -126,6 +127,7 @@
 		AFD507581B144DF100C6360A /* DingAlertViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DingAlertViewController.swift; sourceTree = "<group>"; };
 		AFD5075A1B14519000C6360A /* audi_vector_dinged.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = audi_vector_dinged.png; sourceTree = "<group>"; };
 		AFDEE6361AF9407700F213FD /* audi_vector.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = audi_vector.png; sourceTree = "<group>"; };
+		AFFF2E951B1F973B004C4F08 /* ParkingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParkingViewController.swift; sourceTree = "<group>"; };
 		DC51158A1AF860A00032F6DC /* ticket_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ticket_icon.png; sourceTree = "<group>"; };
 		DC51158E1AF865C70032F6DC /* price_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = price_icon.png; sourceTree = "<group>"; };
 		DC5115901AF86B3F0032F6DC /* crime_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = crime_icon.png; sourceTree = "<group>"; };
@@ -290,6 +292,7 @@
 				AF674E401AD5D72000C0BA16 /* ReportViewController.swift */,
 				AF485A421AF1B998003CCEFA /* ConnectCarViewController.swift */,
 				AFD507581B144DF100C6360A /* DingAlertViewController.swift */,
+				AFFF2E951B1F973B004C4F08 /* ParkingViewController.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -515,6 +518,7 @@
 				AF674E3C1AD5C35500C0BA16 /* Extensions.swift in Sources */,
 				AF4614961AAD77FD00CF8C33 /* IBANetworking.swift in Sources */,
 				AF38CA591AAD5485003892D0 /* HomeViewController.swift in Sources */,
+				AFFF2E961B1F973B004C4F08 /* ParkingViewController.swift in Sources */,
 				AF38CA801AAD5D9B003892D0 /* IBAUtils.swift in Sources */,
 				AF38CA7D1AAD5C6A003892D0 /* MovingAlertViewController.swift in Sources */,
 				AFD507591B144DF100C6360A /* DingAlertViewController.swift in Sources */,
