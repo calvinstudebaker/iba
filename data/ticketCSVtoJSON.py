@@ -4,11 +4,12 @@ import sys
 import time
 import urllib2	#uses Google Maps API to convert address to geopoint
 
-
+#open input/output files
 csvfile = open(sys.argv[1], 'r')
 oldjson = open(sys.argv[2], 'r')
 newjson = open(sys.argv[3], 'w')
 
+#filednames in the csv file
 fieldnames = (
 	"ticket_id",
 	"ag",
@@ -46,7 +47,7 @@ try:
 		if row["ticket_id"] == "ticket_id": continue #skip first line of csv
 		if int(row["ticket_id"]) <= oldRowCount: continue #get to next non-processed line
 		if rowCount > 2450 : break	#limit API calls to not overflow daily limit
-		print "rowCount = " + str(rowCount) + " id = " + row["ticket_id"]
+		print "rowCount = " + str(rowCount) + " id = " + row["ticket_id"] #print progress
 		d = dict()
 		csvDate = row["issue_datetime"]
 		tokens = csvDate.split()

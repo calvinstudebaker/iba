@@ -6,22 +6,14 @@ or from iOS using Parse API
 */
 
 var jobs = require("cloud/jobs.js");
-var meterDataURL = "https://data.sfgov.org/resource/7egw-qt89.json";
-var crimeDataURL = "https://data.sfgov.org/api/views/tmnf-yvry/rows.json";
-
 
 //given four GeoPoints that define a region, return an array of
 //locations and weights of all crimes within that region
-//TODO: make sure southwest and northeast are valid, get time field from request
 Parse.Cloud.define("crimesInRegion", function(request, response){
 	var nearLeft = request.params.nearLeft;
 	var nearRight = request.params.nearRight;
 	var farLeft = request.params.farLeft;
 	var farRight = request.params.farRight;
-
-	console.log(nearLeft);
-	console.log(nearLeft.latitude);
-	console.log(nearLeft.longitude);
 
 	var minLatitude = Math.min(nearLeft.latitude, nearRight.latitude, farLeft.latitude, farRight.latitude);
 	var maxLatitude = Math.max(nearLeft.latitude, nearRight.latitude, farLeft.latitude, farRight.latitude);
@@ -30,9 +22,6 @@ Parse.Cloud.define("crimesInRegion", function(request, response){
 
 	var southwestPoint = new Parse.GeoPoint(minLatitude, minLongitude);
 	var northeastPoint = new Parse.GeoPoint(maxLatitude, maxLongitude);
-
-	console.log(southwestPoint);
-	console.log(northeastPoint);
 
 	var Crime = Parse.Object.extend("CrimeSample");
 	var query = new Parse.Query(Crime);
@@ -69,10 +58,6 @@ Parse.Cloud.define("ticketsInRegion", function(request, response){
 	var farLeft = request.params.farLeft;
 	var farRight = request.params.farRight;
 
-	// console.log(nearLeft);
-	// console.log(nearLeft.latitude);
-	// console.log(nearLeft.longitude);
-
 	var minLatitude = Math.min(nearLeft.latitude, nearRight.latitude, farLeft.latitude, farRight.latitude);
 	var maxLatitude = Math.max(nearLeft.latitude, nearRight.latitude, farLeft.latitude, farRight.latitude);
 	var minLongitude = Math.min(nearLeft.longitude, nearRight.longitude, farLeft.longitude, farRight.longitude);
@@ -80,9 +65,6 @@ Parse.Cloud.define("ticketsInRegion", function(request, response){
 
 	var southwestPoint = new Parse.GeoPoint(minLatitude, minLongitude);
 	var northeastPoint = new Parse.GeoPoint(maxLatitude, maxLongitude);
-
-	console.log(southwestPoint);
-	console.log(northeastPoint);
 
 	var Ticket = Parse.Object.extend("Ticket");
 	var query = new Parse.Query(Ticket);
@@ -114,10 +96,6 @@ Parse.Cloud.define("pricesInRegion", function(request, response){
 	var farLeft = request.params.farLeft;
 	var farRight = request.params.farRight;
 
-	// console.log(nearLeft);
-	// console.log(nearLeft.latitude);
-	// console.log(nearLeft.longitude);
-
 	var minLatitude = Math.min(nearLeft.latitude, nearRight.latitude, farLeft.latitude, farRight.latitude);
 	var maxLatitude = Math.max(nearLeft.latitude, nearRight.latitude, farLeft.latitude, farRight.latitude);
 	var minLongitude = Math.min(nearLeft.longitude, nearRight.longitude, farLeft.longitude, farRight.longitude);
@@ -125,9 +103,6 @@ Parse.Cloud.define("pricesInRegion", function(request, response){
 
 	var southwestPoint = new Parse.GeoPoint(minLatitude, minLongitude);
 	var northeastPoint = new Parse.GeoPoint(maxLatitude, maxLongitude);
-
-	console.log(southwestPoint);
-	console.log(northeastPoint);
 
 	var ParkingMeter = Parse.Object.extend("ParkingMeter");
 	var query = new Parse.Query(ParkingMeter);
@@ -286,35 +261,36 @@ Parse.Cloud.job("alertCarsInSweepingZones", function(request, response){
 	var push = require("cloud/push.js");
 	var _ = require("underscore.js");
 	
+	//Get the hour and day in question
 	var days = ["Sun", "Mon", "Tues", "Wed", "Thu", "Fri", "Sat"];
+	var HALF_HOUR = 30 * 60 * 1000; //half hour in milliseconds
+	var MINUTES_IN_HOUR = 60;
+	var PDT_OFFSET = -7;
 	var d = new Date();
-	var soon = new Date(d.getTime() + 30 * 60 * 1000); //add a half hour
-
-	//Get the hour and day
-	var hour = (d.getHours()).toString();
-	var day = days[d.getDay()];
+	var soon = new Date(d.getTime() + HALF_HOUR); //add a half hour
+	var timezoneOffset = soon.getTimezoneOffset() / MINUTES_IN_HOUR;
+	timezoneOffset = PDT_OFFSET - timezoneOffset;
+	var hour = (soon.getHours() + timezoneOffset).toString();
+	var day = days[soon.getDay()];
 	if (hour.length == 1) {
 		hour = "0" + hour;
 	}
 
-	// var StreetSweepingRoute = Parse.Object.extend("StreetSweepingRoute");
-	// var sweepingQuery = new Parse.Query(StreetSweepingRoute);
-	// sweepingQuery.startsWith("start_time", hour);
-	// sweepingQuery.equalTo("weekday", days[d.getDay()]);
-	// sweepingQuery.select("streetname", "right_from_address", "right_to_address", "left_from_address", "left_to_address", "end_time");
-
+	//Find all parked cars
+	var StreetSweepingRoute = Parse.Object.extend("StreetSweepingRoute");
 	var carQuery = new Parse.Query("Car");
 	carQuery.equalTo("isParked", true);
 	carQuery.exists("location");
 	carQuery.exists("installation");
+	carQuery.exists("address");
 	carQuery.include("installation");
-
-	// var activeRoutes = [];
 
 	carQuery.find().then(function(parkedCars){
 		
-		var pushPromises = [];
+		//Chain together sweeping queries in a parse promise
+		var sweepPromise = Parse.Promise.as();
 
+		//Check each parked car to see if it is in any sweeping routes
 		_.each(parkedCars, function(parkedCar){
 			var address = parkedCar.get("address").toUpperCase();
 			var firstSpace = address.indexOf(" ");
@@ -338,15 +314,19 @@ Parse.Cloud.job("alertCarsInSweepingZones", function(request, response){
 				var sweepingQuery = Parse.Query.or(withinLeftAddressQuery, withinRightAddressQuery);
 
 				//route must be on the same street and active at the right time
+				var startTimeQuery = new Parse.Query(StreetSweepingRoute);
 				sweepingQuery.startsWith("start_time", hour);
 				sweepingQuery.equalTo("weekday", day);
-				sweepingQuery.contains("streetname", streetname);
+				sweepingQuery.startsWith("streetname", streetname);
 
-				sweepingQuery.limit(1); //one active route is all it takes to be illegally parked
+				console.log("hour: " + hour + "\nday: " + day + "\nstreetname: " + streetname + "\nstreetnumber: " + streetnumber);
+
+				sweepingQuery.limit(10); //one active route is all it takes to be illegally parked
 
 				//Check if there is a sweeping route that intersects with this parked car
-				sweepingQuery.count({
-					success: function(activeRouteCount){
+				sweepPromise = sweepPromise.then(function(){
+					return sweepingQuery.count().then(function(activeRouteCount){
+						console.log("count: " + activeRouteCount);
 						if(activeRouteCount > 0){
 							//Send push notification
 							var installationId = parkedCar.get("installation").id;
@@ -355,20 +335,17 @@ Parse.Cloud.job("alertCarsInSweepingZones", function(request, response){
 								"pushType": "STREET_SWEEPING", 
 								"installationId": installationId
 							};
-							pushPromises.push(push.sendPush(pushDict));
+							push.sendPush(pushDict);
 							console.log("Sending street sweeping notification to: " + installationId);
 						}
-					},
-					error: function(error){
+					}, function(error){
 						response.error("Unable to retrieve sweeping routes. Error: " + error.code + " " + error.message);
-					}
-				});
-
-
+					});
+				}); 
 			}
 		});
 
-		return Parse.Promise.when(pushPromises);
+		return sweepPromise;
 	}, function(error){
 		response.error("Unable to retrieve parked cars. Error: " + error.code + " " + error.message);
 	}).then(function(){
@@ -376,54 +353,4 @@ Parse.Cloud.job("alertCarsInSweepingZones", function(request, response){
 	}, function(error){
 		response.error("Unable to send all push notifications to cars in sweeping zones. Error: " + error.code + " " + error.message);
 	});
-
-	// sweepingQuery.find().then(function(routes){
-		
-	// 	for (var entryIndex in routes){
-	// 		var currentRoute = new Object();
-	// 		var entry = routes[entryIndex];
-	// 		currentRoute["streetName"] = entry.get("streetname");
-	// 		currentRoute["rightFromAddress"] = entry.get("right_from_address");
-	// 		currentRoute["rightToAddress"] = entry.get("right_to_address");
-	// 		currentRoute["leftFromAddress"] = entry.get("left_from_address");
-	// 		currentRoute["leftToAddress"] = entry.get("left_to_address");
-	// 		currentRoute["endTime"] = entry.get("end_time");
-	// 		activeRoutes.push(currentRoute);
-	// 	}
-	// 	console.log(activeRoutes.length + " active routes found: ");
-	// 	console.log(activeRoutes);
-
-	// 	return carQuery.find();
-
-
-	// }, function(error){
-	// 	response.error("Unable to retrieve routes. Error: " + error.code + " " + error.message);
-	// }).then(function(parkedCars){
-	// 	var promises = [];
-	// 	console.log(parkedCars);
-	// 	_.each(parkedCars, function(parkedCar){
-	// 		for (var route in activeRoutes){
-	// 			if(streetSweeping.isInSweepingRoute(parkedCar,route)){
-	// 				//for each car in an active route, start a push notification
-	// 				//to the car and add its promise to the list
-	// 				var pushDict = {
-	// 					"pushText": "Street sweeping starting! Move your car as soon as possible.",
-	// 					"pushType": "STREET_SWEEPING", 
-	// 					"installationId": parkedCar.get("installation").id
-	// 				};
-	// 				promises.push(push.sendPush(pushDict));
-	// 				break;
-	// 			}
-	// 		}
-	// 	});
-		
-
-	// 	return Parse.Promise.when(promises);
-	// }, function(error){
-	// 	response.error("Unable to retrieve parked cars. Error: " + error.code + " " + error.message);
-	// }).then(function(){
-	// 	response.success("Every car in street sweeping zones notified!");
-	// }, function(error){
-	// 	response.error("Unable to send all push notifications to cars in sweeping zones. Error: " + error.code + " " + error.message);
-	// });
 });
