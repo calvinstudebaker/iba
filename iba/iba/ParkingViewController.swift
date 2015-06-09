@@ -8,6 +8,11 @@
 
 import UIKit
 
+/**
+A UIViewController presented when the device receives the isParked message.
+Features a UILabel with the parking meter timer (if the user would like to set a 
+location push notification for when the parking meter timer runs out).
+*/
 class ParkingViewController: UIViewController {
 
     let kXPadding: CGFloat = 20
@@ -21,7 +26,6 @@ class ParkingViewController: UIViewController {
     let decrementButton: IBAButton
     
     let timeLabel: UILabel
-    
     
     // MARK: Init Methods
     
@@ -130,6 +134,11 @@ class ParkingViewController: UIViewController {
         })
     }
     
+    /**
+    Once the user has adjusted the timer to the correct time, they hit the "set time" button and this function is called.
+    
+    :param: sender The button who calls the selector
+    */
     func setTime(sender: AnyObject) {
         let currentTime = self.timeLabel.text!
         var hours = currentTime[0...1].toInt()!
@@ -166,6 +175,11 @@ class ParkingViewController: UIViewController {
         
     }
     
+    /**
+    Decrements the timer by 15 minutes
+    
+    :param: sender The button who calls the selector
+    */
     func decrementTime(sender: AnyObject) {
         
         let currentTime = self.timeLabel.text!
@@ -198,6 +212,11 @@ class ParkingViewController: UIViewController {
         
     }
     
+    /**
+    Increments the timer by 15 minutes
+    
+    :param: sender The button who calls the selector
+    */
     func incrementTime(sender: AnyObject) {
         let currentTime = self.timeLabel.text!
         

@@ -8,6 +8,9 @@
 
 import UIKit
 
+/**
+Subclass of UIButton, easier implementation
+*/
 class IBAButton : UIButton {
     
     let mainColor: UIColor

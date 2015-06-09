@@ -8,6 +8,10 @@
 
 import UIKit
 
+/**
+A UIViewController dedicated to Ding Alerts. Presented from AppDelegate when the 
+device receives a push notification.
+*/
 class DingAlertViewController: UIViewController {
     
     let kXPadding: CGFloat = 20
@@ -110,13 +114,22 @@ class DingAlertViewController: UIViewController {
     
     // MARK: Private Methods
     
+    /**
+    Dismisses the view controller
+    
+    :param: sender The button who called the selector
+    */
     func dismiss(sender: AnyObject) {
         self.dismissViewControllerAnimated(true, completion: { () -> Void in
             
         })
     }
     
+    /**
+    Submits a report if there was in fact a ding on the car
     
+    :param: sender The button who called the selector
+    */
     func submitReport(sender: AnyObject) {
         
         // Show loading hud
