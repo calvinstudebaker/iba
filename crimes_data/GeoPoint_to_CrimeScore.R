@@ -73,7 +73,7 @@ stopifnot( sum(geolocFreqTable) == nrow(crimeTable) )
 oo <- order(geolocFreqTable, allGeoLocs)
 allGeoLocs[oo]
 
-for (idx in 1:N) {
+for (idx in 1:M) {
   geoloc = allGeoLocs[idx]
   count = geolocFreqTable[geoloc]
   names(count) <- NULL
@@ -82,4 +82,5 @@ for (idx in 1:N) {
   eachGeoLocToCrimeScore[geoLoc,] = eachGeoLocToCrimeScore[geoLoc,] / count
 }
 
-write.table(eachGeoLocToCrimeScore, file = "GeoPoint_to_Weight.csv")
+setwd("~/iba/crimes_data/")
+write.table(eachGeoLocToCrimeScore, file = "EveryGeoPoint_to_Weight.csv")
