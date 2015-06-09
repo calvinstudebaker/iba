@@ -207,3 +207,10 @@ print( paste("There are", length(category.II), "crime types of high-level Catego
 print( paste("There are", length(category.III), "crime types of high-level Category III..") )
 
 
+
+ct.array.I <- ct.df[category.I,]
+ct.sorted.I <- sort(ct.array.I, decreasing = T)
+ct.df.I <- as.data.frame(ct.sorted.I)
+colnames(ct.df.I) = "Crime Type Freq."
+
+

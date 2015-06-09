@@ -11,7 +11,7 @@ stopifnot( isValidJSON('Crime.json') )
 
 crimeList <- fromJSON('Crime.json')
 #saveRDS(crimeList, file = "allCrimes.RData")
-#crimeList = readRDS(file = "allCrimes.RData")
+crimeList = readRDS(file = "allCrimes.RData")
 
 crimes.all = crimeList$results
 singleCrime = crimes.all[[1]]
@@ -53,4 +53,6 @@ processCrimes <- function(fromIndex, toIndex) {
 processCrimes(1, 10000)
 processCrimes(10001, 50000)
 processCrimes(50001, 250000)
+
+processCrimes(250001, 440396)
 
