@@ -15,6 +15,11 @@ let CAR_STATUS_CHANGED = "carStatusChanged"
 
 let DEFAULT_ZOOM = 16
 
+/**
+Quick useful function for calling other functions after a given delay
+:param: delay The amount of time (in seconds) to delay
+:param: closure The block you'd like to call after the delay
+*/
 func delay(delay:Double, closure:()->()) {
     dispatch_after(
         dispatch_time(
@@ -24,6 +29,9 @@ func delay(delay:Double, closure:()->()) {
         dispatch_get_main_queue(), closure)
 }
 
+/**
+Quick and useful functions for dealing with strings
+*/
 extension String
 {
     subscript(i: Int) -> Character {
