@@ -8,6 +8,9 @@
 
 import UIKit
 
+/**
+A UIViewcontroller responsible for the bluetooth setup with the car.
+*/
 class ConnectCarViewController: UIViewController {
     
     let kXPadding: CGFloat = 20
@@ -68,6 +71,9 @@ class ConnectCarViewController: UIViewController {
     
     // MARK: Setup Methods
     
+    /**
+    Sets up the navigation bar
+    */
     func setupNavigationBar() {
         self.navigationBar.frame = CGRectMake(0, 0, self.view.frame.size.width, 64)
         self.view.insertSubview(self.navigationBar, aboveSubview: self.scrollView)
@@ -147,16 +153,33 @@ class ConnectCarViewController: UIViewController {
         }
     }
     
+    // MARK: Private Methods
+    
+    /**
+    Called when the user would like to disconnect the bluetooth connection to the car
+    
+    :param: sender The button who calls the selector
+    */
     func disconnectCar(sender: AnyObject) {
         NSUserDefaults.standardUserDefaults().setObject(nil, forKey: "CarConnected")
         refreshViews(self)
     }
     
+    /**
+    Called when the user would like to connect the bluetooth connection to the car
+    
+    :param: sender The button who calls the selector
+    */
     func connectedCar(sender: AnyObject) {
         NSUserDefaults.standardUserDefaults().setValue(true, forKey: "CarConnected");
         refreshViews(self)
     }
     
+    /**
+    Called when the bluetooth connection changes, and refreshes the view
+    
+    :param: sender The button who calls the selector
+    */
     func refreshViews(sender: AnyObject) {
         self.carVectorImageView.removeFromSuperview()
         self.descriptionLabel.removeFromSuperview()
@@ -167,14 +190,22 @@ class ConnectCarViewController: UIViewController {
         layoutSubviews()
     }
     
-    // MARK: Private Methods
+    /**
+    Dismisses the view controller
     
+    :param: sender The button who calls the selector
+    */
     func doneButtonHit(sender: AnyObject) {
         self.dismissViewControllerAnimated(true, completion: { () -> Void in
             
         })
     }
     
+    /**
+    Takes the user to settings to deal with bluetooth setup
+    
+    :param: sender The button who calls the selector
+    */
     func goToSettings(sender: AnyObject) {
         UIApplication.sharedApplication().openURL(NSURL(string: UIApplicationOpenSettingsURLString)!)
     }

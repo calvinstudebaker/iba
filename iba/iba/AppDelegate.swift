@@ -39,6 +39,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
     
+    /**
+    Requests access to send push notifications to the device
+    
+    :param: application The current UIApplication
+    */
     func askForPush(application: UIApplication) {
         application.registerUserNotificationSettings(UIUserNotificationSettings(forTypes: (.Sound | .Alert | .Badge), categories: nil))
         application.registerForRemoteNotifications()
@@ -95,6 +100,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         completionHandler(UIBackgroundFetchResult.NoData)
     }
     
+    /**
+    Sets up the initial view setup, with HomeViewController as the root view controller.
+    */
     func setupView() {
         let navigationController = UINavigationController()
         let homeViewController = HomeViewController()

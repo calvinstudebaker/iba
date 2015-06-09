@@ -8,6 +8,10 @@
 
 import UIKit
 
+/**
+This viewcontroller is responsible for the submission of user-generated reports
+for parking spots and features 4 IBARateItemViews (4 different categories)
+*/
 class ReportViewController: UIViewController {
     
     enum ReportType {
@@ -98,7 +102,18 @@ class ReportViewController: UIViewController {
         self.view.backgroundColor = UIColor.whiteColor()
     }
     
+    // MARK: Setup Methods
     
+    func setupDescriptionLabel() {
+        self.descriptionLabel.font = UIFont(name: "HelveticaNeue-Light", size: 21)
+        self.descriptionLabel.textColor = UIColor.blackColor()
+        self.descriptionLabel.textAlignment = .Center
+        self.descriptionLabel.text = "Let us know how your parking spot at " + self.streetName + " was!"
+        self.descriptionLabel.numberOfLines = 3
+        self.scrollView.addSubview(self.descriptionLabel)
+    }
+    
+    // MARK: Private Methods
     
     func layoutSubviews() {
         var originY = 0 as CGFloat
@@ -145,6 +160,11 @@ class ReportViewController: UIViewController {
         self.scrollView.addSubview(self.submitButton)
     }
     
+    /**
+    Called when the "submit report" button is hit
+    
+    :param: sender The button who calls the selector
+    */
     func submitPressed(sender: UIButton) {
         
         var hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
@@ -181,6 +201,11 @@ class ReportViewController: UIViewController {
         })
     }
     
+    /**
+    Compiles the report to send to IBANetworking to save the report in the database
+    
+    :returns: A nicely compiled dictionary of report information (for use with IBANetworking.submitReport)
+    */
     func compileReport() -> [String: AnyObject!] {
         let easePercent = self.easeRateItem.currentValue
         let damagePercent = self.damageRateItem.currentValue
@@ -204,12 +229,4 @@ class ReportViewController: UIViewController {
         return dict
     }
     
-    func setupDescriptionLabel() {
-        self.descriptionLabel.font = UIFont(name: "HelveticaNeue-Light", size: 21)
-        self.descriptionLabel.textColor = UIColor.blackColor()
-        self.descriptionLabel.textAlignment = .Center
-        self.descriptionLabel.text = "Let us know how your parking spot at " + self.streetName + " was!"
-        self.descriptionLabel.numberOfLines = 3
-        self.scrollView.addSubview(self.descriptionLabel)
-    }
 }

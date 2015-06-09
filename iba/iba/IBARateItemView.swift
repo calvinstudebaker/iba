@@ -8,7 +8,10 @@
 
 import Foundation
 
-
+/**
+Custom implementation of UIView used in ReportViewController to rate the various categories for a parking spot
+Consists of a slider, and a couple of labels
+*/
 class IBARateItemView: UIView {
     
     var currentValue: CGFloat = 0
@@ -69,6 +72,8 @@ class IBARateItemView: UIView {
     required init(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    // MARK: Setup Methods
     
     func setupSlider() {
         let sliderCircleImage = UIImage(named: "slider_circle")

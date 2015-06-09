@@ -10,8 +10,18 @@ import Foundation
 import Parse
 import CoreLocation
 
+/**
+Where all the networking calls are situated. Uses parse cloud code.
+*/
 class IBANetworking {
     
+    /**
+    Gets all the values (crimes, prices, or tickets) for a particular GMSVisibleRegion
+    
+    :param: region The GMSVisibleRegion you want to get values for
+    :param: values The string type of value you want ("crimes", "prices", or "tickets")
+    :param: completion The PFIdResultBlock you'd like to have called upon completion
+    */
     class func valuesInRegion(region: GMSVisibleRegion, values: String, completion: PFIdResultBlock) {
         
         let nearLeft = PFGeoPoint(latitude: region.nearLeft.latitude, longitude: region.nearLeft.longitude)
@@ -25,6 +35,12 @@ class IBANetworking {
         
     }
     
+    /**
+    Submits a report for a given parking spot
+    
+    :param: report The Dictionary of information included in the report
+    :param: completion The PFBooleanResultBlock you'd like called after completion
+    */
     class func submitReport(report: [String: AnyObject!], completion: PFBooleanResultBlock) {
         
         let uGenReport = PFObject(className: "UserGeneratedReport")
@@ -42,6 +58,12 @@ class IBANetworking {
         
     }
     
+    /**
+    Documents every instance of users sharing the app in parse
+    
+    :param: type The method the user used to share the app
+    :param: completion The PFBooleanResultBlock you'd like to have called upon completion
+    */
     class func shareHit(type: String, completion: PFBooleanResultBlock) {
         let share = PFObject(className: "Share");
         share["type"] = type;
@@ -49,6 +71,12 @@ class IBANetworking {
         share.saveInBackgroundWithBlock(completion);
     }
     
+    /**
+    Search for a destination via String. Uses Google Maps api to form a query
+    
+    :param: destination The String destination you are searching for
+    :param: completion The custom block to be called upon completion
+    */
     class func searchForDestination(destination: String, completion: (complete: Bool, location: CLLocation?) -> ()) {
         
         let queryString: String = (("https://maps.googleapis.com/maps/api/place/textsearch/json?query=" + destination + "&key=AIzaSyAbd-ELe3MBV2eYyJ3AKCoZuRut7kcWLW0") as NSString).stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding) as String!
