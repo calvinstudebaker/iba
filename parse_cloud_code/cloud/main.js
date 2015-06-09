@@ -14,50 +14,49 @@ Parse.Cloud.define("crimesInRegion", function(request, response){
 
 	var data = [];
 
+	console.log("Southwest: " + points.southwest + " Northeast: " + points.northeast);
+
 	//Add crimes to response data
-	var Crime = Parse.Object.extend("CrimeSample");
+	var Crime = Parse.Object.extend("TrainedCrime");
 	var query = new Parse.Query(Crime);
 	query.withinGeoBox("location", points.southwest, points.northeast).limit(1000);
-	query.find({
-		success: function(results) {
-			for (var entryIndex in results) {
-				var current = new Object();
-				var entry = results[entryIndex];
-				var weight = entry.get("weight");
-				current["location"] = entry.get("location");
-				current["weight"] = weight;
-				data.push(current);
-			}
-			console.log(data);
-		},
-		error: function(error){
-			response.error("Unable to retrieve crime entries. Error: " + error.code + " " + error.messsage);
-		}
-	});
 
 	//Add user reported damage to response data
 	var UserGeneratedReport = Parse.Object.extend("UserGeneratedReport");
 	var userQuery = new Parse.Query(UserGeneratedReport);
 	userQuery.withinGeoBox("location", points.southwest, points.northeast).limit(1000);
-	userQuery.find({
-		success: function(results) {
-			for (var entryIndex in results) {
-				var current = new Object();
-				var entry = results[entryIndex];
-				var weight = entry.get("damageRating") * 10; //magnitude fix
-				current["location"] = entry.get("location");
-				current["weight"] = weight;
-				data.push(current);
-			}
-			console.log(data);
-		},
-		error: function(error){
-			response.error("Unable to retrieve user generated reports. Error: " + error.code + " " + error.messsage);
-		}
-	});
 
-	//Send back an array of locations and weights
-	response.success(data);
+	query.find().then(function(results){
+		for (var entryIndex in results) {
+			var current = new Object();
+			var entry = results[entryIndex];
+			var weight = entry.get("weight");
+			current["location"] = entry.get("location");
+			current["weight"] = weight;
+			data.push(current);
+		}
+		console.log(data);
+
+		return userQuery.find();
+
+	}, function(error){
+		response.error("Unable to retrieve crime entries. Error: " + error.code + " " + error.messsage);
+	}).then(function(results){
+		for (var entryIndex in results) {
+			var current = new Object();
+			var entry = results[entryIndex];
+			var weight = entry.get("damageRating") * 10; //magnitude fix
+			current["location"] = entry.get("location");
+			current["weight"] = weight;
+			data.push(current);
+		}
+		console.log(data);
+
+		//Send back an array of locations and weights
+		response.success(data);
+	}, function(error){
+		response.error("Unable to retrieve user generated reports. Error: " + error.code + " " + error.messsage);
+	});
 });
 
 Parse.Cloud.define("ticketsInRegion", function(request, response){
@@ -71,46 +70,44 @@ Parse.Cloud.define("ticketsInRegion", function(request, response){
 	var Ticket = Parse.Object.extend("Ticket");
 	var query = new Parse.Query(Ticket);
 	query.withinGeoBox("location", points.southwest, points.northeast);
-	query.find({
-		success: function(results) {
-			for (var entryIndex in results) {
-				var current = new Object();
-				var entry = results[entryIndex];
-				var weight = 1;
-				current["location"] = entry.get("location");
-				current["weight"] = weight;
-				data.push(current);
-			}
-			console.log(data);
-		},
-		error: function(error){
-			response.error("Unable to retrieve ticket entries. Error: " + error.code + " " + error.messsage);
-		}
-	});
 
 	//Add user reported tickets to the response data
 	var UserGeneratedReport = Parse.Object.extend("UserGeneratedReport");
 	var userQuery = new Parse.Query(UserGeneratedReport);
 	userQuery.withinGeoBox("location", points.southwest, points.northeast).limit(1000);
-	userQuery.find({
-		success: function(results) {
-			for (var entryIndex in results) {
-				var current = new Object();
-				var entry = results[entryIndex];
-				var weight = entry.get("ticketCost") * 10; //magnitude fix
-				current["location"] = entry.get("location");
-				current["weight"] = weight;
-				data.push(current);
-			}
-			console.log(data);
-		},
-		error: function(error){
-			response.error("Unable to retrieve user generated reports. Error: " + error.code + " " + error.messsage);
+
+	query.find().then(function(results){
+		for (var entryIndex in results) {
+			var current = new Object();
+			var entry = results[entryIndex];
+			var weight = 1;
+			current["location"] = entry.get("location");
+			current["weight"] = weight;
+			data.push(current);
 		}
+		console.log(data);
+
+		return userQuery.find();
+
+	}, function(error){
+		response.error("Unable to retrieve ticket entries. Error: " + error.code + " " + error.messsage);
+	}).then(function(results){
+		for (var entryIndex in results) {
+			var current = new Object();
+			var entry = results[entryIndex];
+			var weight = entry.get("ticketCost") * 10; //magnitude fix
+			current["location"] = entry.get("location");
+			current["weight"] = weight;
+			data.push(current);
+		}
+		console.log(data);
+
+		//Send back an array of locations and weights
+		response.success(data);
+	}, function(error){
+		response.error("Unable to retrieve user generated reports. Error: " + error.code + " " + error.messsage);
 	});
 
-	//Send back an array of locations and weights
-	response.success(data);
 });
 
 Parse.Cloud.define("pricesInRegion", function(request, response){
@@ -124,46 +121,43 @@ Parse.Cloud.define("pricesInRegion", function(request, response){
 	var ParkingMeter = Parse.Object.extend("ParkingMeter");
 	var query = new Parse.Query(ParkingMeter);
 	query.withinGeoBox("location", points.southwest, points.northeast).limit(2000);
-	query.find({
-		success: function(results) {
-			for (var entryIndex in results) {
-				var current = new Object();
-				var entry = results[entryIndex];
-				var price = entry.get("hourlyRateEstimate");
-				current["location"] = entry.get("location");
-				current["weight"] = price;
-				data.push(current);
-			}
-			console.log(data);
-		},
-		error: function(error){
-			response.error("Unable to retrieve parking meter entries. Error: " + error.code + " " + error.messsage);
-		}
-	});
 
 	//Add user reported prices to the response data
 	var UserGeneratedReport = Parse.Object.extend("UserGeneratedReport");
 	var userQuery = new Parse.Query(UserGeneratedReport);
 	userQuery.withinGeoBox("location", points.southwest, points.northeast).limit(1000);
-	userQuery.find({
-		success: function(results) {
-			for (var entryIndex in results) {
-				var current = new Object();
-				var entry = results[entryIndex];
-				var weight = entry.get("priceRating") * 10; //magnitude fix
-				current["location"] = entry.get("location");
-				current["weight"] = weight;
-				data.push(current);
-			}
-			console.log(data);
-		},
-		error: function(error){
-			response.error("Unable to retrieve user generated reports. Error: " + error.code + " " + error.messsage);
-		}
-	});
 
-	//Send back an array of locations and prices
-	response.success(data);
+	query.find().then(function(results){
+		for (var entryIndex in results) {
+			var current = new Object();
+			var entry = results[entryIndex];
+			var price = entry.get("hourlyRateEstimate");
+			current["location"] = entry.get("location");
+			current["weight"] = price;
+			data.push(current);
+		}
+		console.log(data);
+
+		return userQuery.find();
+
+	}, function(error){
+		response.error("Unable to retrieve parking meter entries. Error: " + error.code + " " + error.messsage);
+	}).then(function(results){
+		for (var entryIndex in results) {
+			var current = new Object();
+			var entry = results[entryIndex];
+			var weight = entry.get("priceRating") * 10; //magnitude fix
+			current["location"] = entry.get("location");
+			current["weight"] = weight;
+			data.push(current);
+		}
+		console.log(data);
+
+		//Send back an array of locations and weights
+		response.success(data);
+	}, function(error){
+		response.error("Unable to retrieve user generated reports. Error: " + error.code + " " + error.messsage);
+	});
 });
 
 
