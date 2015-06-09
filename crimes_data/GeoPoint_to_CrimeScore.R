@@ -5,14 +5,17 @@ crTable <- read.table("crimes_1_10000.csv")
 setwd("~/Desktop/CS 210/")
 crTable1 <- read.table("crimes_10001_50000.csv")
 
-setwd("~/Desktop/CS 210/")
 crTable2 <- read.table("crimes_50001_250000.csv")
-crimeTabular.all <- rbind(crTable, crTable1, crTable2)
+crTable3 <- read.table("crimes_250001_440396.csv")
+
+crimeTabular.all <- rbind(crTable, crTable1, crTable2, crTable3)
 
 saveRDS(crimeTabular.all, file = "allCrimesRead.RData")
 
 
+
 # Next time reading, immediately read the saved/cached object..
+setwd("~/Desktop/CS 210/")
 crimeTable <- readRDS(file = "allCrimesRead.RData")
 
 print("Number of unique Geo-locations:")
@@ -22,6 +25,7 @@ stopifnot( length(levels(crimeTable$location)) == length(unique(crimeTable$locat
 allGeoLocs <- unique(crimeTable$location)
 M = length(allGeoLocs)
 
+setwd("~/iba/crimes_data/")
 weights <- read.table("crimeTypeWeights_50000.csv")
 
 eachGeoLocToCrimeScore = matrix(nrow = M, ncol = 1, 
@@ -55,10 +59,13 @@ apply(crimeTable, 1, function(x) {
   
   eachGeoLocToCrimeScore[geoLoc,] <<- eachGeoLocToCrimeScore[geoLoc,] + weights[crimeType,]
 })
-saveRDS(eachGeoLocToCrimeScore, file = "totalWeightsPerGeoPoint")
+setwd("~/Desktop/CS 210/")
+saveRDS(eachGeoLocToCrimeScore, file = "totalWeightsPerGeoPoint.RData")
+
 
 # Next time reading, take it from the "cache"..
-eachGeoLocToCrimeScore <- readRDS(file = "totalWeightsPerGeoPoint")
+setwd("~/Desktop/CS 210/")
+eachGeoLocToCrimeScore <- readRDS(file = "totalWeightsPerGeoPoint.RData")
 
 geolocFreqTable <- table(crimeTable$location)
 stopifnot( sum(geolocFreqTable) == nrow(crimeTable) )
