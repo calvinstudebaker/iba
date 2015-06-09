@@ -41,4 +41,19 @@ for (idx in 1:M) {
 }
 
 
+########## Optimized Version #############
+# Using an optimal algorithm..
+
+eachGeoLocToCrimeScore = matrix(nrow = M, ncol = 1, 
+                                dimnames = list(allGeoLocs, "Crime Score"), data = 0)
+#some = crimeTable[1:10,]
+apply(crimeTable, 1, function(x) {
+  geoLoc = x[["location"]]  # "factor"
+  geoLoc = as.character(geoLoc)
+  crimeType = x[["category"]]  # "factor"
+  crimeType = as.character(crimeType)
+  
+  eachGeoLocToCrimeScore[geoLoc,] <<- eachGeoLocToCrimeScore[geoLoc,] + weights[crimeType,]
+})
+
 
