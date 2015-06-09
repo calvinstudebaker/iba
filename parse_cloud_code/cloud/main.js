@@ -316,12 +316,13 @@ Parse.Cloud.job("alertCarsInSweepingZones", function(request, response){
 		var pushPromises = [];
 
 		_.each(parkedCars, function(parkedCar){
-			var address = parkedCar.get("address");
+			var address = parkedCar.get("address").toUpperCase();
 			var firstSpace = address.indexOf(" ");
 			if (firstSpace != -1 && address.length > firstSpace+1){
 				//Get streetname and streetnumber of parked car
 				var streetname = address.substring(firstSpace + 1);
 				var streetnumber = parseInt(address.substring(0, firstSpace));
+				console.log("Checking if parked car at " + address + " is in a sweeping zone.");
 
 				//Query to check that streetnumber is within the left addresses swept
 				var withinLeftAddressQuery = new Parse.Query(StreetSweepingRoute);
