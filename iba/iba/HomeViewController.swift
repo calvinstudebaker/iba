@@ -15,30 +15,50 @@ Where the majority of the work gets done. The starting point for the application
 */
 class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapViewDelegate, UITextFieldDelegate {
     
+    // The main GMSMapView behind everything
     var mapView: GMSMapView
-    var carMarker: GMSMarker = GMSMarker()
+    
+    // The waypoints for the current navigation
     var waypoints: NSMutableArray
     var waypointStrings: NSMutableArray
     
+    // The location manager to update the user's location
     let locationManager = CLLocationManager()
+    
+    // The last location we have recorded for the user
     let previousLocation: CLLocationCoordinate2D
     
+    // The actual heat map overlay
     var currentOverlay: GMSGroundOverlay = GMSGroundOverlay()
+    
+    // The route for current navigation
     var currentPolyline: GMSPolyline = GMSPolyline()
+
+    // The marker for your car
+    var carMarker: GMSMarker = GMSMarker()
+
+    // The marker for your phone location
     var currentMarker: GMSMarker = GMSMarker()
     
+    // Some buttons
     let reportButton: IBAButton
     let shareButton: IBAButton
     let stopGuidanceButton: IBAButton
+    
+    // Search field for directions
     let searchField: UITextField
+    
+    // Segmented control just below navigation bar
     let segment: UISegmentedControl
     
     var currentFilter: String = "crimes"
     
+    // Some constants for view setup
     let kButtonPadding: CGFloat = 10
     let kButtonHeight: CGFloat = 45
     let kButtonWidth: CGFloat = 80
     
+    // Parking meter timer views (if present)
     let parkingMeterTimerLabel: UILabel
     let parkingMeterTimerBackground: UIView
     var parkingMeterInterval: NSTimeInterval
@@ -358,6 +378,9 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
     
     /**
     Get the string date for timer interval
+    
+    :param: timeInterval The time interval you would like to convert to string
+    :returns: A string of the time with the format HH:mm:ss
     */
     func stringForTimeInterval(timeInterval: NSTimeInterval) -> String {
         let hours = Int(floor(timeInterval / (60 * 60)))
