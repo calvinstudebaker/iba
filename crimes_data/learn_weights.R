@@ -170,3 +170,40 @@ names(weights) <- "Weight of Crime Type"
 write.table(weights, file = "~/iba/crimeTypeWeights_50000.csv")
 
 
+
+
+###################### CLUSTERING METHOD ########################
+
+# Now we define 3 clusters / high-level "categories" of crime types 
+# on which to do the samy probabilistic method-based weight estimation, individually..
+
+category.I <- c("SEX OFFENSES, FORCIBLE", "KIDNAPPING", "ARSON", "ASSAULT", "WEAPON LAWS", "ROBBERY")
+category.II <- c("MISSING PERSON", "SUSPICIOUS OCC", "BURGLARY", "VEHICLE THEFT", "FAMILY OFFENSES", "SEX OFFENSES, NON FORCIBLE", "TRESPASS", "STOLEN PROPERTY", "DRIVING UNDER THE INFLUENCE", "RUNAWAY", "LARCENY/THEFT", "OTHER OFFENSES")
+category.III <- c("WARRANTS", "VANDALISM", "DRUG/NARCOTIC", "SECONDARY CODES", "PORNOGRAPHY/OBSCENE MAT", "TREA", "GAMBLING", "LIQUOR LAWS", "LOITERING", "DRUNKENNESS", "PROSTITUTION", "DISORDERLY CONDUCT", "NON-CRIMINAL")
+
+#stopifnot( length(category.I) + length(category.II) + length(category.III) == nrow(ct.df) )
+allClustered <- c(category.I, category.II, category.III)
+crimeTypes.leftout = setdiff(allCrimeTypes, allClustered)
+crimeTypes.extra = setdiff(allClustered, allCrimeTypes)
+stopifnot( crimeTypes.extra == character(length=0) )
+
+if (! identical(crimeTypes.leftout, character(0)) ) {
+  for (ct in crimeTypes.leftout) {
+    # for each, we expand the corresponding category/cluster,
+    # according to that crime type frequency..
+    freq <- ct.df[ct,]
+    if (freq < 100) {
+      category.I <- c(ct, category.I)
+    } else if (freq < 1000) {
+      category.II <- c(ct, category.II)
+    } else {
+      category.III <- c(ct, category.III)
+    }
+  }
+}
+
+print( paste("There are", length(category.I), "crime types of high-level Category I..") )
+print( paste("There are", length(category.II), "crime types of high-level Category II..") )
+print( paste("There are", length(category.III), "crime types of high-level Category III..") )
+
+
