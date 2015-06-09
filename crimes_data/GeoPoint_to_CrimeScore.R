@@ -55,5 +55,24 @@ apply(crimeTable, 1, function(x) {
   
   eachGeoLocToCrimeScore[geoLoc,] <<- eachGeoLocToCrimeScore[geoLoc,] + weights[crimeType,]
 })
+saveRDS(eachGeoLocToCrimeScore, file = "totalWeightsPerGeoPoint")
 
+# Next time reading, take it from the "cache"..
+eachGeoLocToCrimeScore <- readRDS(file = "totalWeightsPerGeoPoint")
 
+geolocFreqTable <- table(crimeTable$location)
+stopifnot( sum(geolocFreqTable) == nrow(crimeTable) )
+
+oo <- order(geolocFreqTable, allGeoLocs)
+allGeoLocs[oo]
+
+for (idx in 1:N) {
+  geoloc = allGeoLocs[idx]
+  count = geolocFreqTable[geoloc]
+  names(count) <- NULL
+  
+  geoLoc = as.character(geoloc)
+  eachGeoLocToCrimeScore[geoLoc,] = eachGeoLocToCrimeScore[geoLoc,] / count
+}
+
+write.table(eachGeoLocToCrimeScore, file = "GeoPoint_to_Weight.csv")
