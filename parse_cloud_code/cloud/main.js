@@ -5,73 +5,68 @@ These functions can be invoked from the command line using curl with REST API
 or from iOS using Parse API
 */
 
-var jobs = require("cloud/jobs.js");
-
 //given four GeoPoints that define a region, return an array of
 //locations and weights of all crimes within that region
 Parse.Cloud.define("crimesInRegion", function(request, response){
-	var nearLeft = request.params.nearLeft;
-	var nearRight = request.params.nearRight;
-	var farLeft = request.params.farLeft;
-	var farRight = request.params.farRight;
+	var boundingBox = require("cloud/boundingBox.js");
+	var points = boundingBox.getBoundingPoints(request.params);
 
-	var minLatitude = Math.min(nearLeft.latitude, nearRight.latitude, farLeft.latitude, farRight.latitude);
-	var maxLatitude = Math.max(nearLeft.latitude, nearRight.latitude, farLeft.latitude, farRight.latitude);
-	var minLongitude = Math.min(nearLeft.longitude, nearRight.longitude, farLeft.longitude, farRight.longitude);
-	var maxLongitude = Math.max(nearLeft.longitude, nearRight.longitude, farLeft.longitude, farRight.longitude);
-
-	var southwestPoint = new Parse.GeoPoint(minLatitude, minLongitude);
-	var northeastPoint = new Parse.GeoPoint(maxLatitude, maxLongitude);
+	var data = [];
 
 	var Crime = Parse.Object.extend("CrimeSample");
 	var query = new Parse.Query(Crime);
-	query.withinGeoBox("location", southwestPoint, northeastPoint).limit(1000);
+	query.withinGeoBox("location", points.southwest, points.northeast).limit(1000);
 	query.find({
 		success: function(results) {
-			var data = [];
-			var maxWeight = 0;
-			var minWeight = 11;
 			for (var entryIndex in results) {
 				var current = new Object();
 				var entry = results[entryIndex];
 				var weight = entry.get("weight");
 				current["location"] = entry.get("location");
 				current["weight"] = weight;
-				if (weight < minWeight) { minWeight = weight;}
-				if (weight > maxWeight) { maxWeight = weight;}
 				data.push(current);
 			}
-			console.log(data.length + " crimes found with a max weight of " + maxWeight
-				+ " and  min weight of " + minWeight +":");
 			console.log(data);
-			response.success(data);
 		},
 		error: function(error){
-			response.error("Unable to retrieve objects. Error: " + error.code + " " + error.messsage);
+			response.error("Unable to retrieve crime entries. Error: " + error.code + " " + error.messsage);
 		}
 	});
+
+	var UserGeneratedReport = Parse.Object.extend("UserGeneratedReport");
+	var userQuery = new Parse.Query(UserGeneratedReport);
+	userQuery.withinGeoBox("location", points.southwest, points.northeast).limit(1000);
+	userQuery.find({
+		success: function(results) {
+			for (var entryIndex in results) {
+				var current = new Object();
+				var entry = results[entryIndex];
+				var weight = entry.get("damageRating") * 10;
+				current["location"] = entry.get("location");
+				current["weight"] = weight;
+				data.push(current);
+			}
+			console.log(data);
+		},
+		error: function(error){
+			response.error("Unable to retrieve user generated reports. Error: " + error.code + " " + error.messsage);
+		}
+	});
+
+	response.success(data);
 });
 
 Parse.Cloud.define("ticketsInRegion", function(request, response){
-	var nearLeft = request.params.nearLeft;
-	var nearRight = request.params.nearRight;
-	var farLeft = request.params.farLeft;
-	var farRight = request.params.farRight;
+	var boundingBox = require("cloud/boundingBox.js");
+	var points = boundingBox.getBoundingPoints(request.params);
 
-	var minLatitude = Math.min(nearLeft.latitude, nearRight.latitude, farLeft.latitude, farRight.latitude);
-	var maxLatitude = Math.max(nearLeft.latitude, nearRight.latitude, farLeft.latitude, farRight.latitude);
-	var minLongitude = Math.min(nearLeft.longitude, nearRight.longitude, farLeft.longitude, farRight.longitude);
-	var maxLongitude = Math.max(nearLeft.longitude, nearRight.longitude, farLeft.longitude, farRight.longitude);
-
-	var southwestPoint = new Parse.GeoPoint(minLatitude, minLongitude);
-	var northeastPoint = new Parse.GeoPoint(maxLatitude, maxLongitude);
+	var data = [];
 
 	var Ticket = Parse.Object.extend("Ticket");
 	var query = new Parse.Query(Ticket);
-	query.withinGeoBox("location", southwestPoint, northeastPoint);
+	query.withinGeoBox("location", points.southwest, points.northeast);
 	query.find({
 		success: function(results) {
-			var data = [];
 			for (var entryIndex in results) {
 				var current = new Object();
 				var entry = results[entryIndex];
@@ -80,57 +75,83 @@ Parse.Cloud.define("ticketsInRegion", function(request, response){
 				current["weight"] = weight;
 				data.push(current);
 			}
-			console.log(data.length + " tickets found:");
 			console.log(data);
-			response.success(data);
 		},
 		error: function(error){
-			response.error("Unable to retrieve objects. Error: " + error.code + " " + error.messsage);
+			response.error("Unable to retrieve ticket entries. Error: " + error.code + " " + error.messsage);
 		}
 	});
+
+	var UserGeneratedReport = Parse.Object.extend("UserGeneratedReport");
+	var userQuery = new Parse.Query(UserGeneratedReport);
+	userQuery.withinGeoBox("location", points.southwest, points.northeast).limit(1000);
+	userQuery.find({
+		success: function(results) {
+			for (var entryIndex in results) {
+				var current = new Object();
+				var entry = results[entryIndex];
+				var weight = entry.get("ticketCost") * 10;
+				current["location"] = entry.get("location");
+				current["weight"] = weight;
+				data.push(current);
+			}
+			console.log(data);
+		},
+		error: function(error){
+			response.error("Unable to retrieve user generated reports. Error: " + error.code + " " + error.messsage);
+		}
+	});
+
+	response.success(data);
 });
 
 Parse.Cloud.define("pricesInRegion", function(request, response){
-	var nearLeft = request.params.nearLeft;
-	var nearRight = request.params.nearRight;
-	var farLeft = request.params.farLeft;
-	var farRight = request.params.farRight;
+	var boundingBox = require("cloud/boundingBox.js");
+	var points = boundingBox.getBoundingPoints(request.params);
 
-	var minLatitude = Math.min(nearLeft.latitude, nearRight.latitude, farLeft.latitude, farRight.latitude);
-	var maxLatitude = Math.max(nearLeft.latitude, nearRight.latitude, farLeft.latitude, farRight.latitude);
-	var minLongitude = Math.min(nearLeft.longitude, nearRight.longitude, farLeft.longitude, farRight.longitude);
-	var maxLongitude = Math.max(nearLeft.longitude, nearRight.longitude, farLeft.longitude, farRight.longitude);
-
-	var southwestPoint = new Parse.GeoPoint(minLatitude, minLongitude);
-	var northeastPoint = new Parse.GeoPoint(maxLatitude, maxLongitude);
+	var data = [];
 
 	var ParkingMeter = Parse.Object.extend("ParkingMeter");
 	var query = new Parse.Query(ParkingMeter);
-	query.withinGeoBox("location", southwestPoint, northeastPoint).limit(2000);
+	query.withinGeoBox("location", points.southwest, points.northeast).limit(2000);
 	query.find({
 		success: function(results) {
-			var data = [];
-			var minPrice = 20;
-			var maxPrice = 0;
 			for (var entryIndex in results) {
 				var current = new Object();
 				var entry = results[entryIndex];
 				var price = entry.get("hourlyRateEstimate");
 				current["location"] = entry.get("location");
 				current["weight"] = price;
-				if(price < minPrice) {minPrice = price;}
-				if(price > maxPrice) {maxPrice = price;}
 				data.push(current);
 			}
-			console.log(data.length + " meters found with a low price of " + minPrice
-				+ " and a high price of " + maxPrice + ":");
 			console.log(data);
-			response.success(data);
 		},
 		error: function(error){
-			response.error("Unable to retrieve objects. Error: " + error.code + " " + error.messsage);
+			response.error("Unable to retrieve parking meter entries. Error: " + error.code + " " + error.messsage);
 		}
 	});
+
+	var UserGeneratedReport = Parse.Object.extend("UserGeneratedReport");
+	var userQuery = new Parse.Query(UserGeneratedReport);
+	userQuery.withinGeoBox("location", points.southwest, points.northeast).limit(1000);
+	userQuery.find({
+		success: function(results) {
+			for (var entryIndex in results) {
+				var current = new Object();
+				var entry = results[entryIndex];
+				var weight = entry.get("priceRating") * 10;
+				current["location"] = entry.get("location");
+				current["weight"] = weight;
+				data.push(current);
+			}
+			console.log(data);
+		},
+		error: function(error){
+			response.error("Unable to retrieve user generated reports. Error: " + error.code + " " + error.messsage);
+		}
+	});
+
+	response.success(data);
 });
 
 
@@ -298,7 +319,6 @@ Parse.Cloud.job("alertCarsInSweepingZones", function(request, response){
 				//Get streetname and streetnumber of parked car
 				var streetname = address.substring(firstSpace + 1);
 				var streetnumber = parseInt(address.substring(0, firstSpace));
-				console.log("Checking if parked car at " + address + " is in a sweeping zone.");
 
 				//Query to check that streetnumber is within the left addresses swept
 				var withinLeftAddressQuery = new Parse.Query(StreetSweepingRoute);
@@ -318,15 +338,11 @@ Parse.Cloud.job("alertCarsInSweepingZones", function(request, response){
 				sweepingQuery.startsWith("start_time", hour);
 				sweepingQuery.equalTo("weekday", day);
 				sweepingQuery.startsWith("streetname", streetname);
-
-				console.log("hour: " + hour + "\nday: " + day + "\nstreetname: " + streetname + "\nstreetnumber: " + streetnumber);
-
-				sweepingQuery.limit(10); //one active route is all it takes to be illegally parked
+				sweepingQuery.limit(1); //one active route is all it takes to be illegally parked
 
 				//Check if there is a sweeping route that intersects with this parked car
 				sweepPromise = sweepPromise.then(function(){
 					return sweepingQuery.count().then(function(activeRouteCount){
-						console.log("count: " + activeRouteCount);
 						if(activeRouteCount > 0){
 							//Send push notification
 							var installationId = parkedCar.get("installation").id;

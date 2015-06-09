@@ -1,16 +1,17 @@
-#file: ticketCSVtoJSON.py
-#script to convert raw csv data for 2012 parking tickets (data/tickets.csv)
-#into a json file that can be imported into the Parse database. The csv
-#tickets only have an address, no lattitude/longitude GeoPoint, so this script
-#uses Google Maps API to geotag each ticket. Only 2500 API requests are allowed
-#per day, so this script is run everyday to geotag 2450 more tickets.
-#Usage: python ticketCSVtoJSON.py tickets.csv old_file.json new_file.json
-#First argument: tickets.csv is a csv file acquired from ParkRoulette that holds
-#every ticket issued in SF in 2012
-#Second argument: current json converted ticket data, this file will be the starting point
-#for new ticket json data, and will remain unchanged.
-#Third argument: destination file for new ticket json data.
-
+'''
+file: ticketCSVtoJSON.py
+script to convert raw csv data for 2012 parking tickets (data/tickets.csv)
+into a json file that can be imported into the Parse database. The csv
+tickets only have an address, no lattitude/longitude GeoPoint, so this script
+uses Google Maps API to geotag each ticket. Only 2500 API requests are allowed
+per day, so this script is run everyday to geotag 2450 more tickets.
+Usage: python ticketCSVtoJSON.py tickets.csv old_file.json new_file.json
+First argument: tickets.csv is a csv file acquired from ParkRoulette that holds
+every ticket issued in SF in 2012
+Second argument: current json converted ticket data, this file will be the starting point
+for new ticket json data, and will remain unchanged.
+Third argument: destination file for new ticket json data.
+'''
 import csv
 import json
 import sys
