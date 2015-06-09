@@ -8,11 +8,13 @@ or from iOS using Parse API
 //given four GeoPoints that define a region, return an array of
 //locations and weights of all crimes within that region
 Parse.Cloud.define("crimesInRegion", function(request, response){
+	//Get bounding points that enclose the viewport passed by the client
 	var boundingBox = require("cloud/boundingBox.js");
 	var points = boundingBox.getBoundingPoints(request.params);
 
 	var data = [];
 
+	//Add crimes to response data
 	var Crime = Parse.Object.extend("CrimeSample");
 	var query = new Parse.Query(Crime);
 	query.withinGeoBox("location", points.southwest, points.northeast).limit(1000);
@@ -33,6 +35,7 @@ Parse.Cloud.define("crimesInRegion", function(request, response){
 		}
 	});
 
+	//Add user reported damage to response data
 	var UserGeneratedReport = Parse.Object.extend("UserGeneratedReport");
 	var userQuery = new Parse.Query(UserGeneratedReport);
 	userQuery.withinGeoBox("location", points.southwest, points.northeast).limit(1000);
@@ -41,7 +44,7 @@ Parse.Cloud.define("crimesInRegion", function(request, response){
 			for (var entryIndex in results) {
 				var current = new Object();
 				var entry = results[entryIndex];
-				var weight = entry.get("damageRating") * 10;
+				var weight = entry.get("damageRating") * 10; //magnitude fix
 				current["location"] = entry.get("location");
 				current["weight"] = weight;
 				data.push(current);
@@ -53,15 +56,18 @@ Parse.Cloud.define("crimesInRegion", function(request, response){
 		}
 	});
 
+	//Send back an array of locations and weights
 	response.success(data);
 });
 
 Parse.Cloud.define("ticketsInRegion", function(request, response){
+	//Get bounding points that enclose the viewport passed by the client
 	var boundingBox = require("cloud/boundingBox.js");
 	var points = boundingBox.getBoundingPoints(request.params);
 
 	var data = [];
 
+	//Add tickets to the response data
 	var Ticket = Parse.Object.extend("Ticket");
 	var query = new Parse.Query(Ticket);
 	query.withinGeoBox("location", points.southwest, points.northeast);
@@ -82,6 +88,7 @@ Parse.Cloud.define("ticketsInRegion", function(request, response){
 		}
 	});
 
+	//Add user reported tickets to the response data
 	var UserGeneratedReport = Parse.Object.extend("UserGeneratedReport");
 	var userQuery = new Parse.Query(UserGeneratedReport);
 	userQuery.withinGeoBox("location", points.southwest, points.northeast).limit(1000);
@@ -90,7 +97,7 @@ Parse.Cloud.define("ticketsInRegion", function(request, response){
 			for (var entryIndex in results) {
 				var current = new Object();
 				var entry = results[entryIndex];
-				var weight = entry.get("ticketCost") * 10;
+				var weight = entry.get("ticketCost") * 10; //magnitude fix
 				current["location"] = entry.get("location");
 				current["weight"] = weight;
 				data.push(current);
@@ -102,15 +109,18 @@ Parse.Cloud.define("ticketsInRegion", function(request, response){
 		}
 	});
 
+	//Send back an array of locations and weights
 	response.success(data);
 });
 
 Parse.Cloud.define("pricesInRegion", function(request, response){
+	//Get bounding points that enclose the viewport passed by the client
 	var boundingBox = require("cloud/boundingBox.js");
 	var points = boundingBox.getBoundingPoints(request.params);
 
 	var data = [];
 
+	//Add parking meter prices to the response data
 	var ParkingMeter = Parse.Object.extend("ParkingMeter");
 	var query = new Parse.Query(ParkingMeter);
 	query.withinGeoBox("location", points.southwest, points.northeast).limit(2000);
@@ -131,6 +141,7 @@ Parse.Cloud.define("pricesInRegion", function(request, response){
 		}
 	});
 
+	//Add user reported prices to the response data
 	var UserGeneratedReport = Parse.Object.extend("UserGeneratedReport");
 	var userQuery = new Parse.Query(UserGeneratedReport);
 	userQuery.withinGeoBox("location", points.southwest, points.northeast).limit(1000);
@@ -139,7 +150,7 @@ Parse.Cloud.define("pricesInRegion", function(request, response){
 			for (var entryIndex in results) {
 				var current = new Object();
 				var entry = results[entryIndex];
-				var weight = entry.get("priceRating") * 10;
+				var weight = entry.get("priceRating") * 10; //magnitude fix
 				current["location"] = entry.get("location");
 				current["weight"] = weight;
 				data.push(current);
@@ -151,6 +162,7 @@ Parse.Cloud.define("pricesInRegion", function(request, response){
 		}
 	});
 
+	//Send back an array of locations and prices
 	response.success(data);
 });
 
