@@ -13,6 +13,7 @@ import Parse
 class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapViewDelegate, UITextFieldDelegate {
     
     var mapView: GMSMapView
+    var carMarker: GMSMarker = GMSMarker()
     var waypoints: NSMutableArray
     var waypointStrings: NSMutableArray
     
@@ -76,6 +77,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
         super.viewDidLoad()
         
         self.title = "Parq"
+    
         
         setupMapView()
         setupLocationManager()
@@ -106,8 +108,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
             self.parkingMeterTimerLabel.removeFromSuperview()
             self.parkingMeterTimerBackground.removeFromSuperview()
             NSUserDefaults.standardUserDefaults().setValue(nil, forKey: PARKING_METER_END_DATE)
-
-        }
+       }
         
         if (NSUserDefaults.standardUserDefaults().valueForKey("LastLat") != nil) {
             
@@ -163,11 +164,11 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
         // Dispose of any resources that can be recreated.
     }
     
-    //TODO: Add gesture listener to switch heatmap generation @Leigh
-    
-    
     // MARK: Setup Methods
     
+    /**
+        Setup the navbar icon
+    */
     func setupNavIcon() {
         var carImage: UIImage? = UIImage(named: "car_nav_icon")
         carImage = carImage?.imageWithRenderingMode(UIImageRenderingMode.AlwaysOriginal)
@@ -176,6 +177,10 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
         navigationItem.leftBarButtonItem = carButton
     }
     
+    
+    /**
+        Setup the map view
+    */
     func setupMapView() {
         let navBarHeight = self.navigationController!.navigationBar.frame.size.height + UIApplication.sharedApplication().statusBarFrame.size.height
         
@@ -219,8 +224,17 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
         self.searchField.returnKeyType = .Done
         self.view.addSubview(self.searchField)
         
+        self.carMarker = GMSMarker(position: CLLocationCoordinate2DMake(0, 0))
+        self.carMarker.rotation = 0
+        self.carMarker.icon = UIImage(named: "car_icon.png")!
+        self.carMarker.snippet = "your parked car"
+        self.carMarker.map = nil
+        
     }
     
+    /**
+        Setup the report button
+    */
     func setupReportButton() {
         self.reportButton.frame = CGRectMake(self.view.bounds.size.width - kButtonPadding - kButtonWidth, self.view.bounds.size.height - kButtonPadding - 45, kButtonWidth, 45)
         self.reportButton.backgroundColor = UIColor.whiteColor()
@@ -228,6 +242,9 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
         self.view.addSubview(self.reportButton)
     }
     
+    /**
+        Setup the share button
+    */
     func setupShareButton() {
         self.shareButton.frame = CGRectMake(kButtonPadding, self.view.bounds.size.height - kButtonPadding - 45, kButtonWidth, 45)
         self.shareButton.backgroundColor = UIColor.whiteColor()
@@ -235,6 +252,9 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
         self.view.addSubview(self.shareButton)
     }
     
+    /**
+        Setup stop guidance button
+    */
     func setupStopGuidanceButton() {
         self.stopGuidanceButton.frame = CGRectMake(kButtonPadding, self.searchField.frame.origin.y + self.searchField.frame.size.height + kButtonPadding, 50, 50)
         self.stopGuidanceButton.backgroundColor = UIColor.whiteColor()
@@ -244,14 +264,18 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
         self.stopGuidanceButton.alpha = 0.0;
     }
     
-    // Sets up the locationManager
+    /**
+        Setup stop location manager
+    */
     func setupLocationManager() {
         self.locationManager.delegate = self
         self.locationManager.desiredAccuracy = kCLLocationAccuracyBest
         self.locationManager.distanceFilter = 10
     }
     
-    // Sets up the parking timer
+    /*
+        Setup the parking timer
+    */
     func setupParkingTimer() {
         
         // Add the background 
@@ -278,6 +302,9 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
     
     // MARK: Private Methods
     
+    /**
+        What to do when the car status changes
+    */
     func carStatusChanged() {
         
         if (NSUserDefaults.standardUserDefaults().valueForKey(PARKED_LOCATION_LAT) != nil) {
@@ -289,11 +316,8 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
             let cameraPosition: GMSCameraPosition = GMSCameraPosition(target: CLLocationCoordinate2DMake(lat.doubleValue, lon.doubleValue), zoom: Float(DEFAULT_ZOOM), bearing: 0, viewingAngle: 0.0)
             self.mapView.animateToCameraPosition(cameraPosition)
             
-            let marker: GMSMarker = GMSMarker(position: CLLocationCoordinate2DMake(lat.doubleValue, lon.doubleValue))
-            marker.map = self.mapView
-            marker.rotation = 0
-            marker.icon = UIImage(named: "car_icon.png")!
-            marker.snippet = "your parked car"
+            self.carMarker.map = self.mapView
+            self.carMarker.position = CLLocationCoordinate2DMake(lat.doubleValue, lon.doubleValue)
             
             // The car is parked -- check if there is a timer for the parking metetr
             if (NSUserDefaults.standardUserDefaults().valueForKey(PARKING_METER_END_DATE) != nil) {
@@ -307,16 +331,22 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
                     // the date has not passed -- add the timer
                     setupParkingTimer()
                     
+                    
                 } else {
                     
                     // the date has passed -- remove the end date
                     self.parkingMeterTimerLabel.removeFromSuperview()
                     self.parkingMeterTimerBackground.removeFromSuperview()
                     NSUserDefaults.standardUserDefaults().setValue(nil, forKey: PARKING_METER_END_DATE)
+
+                    // Remove any markers on the map
+                    self.carMarker.map = nil;
+
                 }
             } else {
                 self.parkingMeterTimerLabel.removeFromSuperview()
                 self.parkingMeterTimerBackground.removeFromSuperview()
+            
             }
             
             return
@@ -324,10 +354,16 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
             self.parkingMeterTimerLabel.removeFromSuperview()
             self.parkingMeterTimerBackground.removeFromSuperview()
             NSUserDefaults.standardUserDefaults().setValue(nil, forKey: PARKING_METER_END_DATE)
+        
+            // Remove any markers on the map
+            self.carMarker.map = nil;
         }
         
     }
     
+    /**
+        Get the string date for timer interval
+    */
     func stringForTimeInterval(timeInterval: NSTimeInterval) -> String {
         let hours = Int(floor(timeInterval / (60 * 60)))
         let minute_divisor = timeInterval % (60 * 60);
@@ -354,6 +390,10 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
         return "\(hoursString):\(minutesString):\(secondsString)"
     }
     
+    
+    /**
+        Called every second to update the timer
+    */
     func updateTimer(sender: NSTimer!) {
         
         self.parkingMeterInterval--

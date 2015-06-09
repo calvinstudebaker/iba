@@ -86,7 +86,7 @@ Parse.Cloud.define("ticketsInRegion", function(request, response){
 
 	var Ticket = Parse.Object.extend("Ticket");
 	var query = new Parse.Query(Ticket);
-	query.withinGeoBox("location", southwestPoint, northeastPoint).limit(1500);
+	query.withinGeoBox("location", southwestPoint, northeastPoint);
 	query.find({
 		success: function(results) {
 			var data = [];
@@ -277,49 +277,31 @@ Parse.Cloud.define("carDinged", function(request, response) {
 	});
 });
 
-
-// Parse.Cloud.define("userReferralClicked", function(request, response){
-// 	var refId = request.params.ref;
-// 	var installationQuery = Parse.Query.("Installation");
-// 	installationQuery.get(refId, {
-// 		success: function(installation){
-// 			installation.increment("numReferrals");
-// 			installation.save();
-// 			response.success("referral noted");
-// 		},
-// 		error: function(object, error){
-// 			response.error("referral save failed");
-// 		}
-// 	});
-// });
-
-//inject initial data into ParkingMeter table from dataSF.org
-Parse.Cloud.job("putMeterData", function(request, response){
-	jobs.putMeterDataFromURL(meterDataURL, request, response);
-});
-
-//inject initial data into Crime table from dataSF.org
-Parse.Cloud.job("putCrimeData", function(request, response){
-	jobs.putCrimeDataFromURL(crimeDataURL, request, resopnse);
-});
-
 //To run hourly, detecting cars that are parked in street sweeping zones
-Parse.Cloud.job("activeSweepingRoutes", function(request, response){
+//false positives may occur. uses approximate address of car, and street sweeping
+//public public data is inaccurate in terms of on/off weeks of the month, so
+//this function assumes every week is active.
+Parse.Cloud.job("alertCarsInSweepingZones", function(request, response){
 	var streetSweeping = require("cloud/streetSweeping.js");
 	var push = require("cloud/push.js");
 	var _ = require("underscore.js");
+	
 	var days = ["Sun", "Mon", "Tues", "Wed", "Thu", "Fri", "Sat"];
 	var d = new Date();
-	var hour = d.getHours().toString();
+	var soon = new Date(d.getTime() + 30 * 60 * 1000); //add a half hour
+
+	//Get the hour and day
+	var hour = (d.getHours()).toString();
+	var day = days[d.getDay()];
 	if (hour.length == 1) {
 		hour = "0" + hour;
 	}
 
-	var StreetSweepingRoute = Parse.Object.extend("StreetSweepingRoute");
-	var sweepingQuery = new Parse.Query(StreetSweepingRoute);
-	sweepingQuery.startsWith("start_time", hour);
-	sweepingQuery.equalTo("weekday", days[d.getDay()]);
-	sweepingQuery.select("streetname", "right_from_address", "right_to_address", "left_from_address", "left_to_address", "end_time");
+	// var StreetSweepingRoute = Parse.Object.extend("StreetSweepingRoute");
+	// var sweepingQuery = new Parse.Query(StreetSweepingRoute);
+	// sweepingQuery.startsWith("start_time", hour);
+	// sweepingQuery.equalTo("weekday", days[d.getDay()]);
+	// sweepingQuery.select("streetname", "right_from_address", "right_to_address", "left_from_address", "left_to_address", "end_time");
 
 	var carQuery = new Parse.Query("Car");
 	carQuery.equalTo("isParked", true);
@@ -327,50 +309,66 @@ Parse.Cloud.job("activeSweepingRoutes", function(request, response){
 	carQuery.exists("installation");
 	carQuery.include("installation");
 
-	var activeRoutes = [];
+	// var activeRoutes = [];
 
-	sweepingQuery.find().then(function(routes){
+	carQuery.find().then(function(parkedCars){
 		
-		for (var entryIndex in routes){
-			var currentRoute = new Object();
-			var entry = routes[entryIndex];
-			currentRoute["streetName"] = entry.get("streetname");
-			currentRoute["rightFromAddress"] = entry.get("right_from_address");
-			currentRoute["rightToAddress"] = entry.get("right_to_address");
-			currentRoute["leftFromAddress"] = entry.get("left_from_address");
-			currentRoute["leftToAddress"] = entry.get("left_to_address");
-			currentRoute["endTime"] = entry.get("end_time");
-			activeRoutes.push(currentRoute);
-		}
-		console.log(activeRoutes.length + " active routes found: ");
-		console.log(activeRoutes);
+		var pushPromises = [];
 
-		return carQuery.find();
-
-
-	}, function(error){
-		response.error("Unable to retrieve routes. Error: " + error.code + " " + error.message);
-	}).then(function(parkedCars){
-		var promises = [];
-		console.log(parkedCars);
 		_.each(parkedCars, function(parkedCar){
-			for (var route in activeRoutes){
-				if(streetSweeping.isInSweepingRoute(parkedCar,route)){
-					//for each car in an active route, start a push notification
-					//to the car and add its promise to the list
-					var pushDict = {
-						"pushText": "Street sweeping starting! Move your car ya dingus.",
-						"pushType": "STREET_SWEEPING", 
-						"installationId": parkedCar.get("installation").id
-					};
-					promises.push(push.sendPush(pushDict));
-					break;
-				}
+			var address = parkedCar.get("address").toUpperCase();
+			var firstSpace = address.indexOf(" ");
+			if (firstSpace != -1 && address.length > firstSpace+1){
+				//Get streetname and streetnumber of parked car
+				var streetname = address.substring(firstSpace + 1);
+				var streetnumber = parseInt(address.substring(0, firstSpace));
+				console.log("Checking if parked car at " + address + " is in a sweeping zone.");
+
+				//Query to check that streetnumber is within the left addresses swept
+				var withinLeftAddressQuery = new Parse.Query(StreetSweepingRoute);
+				withinLeftAddressQuery.greaterThanOrEqualTo("left_to_address", streetnumber);
+				withinLeftAddressQuery.lessThanOrEqualTo("left_from_address", streetnumber);
+
+				//Query to check that streetnumber is within the right addresses swept
+				var withinRightAddressQuery = new Parse.Query(StreetSweepingRoute);
+				withinRightAddressQuery.greaterThanOrEqualTo("right_to_address", streetnumber);
+				withinRightAddressQuery.lessThanOrEqualTo("right_from_address", streetnumber);
+
+				//compound the two queries together, if either are true then the car could be in danger
+				var sweepingQuery = Parse.Query.or(withinLeftAddressQuery, withinRightAddressQuery);
+
+				//route must be on the same street and active at the right time
+				sweepingQuery.startsWith("start_time", hour);
+				sweepingQuery.equalTo("weekday", day);
+				sweepingQuery.contains("streetname", streetname);
+
+				sweepingQuery.limit(1); //one active route is all it takes to be illegally parked
+
+				//Check if there is a sweeping route that intersects with this parked car
+				sweepingQuery.count({
+					success: function(activeRouteCount){
+						if(activeRouteCount > 0){
+							//Send push notification
+							var installationId = parkedCar.get("installation").id;
+							var pushDict = {
+								"pushText": "Street sweeping starting in 30 minutes! Move your car as soon as possible.",
+								"pushType": "STREET_SWEEPING", 
+								"installationId": installationId
+							};
+							pushPromises.push(push.sendPush(pushDict));
+							console.log("Sending street sweeping notification to: " + installationId);
+						}
+					},
+					error: function(error){
+						response.error("Unable to retrieve sweeping routes. Error: " + error.code + " " + error.message);
+					}
+				});
+
+
 			}
 		});
-		
 
-		return Parse.Promise.when(promises);
+		return Parse.Promise.when(pushPromises);
 	}, function(error){
 		response.error("Unable to retrieve parked cars. Error: " + error.code + " " + error.message);
 	}).then(function(){
@@ -378,4 +376,54 @@ Parse.Cloud.job("activeSweepingRoutes", function(request, response){
 	}, function(error){
 		response.error("Unable to send all push notifications to cars in sweeping zones. Error: " + error.code + " " + error.message);
 	});
+
+	// sweepingQuery.find().then(function(routes){
+		
+	// 	for (var entryIndex in routes){
+	// 		var currentRoute = new Object();
+	// 		var entry = routes[entryIndex];
+	// 		currentRoute["streetName"] = entry.get("streetname");
+	// 		currentRoute["rightFromAddress"] = entry.get("right_from_address");
+	// 		currentRoute["rightToAddress"] = entry.get("right_to_address");
+	// 		currentRoute["leftFromAddress"] = entry.get("left_from_address");
+	// 		currentRoute["leftToAddress"] = entry.get("left_to_address");
+	// 		currentRoute["endTime"] = entry.get("end_time");
+	// 		activeRoutes.push(currentRoute);
+	// 	}
+	// 	console.log(activeRoutes.length + " active routes found: ");
+	// 	console.log(activeRoutes);
+
+	// 	return carQuery.find();
+
+
+	// }, function(error){
+	// 	response.error("Unable to retrieve routes. Error: " + error.code + " " + error.message);
+	// }).then(function(parkedCars){
+	// 	var promises = [];
+	// 	console.log(parkedCars);
+	// 	_.each(parkedCars, function(parkedCar){
+	// 		for (var route in activeRoutes){
+	// 			if(streetSweeping.isInSweepingRoute(parkedCar,route)){
+	// 				//for each car in an active route, start a push notification
+	// 				//to the car and add its promise to the list
+	// 				var pushDict = {
+	// 					"pushText": "Street sweeping starting! Move your car as soon as possible.",
+	// 					"pushType": "STREET_SWEEPING", 
+	// 					"installationId": parkedCar.get("installation").id
+	// 				};
+	// 				promises.push(push.sendPush(pushDict));
+	// 				break;
+	// 			}
+	// 		}
+	// 	});
+		
+
+	// 	return Parse.Promise.when(promises);
+	// }, function(error){
+	// 	response.error("Unable to retrieve parked cars. Error: " + error.code + " " + error.message);
+	// }).then(function(){
+	// 	response.success("Every car in street sweeping zones notified!");
+	// }, function(error){
+	// 	response.error("Unable to send all push notifications to cars in sweeping zones. Error: " + error.code + " " + error.message);
+	// });
 });
