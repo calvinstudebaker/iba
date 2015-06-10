@@ -5,8 +5,16 @@ These functions can be invoked from the command line using curl with REST API
 or from iOS using Parse API
 */
 
-//given four GeoPoints that define a region, return an array of
-//locations and weights of all crimes within that region
+/*
+@function crimesInRegion
+provide crime data for a given region
+The parameters passed must contain 4 Geopoints (nearLeft, nearRight, farLeft, farRight), 
+which define the viewPort that the resulting data will be visualized inside of.
+The function returns an array of json objects, each object containing a Geopoint 
+location and a weight. These data points are a combination of the public data stored 
+in our Parse database, as well as user generated data. The weight of each object represents
+the magnitude (danger) with which the point should be considered.
+*/
 Parse.Cloud.define("crimesInRegion", function(request, response){
 	//Get bounding points that enclose the viewport passed by the client
 	var boundingBox = require("cloud/boundingBox.js");
@@ -59,6 +67,17 @@ Parse.Cloud.define("crimesInRegion", function(request, response){
 	});
 });
 
+
+/*
+@function ticketsInRegion
+provide parking ticket data for a given region
+The parameters passed must contain 4 Geopoints (nearLeft, nearRight, farLeft, farRight), 
+which define the viewPort that the resulting data will be visualized inside of.
+The function returns an array of json objects, each object containing a Geopoint 
+location and a weight. These data points are a combination of the public data stored 
+in our Parse database, as well as user generated data. The weight of each object represents
+the magnitude with which the point should be considered.
+*/
 Parse.Cloud.define("ticketsInRegion", function(request, response){
 	//Get bounding points that enclose the viewport passed by the client
 	var boundingBox = require("cloud/boundingBox.js");
@@ -110,6 +129,17 @@ Parse.Cloud.define("ticketsInRegion", function(request, response){
 
 });
 
+
+/*
+@function pricesInRegion
+provide pricing data for a given region
+The parameters passed must contain 4 Geopoints (nearLeft, nearRight, farLeft, farRight), 
+which define the viewPort that the resulting data will be visualized inside of.
+The function returns an array of json objects, each object containing a Geopoint 
+location and a weight. These data points are a combination of the public data stored 
+in our Parse database, as well as user generated data. The weight of each object represents
+the magnitude (expensiveness) with which the point should be considered.
+*/
 Parse.Cloud.define("pricesInRegion", function(request, response){
 	//Get bounding points that enclose the viewport passed by the client
 	var boundingBox = require("cloud/boundingBox.js");
@@ -161,7 +191,7 @@ Parse.Cloud.define("pricesInRegion", function(request, response){
 });
 
 /**
- *@function
+ *@function carStatusChanged
  *
  *Update the status (started/stopped/parked) of the specified car.
  *Intended to be called by Audi servers when an Audi car changes state.
@@ -261,6 +291,7 @@ Parse.Cloud.define("carStatusChanged", function(request, response) {
 });
 
 /**
+ *@function carDinged
  *Notify the specified car that it has been dinged
  *Intended to be called by Audi servers when a ding event is detected
  *Can be called over REST API with the following format (using the specified Parse Keys):
@@ -310,10 +341,13 @@ Parse.Cloud.define("carDinged", function(request, response) {
 	});
 });
 
-//Runs hourly on the half hour, detecting cars that will soon be parked in street sweeping zones
-//false positives may occur. uses approximate address of car, and street sweeping
-//public data is inaccurate in terms of on/off weeks of the month, so
-//this function assumes every week is active.
+/*
+@function alertCarsInSweepingZones
+Runs hourly on the half hour, detecting cars that will soon be parked in street sweeping zones
+false positives may occur. uses approximate address of car, and street sweeping
+public data is inaccurate in terms of on/off weeks of the month, so
+this function assumes every week is active.
+*/
 Parse.Cloud.job("alertCarsInSweepingZones", function(request, response){
 	var push = require("cloud/push.js");
 	var _ = require("underscore.js");

@@ -1,6 +1,15 @@
 /*
 push.js
-Javascript module 
+Javascript module that has one function sendPush that sends a custom 
+push notification to a given phone installation.
+
+@param params: a javascript object with 4 properties
+-pushText -- string of text to display in the notification
+-pushType -- custom string to define the type of notification (i.e. “STREET_SWEEPING”)
+-installationId -- objectId identifying the phone installation in the Parse Installation table
+-optional -- any extra optional data
+
+@return a Parse Promise indicating the push notification will be sent
 */
 
 exports.sendPush = function(params) {
