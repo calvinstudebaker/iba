@@ -143,6 +143,13 @@ class IBARateItemView: UIView {
         
     }
     
+    // MARK: Private Methods
+    
+    /**
+    When the slider value is changed, this function updates the text on the rate view
+    
+    :param: sender The caller of the selector
+    */
     func sliderValueChanged(sender: UISlider) {
         let percent: CGFloat = CGFloat(slider.value) * 100
         
@@ -159,6 +166,11 @@ class IBARateItemView: UIView {
         currentValue = CGFloat(self.slider.value)
     }
     
+    /**
+    The slider is done sliding
+    
+    :param: sender The caller of the selector
+    */
     func sliderDown(sender: UISlider) {
         if (self.currentLabel.alpha != 1.0) {
             self.currentLabel.alpha = 0.0

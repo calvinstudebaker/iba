@@ -160,7 +160,23 @@ Parse.Cloud.define("pricesInRegion", function(request, response){
 	});
 });
 
-
+/**
+ *@function
+ *
+ *Update the status (started/stopped/parked) of the specified car.
+ *Intended to be called by Audi servers when an Audi car changes state.
+ *A push notification is sent to the phone installation associated with the given car indicating the change.
+ *Can be called over REST API with the following format (using the specified Parse Keys):
+ *curl -X POST \
+ * -H "X-Parse-Application-Id: D7gVBFc0P2dkb4XoronMmAbDGybOfKJQZKhg6akQ" \
+ * -H "X-Parse-REST-API-Key: knFgO4NiKYTvfi5kTqyQpb5jl5puxqbUCSVp0SP8" \
+ * -H "Content-Type: application/json" \
+ * -d '{"carId":"CVBPW2AfQx", "status": 1}' \
+ * https://api.parse.com/1/functions/carStatusChanged
+ *@param {string} carId - the unique identifier for the car whose status should change
+ *@param {int} status - the new status of the car. Options: 1 = Began (Car started moving), 2 = Stopped (Car went into Park), 3 = Parked (Car in Park and turned off)
+ *@returns an HTTP response that, if successful, contains the Parse Car object that has been changed, and if unsuccessful, contains an error message.
+ */
 Parse.Cloud.define("carStatusChanged", function(request, response) {
 	var status = request.params.status;
 
@@ -244,6 +260,21 @@ Parse.Cloud.define("carStatusChanged", function(request, response) {
 	});
 });
 
+/**
+ *Notify the specified car that it has been dinged
+ *Intended to be called by Audi servers when a ding event is detected
+ *Can be called over REST API with the following format (using the specified Parse Keys):
+ *curl -X POST \
+ * -H "X-Parse-Application-Id: D7gVBFc0P2dkb4XoronMmAbDGybOfKJQZKhg6akQ" \
+ * -H "X-Parse-REST-API-Key: knFgO4NiKYTvfi5kTqyQpb5jl5puxqbUCSVp0SP8" \
+ * -H "Content-Type: application/json" \
+ * -d '{"carId":"CVBPW2AfQx"}' \
+ * https://api.parse.com/1/functions/carDinged
+ *@param {string} carId - the unique identifier for the car whose status should change
+ *@returns an HTTP response that, if successful, returns a success message with the phone 
+ * installation id that has been notified with a push notification, 
+ * and if unsuccessful, returns an error message.
+ */
 Parse.Cloud.define("carDinged", function(request, response) {
 
 	var query = new Parse.Query("Car");

@@ -182,7 +182,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
     // MARK: Setup Methods
     
     /**
-    Setup the navbar icon
+    Setup the navbar icon with car image in the upper left
     */
     func setupNavIcon() {
         var carImage: UIImage? = UIImage(named: "car_nav_icon")
@@ -194,7 +194,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, GMSMapVie
     
     
     /**
-    Setup the map view
+    Setup the map view including the map, search text field, and GMSMarkers
     */
     func setupMapView() {
         let navBarHeight = self.navigationController!.navigationBar.frame.size.height + UIApplication.sharedApplication().statusBarFrame.size.height
