@@ -1,5 +1,5 @@
 #script to make sure all ticket id's are stored as ints rather than strings
-
+#usage: python sanitizeTicketsJSON.py [source json file] [destination json file]
 import json
 import sys
 

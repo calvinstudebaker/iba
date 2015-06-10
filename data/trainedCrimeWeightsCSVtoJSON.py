@@ -1,3 +1,5 @@
+#Script to convert csv file of locations and crime scores to Parse-friendly json
+#usage: python trainedCrimeWeightsCSVtoJSON.py [source csv file] [target json file]
 import csv
 import json
 import sys

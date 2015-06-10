@@ -310,12 +310,11 @@ Parse.Cloud.define("carDinged", function(request, response) {
 	});
 });
 
-//To run hourly, detecting cars that are parked in street sweeping zones
+//Runs hourly on the half hour, detecting cars that will soon be parked in street sweeping zones
 //false positives may occur. uses approximate address of car, and street sweeping
-//public public data is inaccurate in terms of on/off weeks of the month, so
+//public data is inaccurate in terms of on/off weeks of the month, so
 //this function assumes every week is active.
 Parse.Cloud.job("alertCarsInSweepingZones", function(request, response){
-	var streetSweeping = require("cloud/streetSweeping.js");
 	var push = require("cloud/push.js");
 	var _ = require("underscore.js");
 	

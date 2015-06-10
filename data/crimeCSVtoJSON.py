@@ -1,3 +1,6 @@
+#script to convert crime csv file from DataSF to Parse-ready json
+#usage python crimeCSVtoJSON.py [source csv file] [destination json file]
+
 import csv
 import json
 import sys

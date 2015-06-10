@@ -1,3 +1,5 @@
+#Script to convert a csv file of parking meter data to Parse-friendly json
+#usage python parkingMeterCSVtoJSON.py [source csv file] [destination json file]
 import csv
 import json
 import sys

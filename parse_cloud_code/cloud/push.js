@@ -1,3 +1,8 @@
+/*
+push.js
+Javascript module 
+*/
+
 exports.sendPush = function(params) {
 	
 	var pushText = params.pushText;
