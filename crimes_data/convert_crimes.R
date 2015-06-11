@@ -1,5 +1,5 @@
 # *------------------------------------------------------------------
-# | PROGRAM NAME: crime_convert.R
+# | PROGRAM NAME: convert_crimes.R
 # | DATE: 05/18/2015
 # | CREATED BY: Narek Tovmasyan (Team IBA)
 # | PROJECT FILE: PARQ
