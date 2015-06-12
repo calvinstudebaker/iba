@@ -302,6 +302,8 @@ Parse.Cloud.define("carStatusChanged", function(request, response) {
  * -d '{"carId":"CVBPW2AfQx"}' \
  * https://api.parse.com/1/functions/carDinged
  *@param {string} carId - the unique identifier for the car whose status should change
+ *@param {string} location - the location on the car of the incident
+ *@param {int} severity - severity of the ding on a scale from 1 to 3
  *@returns an HTTP response that, if successful, returns a success message with the phone 
  * installation id that has been notified with a push notification, 
  * and if unsuccessful, returns an error message.
@@ -320,8 +322,15 @@ Parse.Cloud.define("carDinged", function(request, response) {
 				var installationId = car.get("installation").id;
 				
 				var push = require("cloud/push.js");
+				
+				var verbs = ["scratched", "dinged", "hit"];
+				var severity = request.params.severity;
+				if(severity > 3 || severity < 1){
+					severity = 1;
+				}
+				var pushText = "We've detected that your car has been " + verbs[severity-1] + " near the " + request.params.location;
 				var pushDict = {
-					"pushText": "We've detected that your car has been dinged.",
+					"pushText": pushText,
 					"pushType": "CAR_DINGED", 
 					"installationId": installationId
 				};
